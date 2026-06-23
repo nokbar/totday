@@ -208,7 +208,7 @@ function AuthPage({ onLogin }) {
 // ─── SURVEY 1: QUICK ESTIMATE ─────────────────────────────────────────────────
 function Survey1Page({ onComplete }) {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState({season:"",date:"",city:"Москва",guests:"",format:"",budgetLabel:"",budget:0});
+  const [d, setD] = useState({season:"",date:"",altDates:"",zags:"",city:"Москва",guests:"",outOfTown:"",format:"",budgetLabel:"",budget:0});
   const set = (k,v) => setD(p=>({...p,[k]:v}));
 
   const STEPS = [
@@ -227,6 +227,18 @@ function Survey1Page({ onComplete }) {
             <label style={S.label}>Точная дата (если известна)</label>
             <input type="date" style={{...S.input,maxWidth:220}} value={d.date} onChange={e=>set("date",e.target.value)} />
             {d.date&&<p style={{fontSize:12,color:C.teal,marginTop:6}}>✓ Покажем только свободных подрядчиков</p>}
+          </div>
+          <div>
+            <label style={S.label}>Альтернативные даты (если гибко)</label>
+            <input style={{...S.input,maxWidth:320}} placeholder="например: июнь–июль, любая суббота" value={d.altDates} onChange={e=>set("altDates",e.target.value)} />
+          </div>
+          <div>
+            <label style={S.label}>Заявление в ЗАГС подано?</label>
+            <div style={{display:"flex",gap:8,marginTop:6}}>
+              {["Да","Нет","Пока нет"].map(o=>(
+                <span key={o} style={S.chip(d.zags===o)} onClick={()=>set("zags",o)}>{o}</span>
+              ))}
+            </div>
           </div>
         </div>
       )
@@ -249,6 +261,15 @@ function Survey1Page({ onComplete }) {
           <div>
             <label style={S.label}>Или введите точное число</label>
             <input type="number" style={{...S.input,maxWidth:160}} placeholder="80" value={d.guests} onChange={e=>set("guests",e.target.value)} />
+          </div>
+          <div>
+            <label style={S.label}>Будут гости из других городов?</label>
+            <div style={{display:"flex",gap:8,marginTop:6}}>
+              {["Нет","Да, нужен трансфер","Да, нужно размещение","Да, и то и другое"].map(o=>(
+                <span key={o} style={S.chip(d.outOfTown===o)} onClick={()=>set("outOfTown",o)}>{o}</span>
+              ))}
+            </div>
+            <p style={{fontSize:11,color:C.gray,marginTop:6}}>Влияет на категории «Транспорт» и «Проживание» в смете</p>
           </div>
         </div>
       )
@@ -360,7 +381,7 @@ function ScenariosPage({ survey, onChoose }) {
 // ─── SURVEY 2: CONCEPT ───────────────────────────────────────────────────────
 function Survey2Page({ onComplete }) {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState({personality:[],feelings:[],memory:"",priorities:[],dontWant:[],guestType:"",guestComfort:3,likedPhotos:[],decorLevel:"",mustHave:""});
+  const [d, setD] = useState({personality:[],feelings:[],memory:"",priorities:[],dontWant:[],guestType:"",guestComfort:3,likedPhotos:[],decorLevel:"",decorZones:[],program:[],nature:[],mustHave:""});
   const set = (k,v) => setD(p=>({...p,[k]:v}));
   const toggle = (k,v,max) => {
     const arr = d[k];
@@ -423,6 +444,9 @@ function Survey2Page({ onComplete }) {
       </div>
     )},
     {title:"Уровень декора",sub:"Влияет на бюджет и выбор подрядчиков",body:<Cards field="decorLevel" opts={[["min","🌿 Минимум","Чисто, акцент на пространстве"],["nice","✨ Аккуратно","Продуманные детали, флористика"],["wow","💐 Впечатляюще","Объёмные композиции, свет"],["grand","🏛 Максимум","Полная трансформация пространства"]]}/>},
+    {title:"Какие зоны оформить декором?",sub:"Выберите всё нужное — каждая зона войдёт в смету декора",body:<Chips field="decorZones" opts={[["ceremony","💒 Зона церемонии"],["welcome","🥂 Welcome-зона"],["sweet","🍰 Сладкий стол"],["headtable","💍 Стол молодожёнов"],["photo","📸 Фотозона"],["gifts","🎁 Зона подарков"],["guest","🍽 Гостевые столы"],["lounge","🛋 Лаунж-зона"]]}/>},
+    {title:"Что включить в программу?",sub:"Дополнительные впечатления для гостей",body:<Chips field="program" opts={[["photobooth","📸 Фотобудка"],["fireworks","🎆 Фейерверк"],["live","🎸 Живая музыка"],["kids","🧸 Аниматор для детей"],["fountains","❄️ Холодные фонтаны"],["cover","🎤 Кавер-группа"],["show","🎭 Шоу-программа"]]}/>},
+    {title:"Важны природные элементы?",sub:"Для подбора площадки",body:<Chips field="nature" opts={[["water","🌊 Водоём"],["forest","🌲 Лес"],["park","🌳 Парк"],["terrace","☀️ Терраса"],["none","🏛 Не важно"]]}/>},
     {title:"Что обязательно должно быть?",sub:"Живая группа, церемония на закате, сигарная зона...",body:(
       <textarea style={{...S.input,minHeight:110,resize:"vertical",fontSize:14,marginTop:8}} placeholder={"Например:\n— Живая группа\n— Бар с коктейлями\n— Церемония на закате"} value={d.mustHave} onChange={e=>set("mustHave",e.target.value)}/>
     )},
@@ -542,6 +566,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
           {editingBudget?(
             <input type="number" autoFocus style={{...S.input,textAlign:"center",fontWeight:700,fontSize:16,color:C.brown,padding:"4px 8px"}}
               value={budgetInput} onChange={e=>setBudgetInput(e.target.value)}
+              onFocus={e=>e.target.select()}
               onBlur={()=>applyNewBudget(budgetInput)}
               onKeyDown={e=>{ if(e.key==="Enter") applyNewBudget(budgetInput); if(e.key==="Escape") setEditingBudget(false); }} />
           ):(
@@ -628,6 +653,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
                     {editPlanId===c.id?(
                       <input type="number" autoFocus style={{...S.input,width:"100%",padding:"3px 7px",fontSize:13,textAlign:"right"}}
                         value={c.plan===0?"":c.plan} placeholder="0" onChange={e=>updatePlan(c.id,e.target.value)}
+                        onFocus={e=>e.target.select()}
                         onBlur={()=>setEditPlanId(null)} onKeyDown={e=>e.key==="Enter"&&setEditPlanId(null)}/>
                     ):(
                       <span style={{fontSize:13,color:C.brown,fontWeight:700,cursor:"text",borderBottom:`1px dashed ${C.taupe}`}} onClick={()=>setEditPlanId(c.id)}>
@@ -654,7 +680,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
                       <div key={item} style={{display:"flex",alignItems:"center",gap:10,padding:"5px 0",borderBottom:`1px solid ${C.sand}`}}>
                         <span style={{flex:1,fontSize:13}}>{item}</span>
                         <input type="number" style={{...S.input,width:130,padding:"4px 8px",fontSize:12,background:C.white}} placeholder="0"
-                          value={c.itemActuals[item]||""} onChange={e=>updateItemActual(c.id,item,e.target.value)}/>
+                          value={c.itemActuals[item]||""} onFocus={e=>e.target.select()} onChange={e=>updateItemActual(c.id,item,e.target.value)}/>
                         <span style={{fontSize:11,color:C.gray,flexShrink:0}}>₽</span>
                       </div>
                     )):<p style={{color:C.gray,fontSize:12,margin:0}}>Нет подстатей</p>}
@@ -786,10 +812,13 @@ function VendorsPage({ survey, initCat }) {
             <p style={{fontSize:13,color:C.gray,marginBottom:12}}>Подрядчик получит следующее ТЗ:</p>
             <div style={{background:C.lightGray,borderRadius:10,padding:14,fontSize:13,lineHeight:1.9,marginBottom:18}}>
               <b>Дата:</b> {survey?.date?new Date(survey.date).toLocaleDateString("ru"):survey?.season||"не указана"}<br/>
+              {survey?.altDates&&<><b>Альт. даты:</b> {survey.altDates}<br/></>}
               <b>Город:</b> {survey?.city||"—"}<br/>
               <b>Гостей:</b> {survey?.guests||"—"}<br/>
+              {survey?.outOfTown&&survey.outOfTown!=="Нет"&&<><b>Иногородние:</b> {survey.outOfTown}<br/></>}
               <b>Формат:</b> {FORMATS.find(f=>f.id===survey?.format)?.label||"—"}<br/>
               {survey?.concept?.feelings?.length>0&&<><b>Атмосфера:</b> {survey.concept.feelings.join(", ")}<br/></>}
+              {survey?.concept?.program?.length>0&&<><b>Программа:</b> {survey.concept.program.join(", ")}<br/></>}
               {survey?.concept?.dontWant?.length>0&&<><b>Не хотят:</b> {survey.concept.dontWant.join(", ")}<br/></>}
               {survey?.concept?.mustHave&&<><b>Обязательно:</b> {survey.concept.mustHave}<br/></>}
             </div>
