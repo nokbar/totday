@@ -206,9 +206,9 @@ function AuthPage({ onLogin }) {
 }
 
 // ─── SURVEY 1: QUICK ESTIMATE ─────────────────────────────────────────────────
-function Survey1Page({ onComplete }) {
+function Survey1Page({ onComplete, initial }) {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState({season:"",date:"",altDates:"",zags:"",city:"Москва",guests:"",outOfTown:"",format:"",budgetLabel:"",budget:0});
+  const [d, setD] = useState(()=>({season:"",date:"",altDates:"",zags:"",city:"Москва",guests:"",outOfTown:"",format:"",budgetLabel:"",budget:0, ...(initial||{})}));
   const set = (k,v) => setD(p=>({...p,[k]:v}));
 
   const STEPS = [
@@ -226,7 +226,7 @@ function Survey1Page({ onComplete }) {
           <div>
             <label style={S.label}>Точная дата (если известна)</label>
             <input type="date" style={{...S.input,maxWidth:220}} value={d.date} onChange={e=>set("date",e.target.value)} />
-            {d.date&&<p style={{fontSize:12,color:C.teal,marginTop:6}}>✓ Покажем только свободных подрядчиков</p>}
+            <p style={{fontSize:12,color:d.date?C.teal:"transparent",marginTop:6,minHeight:16}}>✓ Покажем только свободных подрядчиков</p>
           </div>
           <div>
             <label style={S.label}>Альтернативные даты (если гибко)</label>
@@ -379,9 +379,9 @@ function ScenariosPage({ survey, onChoose }) {
 }
 
 // ─── SURVEY 2: CONCEPT ───────────────────────────────────────────────────────
-function Survey2Page({ onComplete }) {
+function Survey2Page({ onComplete, initial }) {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState({personality:[],feelings:[],memory:"",priorities:[],dontWant:[],guestType:"",guestComfort:3,likedPhotos:[],decorLevel:"",decorZones:[],program:[],nature:[],mustHave:""});
+  const [d, setD] = useState(()=>({personality:[],feelings:[],memory:"",priorities:[],dontWant:[],guestType:"",guestComfort:3,likedPhotos:[],decorLevel:"",decorZones:[],program:[],nature:[],mustHave:"", ...(initial||{})}));
   const set = (k,v) => setD(p=>({...p,[k]:v}));
   const toggle = (k,v,max) => {
     const arr = d[k];
@@ -501,7 +501,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
   const guests = Number(survey?.guests)||80;
 
   const applyNewBudget = (raw) => {
-    const nb = Number(raw)||0;
+    const nb = Math.max(0,Number(raw)||0);
     setTotalBudget(nb);
     setBudgetInput(String(nb));
     setCats(prev => {
@@ -512,14 +512,14 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
     setEditingBudget(false);
   };
 
-  const updatePlan = (id,val) => setCats(prev=>prev.map(c=>c.id===id?{...c,plan:Number(val)||0}:c));
+  const updatePlan = (id,val) => setCats(prev=>prev.map(c=>c.id===id?{...c,plan:Math.max(0,Number(val)||0)}:c));
 
   const toggleExpand = (id) => setCats(prev=>prev.map(c=>c.id===id?{...c,expanded:!c.expanded}:c));
 
   const updateItemActual = (catId,item,val) => {
     setCats(prev=>prev.map(c=>{
       if (c.id!==catId) return c;
-      const ia = {...c.itemActuals,[item]:Number(val)||0};
+      const ia = {...c.itemActuals,[item]:Math.max(0,Number(val)||0)};
       return {...c,itemActuals:ia,actual:Object.values(ia).reduce((s,v)=>s+v,0)};
     }));
   };
@@ -564,7 +564,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
           <div style={{fontSize:18,marginBottom:4}}>💰</div>
           <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:4}}>Общий бюджет</div>
           {editingBudget?(
-            <input type="number" autoFocus style={{...S.input,textAlign:"center",fontWeight:700,fontSize:16,color:C.brown,padding:"4px 8px"}}
+            <input type="number" min="0" autoFocus style={{...S.input,textAlign:"center",fontWeight:700,fontSize:16,color:C.brown,padding:"4px 8px"}}
               value={budgetInput} onChange={e=>setBudgetInput(e.target.value)}
               onFocus={e=>e.target.select()}
               onBlur={()=>applyNewBudget(budgetInput)}
@@ -651,7 +651,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
                   {/* План — редактируемый */}
                   <div style={{textAlign:"right"}} onClick={e=>e.stopPropagation()}>
                     {editPlanId===c.id?(
-                      <input type="number" autoFocus style={{...S.input,width:"100%",padding:"3px 7px",fontSize:13,textAlign:"right"}}
+                      <input type="number" min="0" autoFocus style={{...S.input,width:"100%",padding:"3px 7px",fontSize:13,textAlign:"right"}}
                         value={c.plan===0?"":c.plan} placeholder="0" onChange={e=>updatePlan(c.id,e.target.value)}
                         onFocus={e=>e.target.select()}
                         onBlur={()=>setEditPlanId(null)} onKeyDown={e=>e.key==="Enter"&&setEditPlanId(null)}/>
@@ -679,7 +679,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
                     {c.items.length>0?c.items.map(item=>(
                       <div key={item} style={{display:"flex",alignItems:"center",gap:10,padding:"5px 0",borderBottom:`1px solid ${C.sand}`}}>
                         <span style={{flex:1,fontSize:13}}>{item}</span>
-                        <input type="number" style={{...S.input,width:130,padding:"4px 8px",fontSize:12,background:C.white}} placeholder="0"
+                        <input type="number" min="0" style={{...S.input,width:130,padding:"4px 8px",fontSize:12,background:C.white}} placeholder="0"
                           value={c.itemActuals[item]||""} onFocus={e=>e.target.select()} onChange={e=>updateItemActual(c.id,item,e.target.value)}/>
                         <span style={{fontSize:11,color:C.gray,flexShrink:0}}>₽</span>
                       </div>
@@ -1189,9 +1189,9 @@ export default function App() {
       </nav>
 
       {tab==="dashboard" && <Dashboard user={user} survey={fullSurvey} cats={cats} guests={guests} onNav={setTab}/>}
-      {tab==="survey1"   && <Survey1Page onComplete={handleSurvey1Complete}/>}
+      {tab==="survey1"   && <Survey1Page onComplete={handleSurvey1Complete} initial={survey}/>}
       {tab==="scenarios" && survey && <ScenariosPage survey={survey} onChoose={handleScenarioChosen}/>}
-      {tab==="survey2"   && <Survey2Page onComplete={handleConcept}/>}
+      {tab==="survey2"   && <Survey2Page onComplete={handleConcept} initial={concept}/>}
       {tab==="budget"    && <BudgetPage survey={fullSurvey||{city:"Москва",guests:80,budget:1500000,format:"medium"}} cats={cats} setCats={setCats} onGoToVendors={goVendors}/>}
       {tab==="vendors"   && <VendorsPage survey={fullSurvey} initCat={vendorCat}/>}
       {tab==="guests"    && <GuestsPage slug={makeSlug(user)} guests={guests} setGuests={setGuests}/>}
