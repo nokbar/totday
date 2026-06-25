@@ -1,38 +1,50 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Fragment } from "react";
 
-// ─── THEME ───────────────────────────────────────────────────────────────────
+// ─── DESIGN SYSTEM · Quiet Luxury ────────────────────────────────────────────
+// champagne / ivory / warm white / graphite / soft gold
 const C = {
-  bg:"#F9F5F0", white:"#FFFFFF", sand:"#EDE4D8", taupe:"#B8997A",
-  brown:"#7A5C3E", dark:"#2E1F12", teal:"#3D8C82", tealLight:"#6FB8AF",
-  tealBg:"#EAF4F3", rose:"#C4705A", roseBg:"#FAF0EE", gold:"#C9A84C",
-  gray:"#9A8C82", lightGray:"#F2EDE8",
+  // базовые поверхности
+  bg:"#FBFAF7", white:"#FFFFFF", sand:"#F4F0E8", lightGray:"#F8F4EC",
+  champ:"#EFE7D6", champ2:"#F8F2E6",
+  // текст / графит
+  dark:"#1C1B19", brown:"#1C1B19", ink2:"#46413A", gray:"#807A70", taupe:"#A99B82",
+  // линии
+  line:"#E9E3D7",
+  // золото (акцент)
+  gold:"#B89B5E", goldSoft:"#D9C9A3", goldBg:"#F6F0E2",
+  // success (зелёный) — сохраняем ключи teal*
+  teal:"#5C8A6E", tealLight:"#86AE95", tealBg:"#EAF1EC",
+  // alert (терракота) — сохраняем ключи rose*
+  rose:"#BD6B52", roseBg:"#F8EDE8",
 };
-const font = "'Playfair Display', serif";
-const fb = "'Lato', sans-serif";
+const font = "'Fraunces', serif";
+const fb = "'Geist', system-ui, sans-serif";
+const SHADOW = "0 1px 2px rgba(40,33,20,.04),0 12px 32px -16px rgba(40,33,20,.16)";
+const SHADOW_HOVER = "0 1px 2px rgba(40,33,20,.05),0 24px 48px -20px rgba(40,33,20,.26)";
 
 const S = {
   app:   { fontFamily:fb, background:C.bg, minHeight:"100vh", color:C.dark },
-  nav:   { background:C.white, borderBottom:`1px solid ${C.sand}`, padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", height:58, position:"sticky", top:0, zIndex:200, boxShadow:"0 2px 12px rgba(46,31,18,0.07)" },
-  logo:  { fontFamily:font, fontSize:19, color:C.brown, letterSpacing:"0.1em", display:"flex", alignItems:"center", gap:8 },
-  page:  { maxWidth:1080, margin:"0 auto", padding:"32px 20px" },
-  card:  { background:C.white, borderRadius:14, padding:24, border:`1px solid ${C.sand}`, boxShadow:"0 2px 12px rgba(46,31,18,0.05)" },
-  h1:    { fontFamily:font, fontSize:30, color:C.brown, fontWeight:700, marginBottom:6 },
-  h2:    { fontFamily:font, fontSize:20, color:C.brown, fontWeight:600, marginBottom:14 },
-  h3:    { fontFamily:font, fontSize:15, color:C.brown, fontWeight:600, marginBottom:10 },
-  sub:   { fontSize:13, color:C.gray, marginBottom:24, lineHeight:1.6 },
-  label: { fontSize:11, letterSpacing:"0.1em", color:C.brown, textTransform:"uppercase", fontWeight:700, display:"block", marginBottom:5 },
-  input: { width:"100%", padding:"10px 13px", borderRadius:9, border:`1.5px solid ${C.sand}`, background:C.bg, fontSize:14, fontFamily:fb, color:C.dark, outline:"none", boxSizing:"border-box" },
-  select:{ width:"100%", padding:"10px 13px", borderRadius:9, border:`1.5px solid ${C.sand}`, background:C.bg, fontSize:14, fontFamily:fb, color:C.dark, outline:"none", boxSizing:"border-box" },
-  btn:   { padding:"10px 22px", borderRadius:28, border:"none", background:C.teal, color:C.white, cursor:"pointer", fontSize:13, fontFamily:fb, fontWeight:700, letterSpacing:"0.05em" },
-  btnO:  { padding:"9px 20px", borderRadius:28, border:`1.5px solid ${C.taupe}`, background:"transparent", color:C.brown, cursor:"pointer", fontSize:13, fontFamily:fb, fontWeight:600 },
-  btnR:  { padding:"10px 22px", borderRadius:28, border:"none", background:C.rose, color:C.white, cursor:"pointer", fontSize:13, fontFamily:fb, fontWeight:700 },
-  btnSm: { padding:"5px 12px", borderRadius:20, border:`1px solid ${C.sand}`, background:C.white, color:C.gray, cursor:"pointer", fontSize:11, fontFamily:fb, fontWeight:600 },
-  chip:  (on) => ({ padding:"8px 16px", borderRadius:28, cursor:"pointer", fontSize:13, fontFamily:fb, border:`1.5px solid ${on?C.teal:C.sand}`, background:on?C.tealBg:C.white, color:on?C.teal:C.gray, fontWeight:on?700:400, transition:"all 0.13s", display:"inline-flex", alignItems:"center", gap:6 }),
-  chipR: (on) => ({ padding:"8px 16px", borderRadius:28, cursor:"pointer", fontSize:13, fontFamily:fb, border:`1.5px solid ${on?C.rose:C.sand}`, background:on?C.roseBg:C.white, color:on?C.rose:C.gray, fontWeight:on?700:400 }),
-  badge: (c) => ({ display:"inline-block", padding:"2px 9px", borderRadius:18, fontSize:11, fontWeight:700, background:c==="g"?C.tealBg:c==="r"?C.roseBg:C.lightGray, color:c==="g"?C.teal:c==="r"?C.rose:C.gray }),
-  bar:   { height:6, borderRadius:3, background:C.sand, overflow:"hidden" },
-  fill:  (p,over) => ({ height:"100%", width:`${Math.min(Math.max(p,0),100)}%`, borderRadius:3, background:over?C.rose:`linear-gradient(90deg,${C.teal},${C.tealLight})`, transition:"width 0.4s" }),
-  tab:   (on) => ({ padding:"7px 16px", borderRadius:28, border:"none", cursor:"pointer", background:on?C.teal:"transparent", color:on?C.white:C.gray, fontSize:13, fontFamily:fb, fontWeight:on?700:400 }),
+  nav:   { background:"rgba(251,250,247,.72)", backdropFilter:"blur(16px) saturate(1.4)", WebkitBackdropFilter:"blur(16px) saturate(1.4)", borderBottom:`1px solid ${C.line}`, padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", height:66, position:"sticky", top:0, zIndex:200 },
+  logo:  { fontFamily:font, fontSize:23, color:C.dark, fontWeight:500, letterSpacing:"-0.01em", display:"flex", alignItems:"center", gap:8 },
+  page:  { maxWidth:1120, margin:"0 auto", padding:"40px 28px" },
+  card:  { background:C.white, borderRadius:20, padding:24, border:`1px solid ${C.line}`, boxShadow:SHADOW },
+  h1:    { fontFamily:font, fontSize:34, color:C.dark, fontWeight:400, letterSpacing:"-0.02em", marginBottom:6 },
+  h2:    { fontFamily:font, fontSize:22, color:C.dark, fontWeight:500, letterSpacing:"-0.01em", marginBottom:14 },
+  h3:    { fontFamily:font, fontSize:16, color:C.dark, fontWeight:500, marginBottom:10 },
+  sub:   { fontSize:14, color:C.gray, marginBottom:24, lineHeight:1.6 },
+  label: { fontSize:11, letterSpacing:"0.1em", color:C.gray, textTransform:"uppercase", fontWeight:600, display:"block", marginBottom:6 },
+  input: { width:"100%", padding:"11px 14px", borderRadius:12, border:`1.5px solid ${C.line}`, background:C.bg, fontSize:14, fontFamily:fb, color:C.dark, outline:"none", boxSizing:"border-box", transition:"border-color .2s,box-shadow .2s" },
+  select:{ width:"100%", padding:"11px 14px", borderRadius:12, border:`1.5px solid ${C.line}`, background:C.bg, fontSize:14, fontFamily:fb, color:C.dark, outline:"none", boxSizing:"border-box" },
+  btn:   { padding:"12px 24px", borderRadius:100, border:"none", background:C.dark, color:C.bg, cursor:"pointer", fontSize:13.5, fontFamily:fb, fontWeight:600, letterSpacing:"0.01em", transition:"transform .2s,box-shadow .2s" },
+  btnO:  { padding:"11px 22px", borderRadius:100, border:`1px solid ${C.line}`, background:"transparent", color:C.dark, cursor:"pointer", fontSize:13.5, fontFamily:fb, fontWeight:600, transition:"border-color .2s,color .2s" },
+  btnR:  { padding:"12px 24px", borderRadius:100, border:"none", background:C.rose, color:C.white, cursor:"pointer", fontSize:13.5, fontFamily:fb, fontWeight:600 },
+  btnSm: { padding:"6px 13px", borderRadius:100, border:`1px solid ${C.line}`, background:C.white, color:C.gray, cursor:"pointer", fontSize:11.5, fontFamily:fb, fontWeight:600, transition:"all .2s" },
+  chip:  (on) => ({ padding:"9px 17px", borderRadius:100, cursor:"pointer", fontSize:13, fontFamily:fb, border:`1.5px solid ${on?C.gold:C.line}`, background:on?C.goldBg:C.white, color:on?C.dark:C.gray, fontWeight:on?600:400, transition:"all .18s", display:"inline-flex", alignItems:"center", gap:6 }),
+  chipR: (on) => ({ padding:"9px 17px", borderRadius:100, cursor:"pointer", fontSize:13, fontFamily:fb, border:`1.5px solid ${on?C.rose:C.line}`, background:on?C.roseBg:C.white, color:on?C.rose:C.gray, fontWeight:on?600:400, transition:"all .18s" }),
+  badge: (c) => ({ display:"inline-block", padding:"3px 10px", borderRadius:7, fontSize:11, fontWeight:600, background:c==="g"?C.tealBg:c==="r"?C.roseBg:c==="gold"?C.goldBg:C.sand, color:c==="g"?C.teal:c==="r"?C.rose:c==="gold"?C.gold:C.gray }),
+  bar:   { height:5, borderRadius:3, background:C.sand, overflow:"hidden" },
+  fill:  (p,over) => ({ height:"100%", width:`${Math.min(Math.max(p,0),100)}%`, borderRadius:3, background:over?C.rose:`linear-gradient(90deg,${C.gold},${C.goldSoft})`, transition:"width 1s cubic-bezier(.2,.7,.2,1)" }),
+  tab:   (on) => ({ padding:"8px 16px", borderRadius:10, border:"none", cursor:"pointer", background:on?C.sand:"transparent", color:on?C.dark:C.gray, fontSize:13.5, fontFamily:fb, fontWeight:on?600:500, transition:"all .18s" }),
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -67,23 +79,61 @@ const BUDGET_OPTIONS = [
 ];
 
 // Коэффициент города (относительно Москвы)
+// ─── ЦЕНОВАЯ МОДЕЛЬ (рынок Москвы 2025–2026, по данным исследования) ──────────
+// Источники: WedWed, gorko.ru, Профи.ру, wedding-magazine, vc.ru
 const CITY_MULT = {"Москва":1.0,"Санкт-Петербург":0.85,"Сочи":0.9,"Казань":0.7,"Екатеринбург":0.72,"Другой город":0.65};
-
-// Базовые расценки (Москва, 1 гость)
-const BASE_PER_GUEST = {"basic":2200,"comfort":3800,"premium":7000};
+const FORMAT_MULT = {restaurant:1.0, loft:1.1, outdoor:1.15, destination:1.4, intimate:0.85};
+// Банкет на гостя, ₽ (еда+напитки, без сервисного сбора). Бюджет 3500–4000 · Средний 4500–5500 · Премиум 9000+
+const CATERING_PER_GUEST = {basic:4000, comfort:5500, premium:9000};
+const SERVICE_FEE = 0.12; // сервисный сбор 10–15%
+// Подрядчики: реальные диапазоны по Москве, ₽ (basic/comfort/premium)
+const VENDOR_PRICES = {
+  venue:    {basic:70000, comfort:120000,premium:250000},
+  photo:    {basic:35000, comfort:50000, premium:90000},
+  video:    {basic:35000, comfort:50000, premium:90000},
+  host:     {basic:40000, comfort:70000, premium:150000},
+  decor:    {basic:80000, comfort:180000,premium:400000},
+  dj:       {basic:35000, comfort:60000, premium:150000},
+  makeup:   {basic:12000, comfort:20000, premium:35000},
+  cake:     {basic:12000, comfort:20000, premium:40000},
+  dress:    {basic:40000, comfort:90000, premium:200000},
+  suit:     {basic:20000, comfort:40000, premium:80000},
+  rings:    {basic:30000, comfort:70000, premium:200000},
+  ceremony: {basic:25000, comfort:45000, premium:80000},
+  transport:{basic:12000, comfort:25000, premium:50000},
+  hotel:    {basic:15000, comfort:40000, premium:100000},
+  invites:  {basic:8000,  comfort:20000, premium:50000},
+  honeymoon:{basic:150000,comfort:300000,premium:700000},
+};
+// Полный расчёт сметы по тиру → {items по категориям, total}
+function calcEstimate(guests, city, format, tier) {
+  const g = Number(guests)||50;
+  const cm = CITY_MULT[city] ?? 0.8;
+  const fm = FORMAT_MULT[format] ?? 1.0;
+  const items = {};
+  items.catering = Math.round(g * CATERING_PER_GUEST[tier] * (1+SERVICE_FEE) * cm);
+  for (const [k,p] of Object.entries(VENDOR_PRICES)) {
+    const fmMult = k==="venue" ? fm : 1;
+    items[k] = Math.round(p[tier] * cm * fmMult);
+  }
+  const sub = Object.values(items).reduce((s,v)=>s+v,0);
+  items.other = Math.round(sub*0.07); // резерв 7%
+  const total = sub + items.other;
+  return {items, total};
+}
 
 const DEFAULT_CATS = [
-  {id:"venue",    name:"Площадка",              icon:"🏛", pct:0.19, market:"100 000 – 500 000 ₽",   rec:"Бронируйте за 9–12 мес.", items:["Аренда зала","Аренда мебели","Инвентарь","Уборка"]},
-  {id:"catering", name:"Кейтеринг и напитки",   icon:"🍽", pct:0.21, market:"2 500 – 6 000 ₽/гость",  rec:"~3 500 ₽/гость оптимально",items:["Банкетное меню","Алкоголь","Фуршет","Детское меню","Персонал"]},
-  {id:"photo",    name:"Фотограф",              icon:"📷", pct:0.08, market:"50 000 – 200 000 ₽",    rec:"Не экономьте — снимки на всю жизнь",items:["Фотосъёмка дня","Love story","Обработка и альбом","2-й фотограф"]},
-  {id:"video",    name:"Видеограф",             icon:"🎬", pct:0.05, market:"40 000 – 150 000 ₽",    rec:"Пакет с фото — дешевле",  items:["Видеосъёмка","Монтаж","Аэросъёмка","SDE-ролик"]},
-  {id:"decor",    name:"Декор и флористика",    icon:"💐", pct:0.10, market:"80 000 – 400 000 ₽",    rec:"Сезонные цветы выгоднее", items:["Арка / зона церемонии","Столовые композиции","Букет невесты","Аренда декора"]},
-  {id:"host",     name:"Ведущий",               icon:"🎤", pct:0.05, market:"30 000 – 120 000 ₽",    rec:"Встретьтесь лично до найма",items:["Услуги ведущего","Сценарий","Конкурсы"]},
+  {id:"venue",    name:"Площадка",              icon:"🏛", pct:0.19, market:"70 000 – 250 000 ₽", rec:"Бронируйте за 9–12 мес.", items:["Аренда зала","Аренда мебели","Инвентарь","Уборка"]},
+  {id:"catering", name:"Кейтеринг и напитки",   icon:"🍽", pct:0.21, market:"4 000 – 9 000 ₽/гость", rec:"+12% сервисный сбор",items:["Банкетное меню","Алкоголь","Фуршет","Детское меню","Персонал"]},
+  {id:"photo",    name:"Фотограф",              icon:"📷", pct:0.08, market:"35 000 – 90 000 ₽", rec:"Не экономьте — снимки навсегда",items:["Фотосъёмка дня","Love story","Обработка и альбом","2-й фотограф"]},
+  {id:"video",    name:"Видеограф",             icon:"🎬", pct:0.05, market:"35 000 – 90 000 ₽", rec:"Пакет с фото — дешевле",  items:["Видеосъёмка","Монтаж","Аэросъёмка","SDE-ролик"]},
+  {id:"decor",    name:"Декор и флористика",    icon:"💐", pct:0.10, market:"80 000 – 400 000 ₽", rec:"от 2 000 ₽/гость минимум", items:["Арка / зона церемонии","Столовые композиции","Букет невесты","Аренда декора"]},
+  {id:"host",     name:"Ведущий",               icon:"🎤", pct:0.05, market:"40 000 – 150 000 ₽", rec:"Звёздные — от 350 000 ₽",items:["Услуги ведущего","Сценарий","Конкурсы"]},
   {id:"dj",       name:"DJ / Музыканты",        icon:"🎵", pct:0.03, market:"25 000 – 100 000 ₽",    rec:"Живая музыка на церемонию",items:["DJ-сет","Звуковое оборудование","Живая музыка","Музыка на церемонию"]},
   {id:"cake",     name:"Торт и десерты",        icon:"🎂", pct:0.02, market:"150 – 400 ₽/порция",    rec:"~200 ₽/порция — хороший торт",items:["Свадебный торт","Кенди-бар","Капкейки"]},
   {id:"dress",    name:"Образ невесты",         icon:"👗", pct:0.05, market:"30 000 – 300 000 ₽",    rec:"Учтите примерки и подгонку",items:["Платье","Аксессуары и фата","Туфли","Подгонка"]},
   {id:"suit",     name:"Образ жениха",          icon:"🤵", pct:0.02, market:"15 000 – 100 000 ₽",    rec:"Аренда смокинга дешевле",  items:["Костюм / смокинг","Рубашка, галстук","Туфли"]},
-  {id:"makeup",   name:"Визажист и стилист",    icon:"💄", pct:0.02, market:"15 000 – 60 000 ₽",     rec:"Репетиция образа обязательна",items:["Макияж невесты","Причёска","Репетиция","Макияж подружек"]},
+  {id:"makeup",   name:"Визажист и стилист",    icon:"💄", pct:0.02, market:"12 000 – 35 000 ₽", rec:"Репетиция образа обязательна",items:["Макияж невесты","Причёска","Репетиция","Макияж подружек"]},
   {id:"rings",    name:"Кольца",                icon:"💍", pct:0.05, market:"30 000 – 500 000 ₽",    rec:"Бюджет = 1–2 зарплаты",   items:["Обручальные кольца","Гравировка","Упаковка"]},
   {id:"ceremony", name:"Церемония",             icon:"💒", pct:0.02, market:"20 000 – 80 000 ₽",     rec:"Выездная регистрация +30% эмоций",items:["Выездная регистрация","Распорядитель","Оформление"]},
   {id:"transport",name:"Транспорт",             icon:"🚗", pct:0.02, market:"10 000 – 50 000 ₽",     rec:"Трансфер для гостей снижает no-show",items:["Авто молодожёнов","Трансфер гостей","Украшение авто"]},
@@ -92,8 +142,6 @@ const DEFAULT_CATS = [
   {id:"honeymoon",name:"Медовый месяц",         icon:"✈️", pct:0.05, market:"от 100 000 ₽",          rec:"Бронируйте сразу — дешевле",items:["Авиабилеты","Отель","Экскурсии"]},
   {id:"other",    name:"Прочее / резерв",       icon:"✨", pct:0.03, market:"по факту",               rec:"Оставьте 5–10% бюджета",  items:["Непредвиденные расходы","Чаевые персоналу"]},
 ];
-const PCT_TOTAL = DEFAULT_CATS.reduce((s,c)=>s+c.pct,0);
-DEFAULT_CATS.forEach(c=>{ c.pct = c.pct/PCT_TOTAL; });
 
 const VENDORS = [
   {id:1,cat:"venue",   name:"Loft Riverside",  city:"Москва",priceFrom:150000,rating:4.9,reviews:87, tags:["Панорамный вид","до 200 гостей"],desc:"Стильный лофт на берегу Москвы-реки",busy:["2025-08-16"]},
@@ -128,84 +176,258 @@ const WEDDING_PHOTOS = [
   {id:11,emoji:"🎸",label:"Живая музыка"},{id:12,emoji:"🏡",label:"На природе"},
 ];
 
-// ─── SCENARIO CALCULATOR ─────────────────────────────────────────────────────
+// ─── SCENARIO CALCULATOR (на реальной ценовой модели) ────────────────────────
 function calcScenarios(survey) {
   const guests = Number(survey.guests) || 50;
-  const cityMult = CITY_MULT[survey.city] || 0.8;
-  const fmt_ = survey.format || "medium";
-  const formatMult = FORMATS.find(f=>f.id===fmt_)?.mult || 1;
-  const userBudget = survey.budget || 0;
-
-  const scenarios = ["basic","comfort","premium"].map(tier => {
-    const base = Math.round(guests * BASE_PER_GUEST[tier] * cityMult * formatMult);
-    const total = userBudget > 0 ? Math.round((base + userBudget) / 2) : base;
+  const meta = {
+    basic:   {label:"Базовый", icon:"🌿", color:C.teal,
+      bullets:["Банкетный зал или шатёр","Стандартное меню и напитки","1 фотограф","Базовый декор","DJ и звук"]},
+    comfort: {label:"Комфорт", icon:"✨", color:C.gold,
+      bullets:["Площадка с атмосферой","Авторское меню + алкоголь","Фотограф + видеограф","Полный декор и флористика","Ведущий + DJ"]},
+    premium: {label:"Премиум", icon:"🏆", color:C.rose,
+      bullets:["Топовая площадка","Premium-меню и open bar","2 фотографа + видео + аэро","Дизайнерский декор","Шоу-программа, живая музыка"]},
+  };
+  return ["basic","comfort","premium"].map(tier => {
+    const {total} = calcEstimate(guests, survey.city, survey.format, tier);
     return {
-      tier,
-      label: tier==="basic"?"Базовый":tier==="comfort"?"Комфорт":"Премиум",
-      icon: tier==="basic"?"🌿":tier==="comfort"?"✨":"🏆",
-      color: tier==="basic"?C.teal:tier==="comfort"?C.gold:C.rose,
-      total: tier==="basic"?Math.round(total*0.75):tier==="comfort"?total:Math.round(total*1.6),
-      perGuest: Math.round((tier==="basic"?total*0.75:tier==="comfort"?total:total*1.6)/guests),
-      bullets: tier==="basic"
-        ? ["Банкетный зал или шатёр","Стандартный кейтеринг","1 фотограф","Базовый декор","DJ"]
-        : tier==="comfort"
-        ? ["Площадка с атмосферой","Авторское меню и алкоголь","Фотограф + видеограф","Полный декор и флористика","Ведущий + DJ"]
-        : ["Топовая площадка","Premium меню и open bar","2 фотографа + видео + аэро","Дизайнерский декор","Шоу-программа и живая музыка"],
+      tier, ...meta[tier],
+      total,
+      perGuest: Math.round(total/guests),
     };
   });
-  return scenarios;
 }
 
-function makeCatsFromBudget(totalBudget) {
-  return DEFAULT_CATS.map(c => ({
-    ...c,
-    plan: Math.round(totalBudget * c.pct),
-    actual: 0,
-    expanded: false,
-    itemActuals: Object.fromEntries(c.items.map(item=>[item,0])),
-  }));
+// Раскладка сметы по реальным ценам категорий, точно равная бюджету.
+// survey даёт guests/city/format/tier; budget — выбранная сумма (может отличаться от тира).
+function makeCatsFromBudget(totalBudget, survey, tier) {
+  const t = tier || survey?.chosenScenario || "comfort";
+  const {items, total: estTotal} = calcEstimate(survey?.guests||50, survey?.city||"Москва", survey?.format||"restaurant", t);
+  // масштабируем реальную раскладку под фактический бюджет
+  const scale = estTotal>0 ? totalBudget/estTotal : 1;
+  let running = 0;
+  const cats = DEFAULT_CATS.map((c,i) => {
+    let plan;
+    if (i === DEFAULT_CATS.length-1) {
+      plan = Math.max(0, totalBudget - running); // последняя категория = точный остаток
+    } else {
+      plan = Math.round((items[c.id]||0) * scale);
+      running += plan;
+    }
+    return {
+      ...c, plan, avans:0, actual:0, expanded:false,
+      itemActuals: Object.fromEntries(c.items.map(item=>[item,0])),
+    };
+  });
+  return cats;
 }
 
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
-function AuthPage({ onLogin }) {
-  const [mode, setMode] = useState("login");
+function AuthPage({ onLogin, prefill, onBack, agency }) {
+  const [mode, setMode] = useState((prefill||agency) ? "register" : "login");
   const [f, setF] = useState({email:"",pass:"",name1:"",name2:""});
   const upd = k => e => setF(p=>({...p,[k]:e.target.value}));
   return (
-    <div style={{minHeight:"100vh",background:`linear-gradient(135deg,${C.sand},${C.bg} 55%,${C.tealBg})`,display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
+    <div style={{minHeight:"100vh",background:`linear-gradient(135deg,${C.champ2},${C.bg} 55%,${C.champ})`,display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
       <div style={{...S.card,maxWidth:400,width:"100%"}}>
         <div style={{textAlign:"center",marginBottom:24}}>
-          <div style={{fontSize:40,marginBottom:8}}>🕊</div>
-          <h1 style={{fontFamily:font,fontSize:24,color:C.brown,margin:0}}>TotDay</h1>
-          <p style={{color:C.gray,fontSize:13,marginTop:4}}>Планируйте свадьбу мечты</p>
+          <h1 style={{fontFamily:font,fontSize:34,color:C.dark,margin:0,fontWeight:400,letterSpacing:"-0.02em"}}>Tot<span style={{color:C.gold}}>Day</span>{agency&&<span style={{fontFamily:fb,fontSize:11,fontWeight:600,color:C.gold,background:C.goldBg,padding:"2px 8px",borderRadius:6,marginLeft:8,verticalAlign:"middle"}}>AGENCY</span>}</h1>
+          <p style={{color:C.gray,fontSize:14,marginTop:8}}>{agency?"Кабинет для свадебного агентства":prefill?"Почти готово — создайте аккаунт, чтобы сохранить":"Свадьба, которой легко управлять"}</p>
         </div>
-        <div style={{display:"flex",gap:6,marginBottom:20,background:C.lightGray,borderRadius:28,padding:4}}>
+        {prefill && !agency && (
+          <div style={{background:C.goldBg,borderRadius:12,padding:"10px 14px",marginBottom:18,fontSize:13,color:C.ink2,textAlign:"center"}}>
+            ✓ {prefill.city} · {prefill.guests} гостей · смета готова
+          </div>
+        )}
+        <div style={{display:"flex",gap:6,marginBottom:20,background:C.sand,borderRadius:12,padding:4}}>
           {[["login","Войти"],["register","Регистрация"]].map(([m,l])=>(
-            <button key={m} onClick={()=>setMode(m)} style={{...S.tab(mode===m),flex:1,borderRadius:24}}>{l}</button>
+            <button key={m} onClick={()=>setMode(m)} style={{...S.tab(mode===m),flex:1}}>{l}</button>
           ))}
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:13}}>
-          {mode==="register" && (
+          {mode==="register" && !agency && (
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               <div><label style={S.label}>Невеста</label><input style={S.input} placeholder="Соня" value={f.name1} onChange={upd("name1")} /></div>
               <div><label style={S.label}>Жених</label><input style={S.input} placeholder="Никита" value={f.name2} onChange={upd("name2")} /></div>
             </div>
           )}
+          {mode==="register" && agency && (
+            <div><label style={S.label}>Название агентства</label><input style={S.input} placeholder="Wedding Studio" value={f.name1} onChange={upd("name1")} /></div>
+          )}
           <div><label style={S.label}>Email</label><input style={S.input} type="email" value={f.email} onChange={upd("email")} /></div>
           <div><label style={S.label}>Пароль</label><input style={S.input} type="password" value={f.pass} onChange={upd("pass")} /></div>
-          <button style={{...S.btn,width:"100%",padding:13}} onClick={()=>onLogin({email:f.email,name1:f.name1||"Невеста",name2:f.name2||"Жених"})}>
+          <button style={{...S.btn,width:"100%",padding:13}} onClick={()=>onLogin({email:f.email,name1:f.name1||(agency?"Агентство":"Невеста"),name2:f.name2||"Жених"})}>
             {mode==="login"?"Войти →":"Создать аккаунт →"}
           </button>
-          <button style={{background:"none",border:"none",color:C.gray,fontSize:12,cursor:"pointer",textDecoration:"underline"}} onClick={()=>onLogin({email:"demo@totday.app",name1:"Соня",name2:"Никита"})}>
+          <button style={{background:"none",border:"none",color:C.gray,fontSize:12,cursor:"pointer",textDecoration:"underline"}} onClick={()=>onLogin({email:"demo@totday.app",name1:agency?"Студия":"Соня",name2:"Никита"})}>
             Войти как демо
           </button>
+          {onBack && <button style={{background:"none",border:"none",color:C.gray,fontSize:12,cursor:"pointer"}} onClick={onBack}>← На главную</button>}
         </div>
       </div>
     </div>
   );
 }
 
-// ─── SURVEY 1: QUICK ESTIMATE ─────────────────────────────────────────────────
+// ─── LANDING ──────────────────────────────────────────────────────────────────
+function LandingPage({ onStart, onLogin, onAgency }) {
+  const features = [
+    {t:"Умная смета", d:"Расчёт на реальных ценах рынка 2026. План, аванс, остаток к доплате — как у профессионального агентства."},
+    {t:"Гости и рассадка", d:"Список с RSVP, трансфером, проживанием, столами и заметками ведущему. Всё под рукой."},
+    {t:"Тайминг дня", d:"Расписание «за день до» и по часам. Раздайте подрядчикам и координатору одним файлом."},
+    {t:"Подрядчики", d:"Каталог проверенных специалистов. Отправьте им готовое ТЗ прямо из вашей сметы."},
+    {t:"Сайт-приглашение", d:"Красивая страница для гостей со сбором ответов. Личная ссылка totday.app/вы."},
+    {t:"Таймер до свадьбы", d:"Обратный отсчёт и чек-лист, который сам отмечает выполненное. Спокойствие вместо хаоса."},
+  ];
+  const steps = [
+    {n:"01",t:"Расскажите о свадьбе",d:"Пара вопросов — дата, город, гости, бюджет."},
+    {n:"02",t:"Получите смету и план",d:"Готовый бюджет и рекомендации под ваши вводные."},
+    {n:"03",t:"Управляйте всем в одном месте",d:"Гости, подрядчики, тайминг, сайт — без таблиц."},
+  ];
+  return (
+    <div style={{background:C.bg,minHeight:"100vh",color:C.dark,fontFamily:fb}}>
+      <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+      <style>{`
+        *{-webkit-font-smoothing:antialiased}
+        button{transition:transform .2s,box-shadow .2s,border-color .2s,color .2s}
+        button:active{transform:scale(.97)}
+        @keyframes lf{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+        .lf{animation:lf .7s cubic-bezier(.2,.7,.2,1) both}
+        .lf2{animation:lf .7s .1s cubic-bezier(.2,.7,.2,1) both}
+        .lf3{animation:lf .7s .2s cubic-bezier(.2,.7,.2,1) both}
+        .lcard{transition:transform .25s,box-shadow .25s}
+        .lcard:hover{transform:translateY(-4px);box-shadow:${SHADOW_HOVER}}
+        ::selection{background:${C.goldBg}}
+      `}</style>
+
+      {/* NAV */}
+      <nav style={{...S.nav,maxWidth:"none"}}>
+        <div style={{maxWidth:1120,margin:"0 auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <div style={S.logo}>Tot<span style={{color:C.gold}}>Day</span></div>
+          <div style={{display:"flex",gap:10,alignItems:"center"}}>
+            <button style={{background:"none",border:"none",color:C.gray,fontSize:13.5,fontWeight:500,cursor:"pointer"}} onClick={onAgency}>Для агентств</button>
+            <button style={S.btnO} onClick={onLogin}>Личный кабинет</button>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section style={{maxWidth:1120,margin:"0 auto",padding:"88px 28px 56px",textAlign:"center",position:"relative"}}>
+        <div style={{position:"absolute",top:"-5%",left:"50%",transform:"translateX(-50%)",width:760,height:440,maxWidth:"120%",background:`radial-gradient(ellipse at center,${C.goldBg},transparent 70%)`,filter:"blur(10px)",zIndex:0}}/>
+        <div style={{position:"relative",zIndex:1}}>
+          <div className="lf" style={{display:"inline-flex",alignItems:"center",gap:8,fontSize:12.5,fontWeight:600,letterSpacing:"0.14em",textTransform:"uppercase",color:C.gold,marginBottom:24}}>Планирование свадьбы</div>
+          <h1 className="lf2" style={{fontFamily:font,fontWeight:400,fontSize:"clamp(40px,7vw,72px)",lineHeight:1.02,letterSpacing:"-0.025em",margin:"0 0 22px"}}>Ваша свадьба —<br/><span style={{fontStyle:"italic",color:C.gold}}>понятная и управляемая</span></h1>
+          <p className="lf2" style={{maxWidth:560,margin:"0 auto 36px",fontSize:17,color:C.ink2,lineHeight:1.6}}>Смета на реальных ценах, гости, подрядчики, тайминг и сайт-приглашение. Всё в одном спокойном месте — без бесконечных таблиц и хаоса.</p>
+          <div className="lf3" style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+            <button style={{...S.btn,padding:"15px 36px",fontSize:15}} onClick={onStart}>Начать планирование →</button>
+            <button style={{...S.btnO,padding:"15px 30px",fontSize:15}} onClick={onLogin}>У меня уже есть аккаунт</button>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section style={{maxWidth:1120,margin:"0 auto",padding:"32px 28px"}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20}}>
+          {steps.map(s=>(
+            <div key={s.n} style={{padding:"4px 8px"}}>
+              <div style={{fontFamily:font,fontSize:34,color:C.goldSoft,fontWeight:400}}>{s.n}</div>
+              <div style={{fontFamily:font,fontSize:20,fontWeight:500,margin:"6px 0 6px"}}>{s.t}</div>
+              <div style={{fontSize:14,color:C.gray,lineHeight:1.55}}>{s.d}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section style={{maxWidth:1120,margin:"0 auto",padding:"56px 28px"}}>
+        <div style={{textAlign:"center",marginBottom:36}}>
+          <h2 style={{fontFamily:font,fontSize:"clamp(26px,4vw,36px)",fontWeight:400,letterSpacing:"-0.02em"}}>Всё, что нужно для свадьбы</h2>
+          <p style={{color:C.gray,fontSize:15,marginTop:8}}>Инструменты уровня свадебного агентства — в ваших руках</p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:18}}>
+          {features.map(f=>(
+            <div key={f.t} className="lcard" style={{...S.card}}>
+              <div style={{fontFamily:font,fontSize:19,fontWeight:500,marginBottom:8}}>{f.t}</div>
+              <div style={{fontSize:14,color:C.gray,lineHeight:1.6}}>{f.d}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{maxWidth:1120,margin:"0 auto",padding:"40px 28px 88px"}}>
+        <div style={{background:`linear-gradient(135deg,${C.champ2},${C.white} 55%,${C.champ})`,border:`1px solid ${C.line}`,borderRadius:24,padding:"56px 32px",textAlign:"center",boxShadow:SHADOW}}>
+          <h2 style={{fontFamily:font,fontSize:"clamp(26px,4vw,38px)",fontWeight:400,letterSpacing:"-0.02em",marginBottom:14}}>Начнём планировать?</h2>
+          <p style={{color:C.ink2,fontSize:16,marginBottom:28,maxWidth:440,margin:"0 auto 28px"}}>Пара вопросов — и вы увидите смету своей свадьбы. Бесплатно.</p>
+          <button style={{...S.btn,padding:"15px 36px",fontSize:15}} onClick={onStart}>Начать →</button>
+        </div>
+      </section>
+
+      <footer style={{borderTop:`1px solid ${C.line}`,padding:"28px",textAlign:"center",color:C.gray,fontSize:13}}>
+        <div style={{...S.logo,justifyContent:"center",marginBottom:8}}>Tot<span style={{color:C.gold}}>Day</span></div>
+        © 2026 TotDay · Свадьба, которой легко управлять
+      </footer>
+    </div>
+  );
+}
+
+// ─── MINI SURVEY (перед регистрацией) ─────────────────────────────────────────
+function MiniSurvey({ onDone, onBack }) {
+  const [step, setStep] = useState(0);
+  const [d, setD] = useState({city:"Москва", guests:"", date:"", budget:""});
+  const set = (k,v) => setD(p=>({...p,[k]:v}));
+  const cities = ["Москва","Санкт-Петербург","Сочи","Казань","Екатеринбург","Другой город"];
+  const guestRanges = [["До 30","22"],["30–60","45"],["60–100","80"],["100–150","125"],["150+","180"]];
+  const budgets = [["до 700 тыс","600000"],["700 тыс – 1.5 млн","1100000"],["1.5 – 3 млн","2200000"],["3 млн+","3500000"]];
+
+  const steps = [
+    {q:"В каком городе свадьба?", ok:!!d.city, body:(
+      <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
+        {cities.map(c=><span key={c} style={S.chip(d.city===c)} onClick={()=>set("city",c)}>{c}</span>)}
+      </div>
+    )},
+    {q:"Сколько примерно гостей?", ok:!!d.guests, body:(
+      <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
+        {guestRanges.map(([l,v])=><span key={l} style={S.chip(d.guests===v)} onClick={()=>set("guests",v)}>{l}</span>)}
+      </div>
+    )},
+    {q:"Когда планируете?", ok:true, body:(
+      <div style={{maxWidth:240,margin:"0 auto"}}>
+        <input type="date" style={S.input} value={d.date} onChange={e=>set("date",e.target.value)}/>
+        <p style={{fontSize:12,color:C.gray,marginTop:8,textAlign:"center"}}>Можно пропустить и указать позже</p>
+      </div>
+    )},
+    {q:"Ориентир по бюджету?", ok:!!d.budget, body:(
+      <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
+        {budgets.map(([l,v])=><span key={l} style={S.chip(d.budget===v)} onClick={()=>set("budget",v)}>{l}</span>)}
+      </div>
+    )},
+  ];
+  const cur = steps[step];
+  const next = () => step<steps.length-1 ? setStep(step+1) : onDone(d);
+  const back = () => step>0 ? setStep(step-1) : onBack();
+
+  return (
+    <div style={{minHeight:"100vh",background:`linear-gradient(135deg,${C.champ2},${C.bg} 55%,${C.champ})`,display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
+      <div style={{maxWidth:520,width:"100%"}}>
+        <div style={{textAlign:"center",marginBottom:8}}><div style={S.logo}>Tot<span style={{color:C.gold}}>Day</span></div></div>
+        <div style={{textAlign:"center",fontSize:12,color:C.gold,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:18}}>Шаг {step+1} из {steps.length}</div>
+        <div style={{height:4,background:C.sand,borderRadius:2,marginBottom:28,overflow:"hidden"}}>
+          <div style={{height:"100%",width:`${(step+1)/steps.length*100}%`,background:`linear-gradient(90deg,${C.gold},${C.goldSoft})`,borderRadius:2,transition:"width .4s cubic-bezier(.2,.7,.2,1)"}}/>
+        </div>
+        <div style={{...S.card,padding:"36px 28px"}}>
+          <h2 style={{fontFamily:font,fontSize:26,fontWeight:400,letterSpacing:"-0.02em",textAlign:"center",marginBottom:28}}>{cur.q}</h2>
+          {cur.body}
+        </div>
+        <div style={{display:"flex",justifyContent:"space-between",marginTop:20}}>
+          <button style={S.btnO} onClick={back}>← Назад</button>
+          <button style={{...S.btn,opacity:cur.ok?1:0.5}} onClick={()=>cur.ok&&next()}>{step<steps.length-1?"Далее →":"К регистрации →"}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
 function Survey1Page({ onComplete, initial }) {
   const [step, setStep] = useState(0);
   const [d, setD] = useState(()=>({season:"",date:"",altDates:"",zags:"",city:"Москва",guests:"",outOfTown:"",format:"",budgetLabel:"",budget:0, ...(initial||{})}));
@@ -485,6 +707,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
   const [editingBudget, setEditingBudget] = useState(false);
   const [budgetInput, setBudgetInput] = useState(String(Number(survey?.budget)||1500000));
   const [editPlanId, setEditPlanId] = useState(null);
+  const [editAvansId, setEditAvansId] = useState(null);
   const [newTx, setNewTx] = useState({catId:"venue",amount:"",note:""});
   const [txHistory, setTxHistory] = useState(() => LS.get("td_txHistory",[]) );
   const [activeTab, setActiveTab] = useState("plan");
@@ -506,13 +729,20 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
     setBudgetInput(String(nb));
     setCats(prev => {
       const prevTotal = prev.reduce((s,c)=>s+c.plan,0);
-      if (prevTotal===0) return prev.map(c=>({...c,plan:Math.round(nb*c.pct)}));
-      return prev.map(c=>({...c,plan:Math.round(c.plan/prevTotal*nb)}));
+      const scale = prevTotal>0 ? nb/prevTotal : 0;
+      let running = 0;
+      return prev.map((c,i) => {
+        let plan;
+        if (i === prev.length-1) plan = Math.max(0, nb - running);
+        else { plan = prevTotal>0 ? Math.round(c.plan*scale) : Math.round(nb/prev.length); running += plan; }
+        return {...c, plan};
+      });
     });
     setEditingBudget(false);
   };
 
   const updatePlan = (id,val) => setCats(prev=>prev.map(c=>c.id===id?{...c,plan:Math.max(0,Number(val)||0)}:c));
+  const updateAvans = (id,val) => setCats(prev=>prev.map(c=>c.id===id?{...c,avans:Math.max(0,Number(val)||0)}:c));
 
   const toggleExpand = (id) => setCats(prev=>prev.map(c=>c.id===id?{...c,expanded:!c.expanded}:c));
 
@@ -537,7 +767,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
   const addCat = () => {
     if (!newCat.name) return;
     const id = "custom_"+Date.now();
-    setCats(prev=>[...prev,{id,name:newCat.name,icon:newCat.icon||"✨",pct:0,market:"—",rec:"—",items:[],plan:Number(newCat.plan)||0,actual:0,expanded:false,itemActuals:{}}]);
+    setCats(prev=>[...prev,{id,name:newCat.name,icon:newCat.icon||"✨",pct:0,market:"—",rec:"—",items:[],plan:Number(newCat.plan)||0,avans:0,actual:0,expanded:false,itemActuals:{}}]);
     setNewCat({name:"",icon:"✨",plan:""});
     setShowAddCat(false);
   };
@@ -545,7 +775,7 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
   const budgetPct = totalBudget>0?totalActual/totalBudget*100:0;
 
   return (
-    <div style={S.page}>
+    <div className="td-page" style={S.page}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12,marginBottom:8}}>
         <div>
           <h2 style={S.h1}>Бюджет свадьбы</h2>
@@ -619,13 +849,13 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
           )}
 
           {/* Header row */}
-          <div style={{display:"grid",gridTemplateColumns:"28px 1fr 110px 110px 110px 90px 90px",gap:8,padding:"6px 0 10px",borderBottom:`2px solid ${C.sand}`,fontSize:10,color:C.gray,letterSpacing:"0.07em",textTransform:"uppercase",fontWeight:700}}>
+          <div style={{display:"grid",gridTemplateColumns:"28px 1fr 100px 100px 100px 100px 70px",gap:8,padding:"6px 0 10px",borderBottom:`2px solid ${C.line}`,fontSize:10,color:C.gray,letterSpacing:"0.07em",textTransform:"uppercase",fontWeight:600}}>
             <div/>
             <div>Категория</div>
-            <div style={{textAlign:"right"}}>Рынок</div>
             <div style={{textAlign:"right"}}>План</div>
+            <div style={{textAlign:"right"}}>Аванс</div>
+            <div style={{textAlign:"right"}}>К доплате</div>
             <div style={{textAlign:"right"}}>Факт</div>
-            <div style={{textAlign:"right"}}>Разница</div>
             <div/>
           </div>
 
@@ -636,18 +866,16 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
             return (
               <div key={c.id} style={{borderBottom:i<cats.length-1?`1px solid ${C.lightGray}`:"none"}}>
                 {/* Main row */}
-                <div style={{display:"grid",gridTemplateColumns:"28px 1fr 110px 110px 110px 90px 90px",gap:8,padding:"12px 0",alignItems:"center",cursor:"pointer"}} onClick={()=>toggleExpand(c.id)}>
-                  <span style={{fontSize:17}}>{c.icon}</span>
+                <div style={{display:"grid",gridTemplateColumns:"28px 1fr 100px 100px 100px 100px 70px",gap:8,padding:"12px 0",alignItems:"center",cursor:"pointer"}} onClick={()=>toggleExpand(c.id)}>
+                  <span style={{fontSize:13,fontFamily:font,color:C.ink2,width:28,height:28,borderRadius:8,background:C.sand,display:"flex",alignItems:"center",justifyContent:"center"}}>{(c.name||"?").slice(0,2)}</span>
                   <div>
-                    <div style={{fontSize:13,fontWeight:600,display:"flex",alignItems:"center",gap:6}}>
+                    <div style={{fontSize:13.5,fontWeight:500,display:"flex",alignItems:"center",gap:6}}>
                       {c.name}
                       {over&&<span style={S.badge("r")}>перерасход</span>}
                     </div>
-                    <div style={{fontSize:10,color:C.teal,marginTop:2}}>{c.rec}</div>
+                    <div style={{fontSize:10,color:C.gold,marginTop:2}}>{c.rec}</div>
                     <div style={{marginTop:5,paddingRight:8}}><div style={S.bar}><div style={S.fill(pUsed,over)}/></div></div>
                   </div>
-                  {/* Рынок */}
-                  <div style={{textAlign:"right",fontSize:11,color:C.gray}}>{c.market}</div>
                   {/* План — редактируемый */}
                   <div style={{textAlign:"right"}} onClick={e=>e.stopPropagation()}>
                     {editPlanId===c.id?(
@@ -656,19 +884,32 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
                         onFocus={e=>e.target.select()}
                         onBlur={()=>setEditPlanId(null)} onKeyDown={e=>e.key==="Enter"&&setEditPlanId(null)}/>
                     ):(
-                      <span style={{fontSize:13,color:C.brown,fontWeight:700,cursor:"text",borderBottom:`1px dashed ${C.taupe}`}} onClick={()=>setEditPlanId(c.id)}>
+                      <span style={{fontSize:13,color:C.dark,fontWeight:500,cursor:"text",borderBottom:`1px dashed ${C.gold}`}} onClick={()=>setEditPlanId(c.id)}>
                         {fmt(c.plan)} ₽
                       </span>
                     )}
                   </div>
+                  {/* Аванс — редактируемый */}
+                  <div style={{textAlign:"right"}} onClick={e=>e.stopPropagation()}>
+                    {editAvansId===c.id?(
+                      <input type="number" min="0" autoFocus style={{...S.input,width:"100%",padding:"3px 7px",fontSize:13,textAlign:"right"}}
+                        value={(c.avans||0)===0?"":c.avans} placeholder="0" onChange={e=>updateAvans(c.id,e.target.value)}
+                        onFocus={e=>e.target.select()}
+                        onBlur={()=>setEditAvansId(null)} onKeyDown={e=>e.key==="Enter"&&setEditAvansId(null)}/>
+                    ):(
+                      <span style={{fontSize:13,color:C.gray,cursor:"text",borderBottom:`1px dashed ${C.line}`}} onClick={()=>setEditAvansId(c.id)}>
+                        {fmt(c.avans||0)} ₽
+                      </span>
+                    )}
+                  </div>
+                  {/* К доплате = план − аванс */}
+                  <div style={{textAlign:"right",fontSize:13,fontWeight:600,color:C.ink2}}>{fmt(Math.max(0,c.plan-(c.avans||0)))} ₽</div>
                   {/* Факт */}
-                  <div style={{textAlign:"right",fontSize:13,color:over?C.rose:C.teal,fontWeight:600}}>{fmt(c.actual)} ₽</div>
-                  {/* Разница */}
-                  <div style={{textAlign:"right",fontSize:13,fontWeight:700,color:diff>=0?C.teal:C.rose}}>{diff>=0?"+":""}{fmt(diff)} ₽</div>
+                  <div style={{textAlign:"right",fontSize:13,color:over?C.rose:C.teal,fontWeight:500}}>{fmt(c.actual)} ₽</div>
                   {/* Actions */}
                   <div style={{display:"flex",gap:4,justifyContent:"flex-end"}} onClick={e=>e.stopPropagation()}>
-                    <button style={{...S.btnSm,color:C.teal,borderColor:C.teal,padding:"3px 8px"}} onClick={()=>onGoToVendors(c.id)}>→</button>
-                    <button style={{...S.btnSm,color:C.rose,borderColor:C.rose,padding:"3px 8px"}} onClick={()=>removeCat(c.id)}>✕</button>
+                    <button style={{...S.btnSm,color:C.teal,borderColor:C.line,padding:"3px 8px"}} onClick={()=>onGoToVendors(c.id)}>→</button>
+                    <button style={{...S.btnSm,color:C.rose,borderColor:C.line,padding:"3px 8px"}} onClick={()=>removeCat(c.id)}>✕</button>
                   </div>
                 </div>
 
@@ -693,6 +934,37 @@ function BudgetPage({ survey, cats, setCats, onGoToVendors }) {
               </div>
             );
           })}
+
+          {/* Итоговый блок по-агентски */}
+          {(() => {
+            const totAvans = cats.reduce((s,c)=>s+(c.avans||0),0);
+            const toPay = Math.max(0, totalPlan - totAvans);
+            const service = Math.round(totalPlan * 0.10); // сервисный сбор 10%
+            const organizer = 100000; // вознаграждение организатора (если работаете сами — 0)
+            const deposit = 50000; // возвратный депозит на день
+            return (
+              <div style={{marginTop:18,borderTop:`2px solid ${C.line}`,paddingTop:16}}>
+                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:13}}>
+                  <span style={{color:C.gray}}>Итого по смете</span>
+                  <strong style={{fontFamily:font,fontSize:16}}>{fmt(totalPlan)} ₽</strong>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:13,color:C.gray}}>
+                  <span>Внесено авансов</span><span>−{fmt(totAvans)} ₽</span>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:13,borderBottom:`1px solid ${C.line}`}}>
+                  <span style={{color:C.gray}}>Осталось доплатить</span>
+                  <strong style={{color:C.gold}}>{fmt(toPay)} ₽</strong>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:12,color:C.gray,marginTop:6}}>
+                  <span>Сервисный сбор площадки (10%)</span><span>≈ {fmt(service)} ₽</span>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:12,color:C.gray}}>
+                  <span>Депозит на день (возвратный)</span><span>{fmt(deposit)} ₽</span>
+                </div>
+                <p style={{fontSize:11,color:C.gray,marginTop:10,lineHeight:1.5}}>Сервисный сбор и депозит — справочно, не входят в сумму сметы. Аванс по каждой категории редактируется в строке.</p>
+              </div>
+            );
+          })()}
         </div>
       )}
 
@@ -776,7 +1048,7 @@ function VendorsPage({ survey, initCat }) {
   });
 
   return (
-    <div style={S.page}>
+    <div className="td-page" style={S.page}>
       <h2 style={S.h1}>Подрядчики</h2>
       <p style={S.sub}>{date?`Свободные на ${new Date(date).toLocaleDateString("ru")} · `:""}{survey?.city||"Москва"}</p>
       <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:16}}>
@@ -835,37 +1107,40 @@ function VendorsPage({ survey, initCat }) {
 
 // ─── GUESTS ───────────────────────────────────────────────────────────────────
 function GuestsPage({ slug, guests, setGuests }) {
-  const [form, setForm] = useState({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false});
+  const [form, setForm] = useState({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("Все");
+  const [expanded, setExpanded] = useState(null);
   const RSVP = ["Придёт","Ожидает","Не придёт"];
   const RC = {"Придёт":"g","Ожидает":"","Не придёт":"r"};
-  const stats = {total:guests.length,yes:guests.filter(g=>g.rsvp==="Придёт").length,wait:guests.filter(g=>g.rsvp==="Ожидает").length};
+  const stats = {total:guests.length,yes:guests.filter(g=>g.rsvp==="Придёт").length,wait:guests.filter(g=>g.rsvp==="Ожидает").length,transfer:guests.filter(g=>g.transfer).length,lodging:guests.filter(g=>g.lodging).length};
   const filtered = guests.filter(g=>(filter==="Все"||g.rsvp===filter)&&g.name.toLowerCase().includes(search.toLowerCase()));
   const add = () => {
     if (!form.name) return;
     setGuests(p=>[...p,{...form,id:Date.now()}]);
-    setForm({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false});
+    setForm({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});
   };
+  const upd = (id,patch) => setGuests(p=>p.map(g=>g.id===id?{...g,...patch}:g));
+  const del = (id) => setGuests(p=>p.filter(g=>g.id!==id));
   return (
-    <div style={S.page}>
+    <div className="td-page" style={S.page}>
       <h2 style={S.h1}>Список гостей</h2>
-      <p style={S.sub}>Ссылка на сайт: <strong style={{color:C.teal}}>totday.app/{slug}</strong></p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:14,marginBottom:22}}>
-        {[{l:"Всего",v:stats.total,c:C.brown},{l:"Подтверждено",v:stats.yes,c:C.teal},{l:"Ожидает",v:stats.wait,c:C.taupe}].map(s=>(
-          <div key={s.l} style={{...S.card,textAlign:"center"}}>
-            <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:4}}>{s.l}</div>
-            <div style={{fontFamily:font,fontSize:26,color:s.c,fontWeight:700}}>{s.v}</div>
+      <p style={S.sub}>Ссылка на сайт: <strong style={{color:C.gold}}>totday.app/{slug}</strong></p>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:14,marginBottom:22}}>
+        {[{l:"Всего",v:stats.total,c:C.dark},{l:"Подтверждено",v:stats.yes,c:C.teal},{l:"Ожидает",v:stats.wait,c:C.gold},{l:"Трансфер",v:stats.transfer,c:C.ink2},{l:"Проживание",v:stats.lodging,c:C.ink2}].map(s=>(
+          <div key={s.l} className="td-lift" style={{...S.card,textAlign:"center"}}>
+            <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:6}}>{s.l}</div>
+            <div style={{fontFamily:font,fontSize:28,color:s.c,fontWeight:400}}>{s.v}</div>
           </div>
         ))}
       </div>
       <div style={{...S.card,marginBottom:20}}>
         <h3 style={S.h3}>Добавить гостя</h3>
         <div style={{display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
-          <div style={{flex:"2 1 160px"}}><label style={S.label}>Имя</label><input style={S.input} value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Имя Фамилия"/></div>
-          <div style={{flex:"1 1 110px"}}><label style={S.label}>Сторона</label><select style={S.select} value={form.side} onChange={e=>setForm(p=>({...p,side:e.target.value}))}>{["Жениха","Невесты","Общий"].map(s=><option key={s}>{s}</option>)}</select></div>
-          <div style={{flex:"1 1 110px"}}><label style={S.label}>RSVP</label><select style={S.select} value={form.rsvp} onChange={e=>setForm(p=>({...p,rsvp:e.target.value}))}>{RSVP.map(s=><option key={s}>{s}</option>)}</select></div>
-          <div style={{flex:"1 1 110px"}}><label style={S.label}>Питание</label><select style={S.select} value={form.diet} onChange={e=>setForm(p=>({...p,diet:e.target.value}))}>{["Нет","Вегетарианец","Веган","Без глютена","Халяль"].map(s=><option key={s}>{s}</option>)}</select></div>
+          <div style={{flex:"2 1 160px"}}><label style={S.label}>Имя и фамилия</label><input style={S.input} value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Имя Фамилия"/></div>
+          <div style={{flex:"1 1 120px"}}><label style={S.label}>Кем приходится</label><input style={S.input} value={form.relation} onChange={e=>setForm(p=>({...p,relation:e.target.value}))} placeholder="друг, тётя…"/></div>
+          <div style={{flex:"1 1 100px"}}><label style={S.label}>Сторона</label><select style={S.select} value={form.side} onChange={e=>setForm(p=>({...p,side:e.target.value}))}>{["Жениха","Невесты","Общий"].map(s=><option key={s}>{s}</option>)}</select></div>
+          <div style={{flex:"1 1 100px"}}><label style={S.label}>RSVP</label><select style={S.select} value={form.rsvp} onChange={e=>setForm(p=>({...p,rsvp:e.target.value}))}>{RSVP.map(s=><option key={s}>{s}</option>)}</select></div>
           <button style={S.btn} onClick={add}>+ Добавить</button>
         </div>
       </div>
@@ -876,22 +1151,101 @@ function GuestsPage({ slug, guests, setGuests }) {
         </div>
         <div style={{overflowX:"auto"}}>
           <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
-            <thead><tr style={{borderBottom:`2px solid ${C.sand}`}}>
-              {["Имя","Сторона","RSVP","Питание","Дети","Трансфер"].map(h=><th key={h} style={{padding:"7px 10px",textAlign:"left",fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:700}}>{h}</th>)}
+            <thead><tr style={{borderBottom:`2px solid ${C.line}`}}>
+              {["Имя","Кем приходится","Сторона","RSVP","Стол","Трансфер","Прожив.",""].map(h=><th key={h} style={{padding:"9px 10px",textAlign:"left",fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600}}>{h}</th>)}
             </tr></thead>
             <tbody>{filtered.map(g=>(
-              <tr key={g.id} style={{borderBottom:`1px solid ${C.lightGray}`}}>
-                <td style={{padding:"10px",fontWeight:600}}>{g.name}</td>
-                <td style={{padding:"10px",color:C.gray}}>{g.side}</td>
-                <td style={{padding:"10px"}}><span style={S.badge(RC[g.rsvp])}>{g.rsvp}</span></td>
-                <td style={{padding:"10px",color:C.gray}}>{g.diet}</td>
-                <td style={{padding:"10px",color:C.gray}}>{g.kids||"—"}</td>
-                <td style={{padding:"10px"}}>{g.transfer?"✓":"—"}</td>
+              <Fragment key={g.id}>
+              <tr style={{borderBottom:expanded===g.id?"none":`1px solid ${C.line}`}}>
+                <td style={{padding:"11px 10px",fontWeight:500}}>{g.name}</td>
+                <td style={{padding:"11px 10px",color:C.gray}}>{g.relation||"—"}</td>
+                <td style={{padding:"11px 10px",color:C.gray}}>{g.side}</td>
+                <td style={{padding:"11px 10px"}}><span style={S.badge(RC[g.rsvp])}>{g.rsvp}</span></td>
+                <td style={{padding:"11px 10px",color:C.gray}}>{g.table||"—"}</td>
+                <td style={{padding:"11px 10px"}}>{g.transfer?"✓":"—"}</td>
+                <td style={{padding:"11px 10px"}}>{g.lodging?"✓":"—"}</td>
+                <td style={{padding:"11px 10px",textAlign:"right"}}><button style={{...S.btnSm,padding:"4px 10px"}} onClick={()=>setExpanded(expanded===g.id?null:g.id)}>{expanded===g.id?"Скрыть":"Детали"}</button></td>
               </tr>
+              {expanded===g.id && (
+                <tr style={{borderBottom:`1px solid ${C.line}`,background:C.bg}}>
+                  <td colSpan={8} style={{padding:"14px 10px"}}>
+                    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12}}>
+                      <div><label style={S.label}>Обращение в пригласительном</label><input style={S.input} value={g.inviteName||""} onChange={e=>upd(g.id,{inviteName:e.target.value})} placeholder="Дорогая Анна…"/></div>
+                      <div><label style={S.label}>Имя на рассадочной карточке</label><input style={S.input} value={g.seatName||""} onChange={e=>upd(g.id,{seatName:e.target.value})} placeholder="Анна"/></div>
+                      <div><label style={S.label}>№ стола</label><input style={S.input} value={g.table||""} onChange={e=>upd(g.id,{table:e.target.value})} placeholder="3"/></div>
+                      <div><label style={S.label}>Питание</label><select style={S.select} value={g.diet||"Нет"} onChange={e=>upd(g.id,{diet:e.target.value})}>{["Нет","Вегетарианец","Веган","Без глютена","Халяль"].map(s=><option key={s}>{s}</option>)}</select></div>
+                      <div><label style={S.label}>Дети</label><input type="number" min="0" style={S.input} value={g.kids||0} onFocus={e=>e.target.select()} onChange={e=>upd(g.id,{kids:Math.max(0,Number(e.target.value)||0)})}/></div>
+                      <div><label style={S.label}>Комментарий ведущему</label><input style={S.input} value={g.hostNote||""} onChange={e=>upd(g.id,{hostNote:e.target.value})} placeholder="тамада, поёт…"/></div>
+                      <div style={{display:"flex",gap:16,alignItems:"flex-end",paddingBottom:8}}>
+                        <label style={{display:"flex",alignItems:"center",gap:6,fontSize:13,cursor:"pointer"}}><input type="checkbox" checked={!!g.transfer} onChange={e=>upd(g.id,{transfer:e.target.checked})}/>Трансфер</label>
+                        <label style={{display:"flex",alignItems:"center",gap:6,fontSize:13,cursor:"pointer"}}><input type="checkbox" checked={!!g.lodging} onChange={e=>upd(g.id,{lodging:e.target.checked})}/>Проживание</label>
+                      </div>
+                      <div style={{display:"flex",alignItems:"flex-end",paddingBottom:6}}><button style={{...S.btnSm,color:C.rose,borderColor:C.roseBg}} onClick={()=>del(g.id)}>Удалить гостя</button></div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+              </Fragment>
             ))}</tbody>
           </table>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── TIMING ───────────────────────────────────────────────────────────────────
+function TimingPage({ survey, timing, setTiming }) {
+  const [form, setForm] = useState({block:"day", time:"", title:""});
+  const blocks = [
+    {id:"before", label:"За день до"},
+    {id:"day",    label:"День свадьбы"},
+  ];
+  const add = () => {
+    if (!form.title) return;
+    setTiming(p=>[...p,{...form, id:Date.now()}]);
+    setForm({block:form.block, time:"", title:""});
+  };
+  const del = (id) => setTiming(p=>p.filter(t=>t.id!==id));
+  const upd = (id,patch) => setTiming(p=>p.map(t=>t.id===id?{...t,...patch}:t));
+  const dateStr = survey?.date ? new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}) : "";
+
+  return (
+    <div className="td-page" style={S.page}>
+      <h2 style={S.h1}>Тайминг дня</h2>
+      <p style={S.sub}>Расписание свадьбы{dateStr?` · ${dateStr}`:""}. Раздайте подрядчикам и координатору.</p>
+
+      <div style={{...S.card, marginBottom:20}}>
+        <h3 style={S.h3}>Добавить пункт</h3>
+        <div style={{display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
+          <div style={{flex:"1 1 140px"}}><label style={S.label}>Блок</label><select style={S.select} value={form.block} onChange={e=>setForm(p=>({...p,block:e.target.value}))}>{blocks.map(b=><option key={b.id} value={b.id}>{b.label}</option>)}</select></div>
+          <div style={{flex:"0 1 110px"}}><label style={S.label}>Время</label><input type="time" style={S.input} value={form.time} onChange={e=>setForm(p=>({...p,time:e.target.value}))}/></div>
+          <div style={{flex:"3 1 220px"}}><label style={S.label}>Событие</label><input style={S.input} value={form.title} onChange={e=>setForm(p=>({...p,title:e.target.value}))} placeholder="Сбор гостей, церемония…" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
+          <button style={S.btn} onClick={add}>+ Добавить</button>
+        </div>
+      </div>
+
+      {blocks.map(b=>{
+        const items = timing.filter(t=>t.block===b.id).sort((a,z)=>(a.time||"").localeCompare(z.time||""));
+        return (
+          <div key={b.id} style={{...S.card, marginBottom:18}}>
+            <div style={{fontSize:11,letterSpacing:"0.14em",textTransform:"uppercase",color:C.gold,fontWeight:600,marginBottom:14}}>{b.label}</div>
+            {items.length===0 ? (
+              <p style={{color:C.gray,fontSize:13,margin:0}}>Пока пусто — добавьте первый пункт выше.</p>
+            ) : (
+              <div>
+                {items.map((t,i)=>(
+                  <div key={t.id} style={{display:"grid",gridTemplateColumns:"78px 1fr 36px",gap:14,alignItems:"center",padding:"13px 0",borderTop:i>0?`1px solid ${C.line}`:"none"}}>
+                    <input style={{...S.input,padding:"6px 10px",fontFamily:font,fontSize:16,textAlign:"center"}} value={t.time||""} onChange={e=>upd(t.id,{time:e.target.value})} placeholder="—:—"/>
+                    <input style={{...S.input,padding:"8px 12px",border:"none",background:"transparent",fontSize:14.5}} value={t.title} onChange={e=>upd(t.id,{title:e.target.value})}/>
+                    <button style={{...S.btnSm,color:C.rose,borderColor:C.line,padding:"5px 9px"}} onClick={()=>del(t.id)}>✕</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -936,7 +1290,7 @@ function InvitePage({ survey, user, inviteData, setInviteData }) {
   );
 
   return (
-    <div style={S.page}>
+    <div className="td-page" style={S.page}>
       <h2 style={S.h1}>Сайт гостей</h2>
       <p style={S.sub}>Создайте персональный сайт — гости подтвердят участие онлайн</p>
       <div style={{...S.card,marginBottom:20}}>
@@ -980,7 +1334,7 @@ function InvitePage({ survey, user, inviteData, setInviteData }) {
 }
 
 // ─── COUNTDOWN TIMER ─────────────────────────────────────────────────────────
-function CountdownTimer({ date }) {
+function CountdownTimer({ date, names }) {
   const calc = useCallback(() => {
     if (!date) return null;
     const diff = new Date(date) - new Date();
@@ -1002,28 +1356,31 @@ function CountdownTimer({ date }) {
   },[calc]);
 
   if (!t) return (
-    <div style={{...S.card, textAlign:"center", background:`linear-gradient(135deg,${C.tealBg},${C.white})`}}>
-      <div style={{fontSize:13, color:C.gray}}>Укажите дату свадьбы в «Быстром расчёте», чтобы запустить обратный отсчёт</div>
+    <div style={{...S.card, textAlign:"center", background:`linear-gradient(135deg,${C.champ2},${C.white})`, padding:"28px 24px"}}>
+      <div style={{fontSize:13.5, color:C.gray}}>Укажите дату свадьбы в «Быстром расчёте», чтобы запустить обратный отсчёт</div>
     </div>
   );
   if (t.passed) return (
-    <div style={{...S.card, textAlign:"center", background:`linear-gradient(135deg,${C.tealBg},${C.white})`}}>
-      <div style={{fontFamily:font, fontSize:22, color:C.teal, fontWeight:700}}>🎉 Поздравляем — ваш день настал!</div>
+    <div style={{...S.card, textAlign:"center", background:`linear-gradient(135deg,${C.champ2},${C.white})`, padding:"32px"}}>
+      <div style={{fontFamily:font, fontSize:24, color:C.gold, fontWeight:500}}>Поздравляем — ваш день настал</div>
     </div>
   );
 
   const units = [["дней",t.days],["часов",t.hours],["минут",t.mins],["секунд",t.secs]];
   return (
-    <div style={{...S.card, background:`linear-gradient(135deg,${C.brown},${C.taupe})`, color:C.white, textAlign:"center", border:"none"}}>
-      <div style={{fontSize:11, letterSpacing:"0.15em", textTransform:"uppercase", opacity:0.85, marginBottom:12}}>До вашей свадьбы осталось</div>
-      <div style={{display:"flex", justifyContent:"center", gap:0}}>
+    <div style={{background:`linear-gradient(135deg,${C.champ2},${C.white} 55%,${C.champ})`, border:`1px solid ${C.line}`, borderRadius:24, padding:"30px 36px", boxShadow:SHADOW, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20}}>
+      <div style={{textAlign:"left"}}>
+        <div style={{fontSize:11, letterSpacing:"0.16em", textTransform:"uppercase", color:C.gray, marginBottom:6}}>До свадьбы</div>
+        {names && <div style={{fontFamily:font, fontSize:22, fontWeight:500, color:C.dark}}>{names}</div>}
+      </div>
+      <div style={{display:"flex", gap:18, textAlign:"center"}}>
         {units.map(([label,val],i)=>(
-          <div key={label} style={{display:"flex", alignItems:"center"}}>
-            <div style={{minWidth:64}}>
-              <div style={{fontFamily:font, fontSize:38, fontWeight:700, lineHeight:1}}>{String(val).padStart(2,"0")}</div>
-              <div style={{fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", opacity:0.8, marginTop:4}}>{label}</div>
+          <div key={label} style={{display:"flex", alignItems:"flex-start", gap:18}}>
+            <div style={{minWidth:50}}>
+              <div style={{fontFamily:font, fontSize:40, fontWeight:400, lineHeight:1, letterSpacing:"-0.02em", color:C.dark, fontVariantNumeric:"tabular-nums"}}>{String(val).padStart(2,"0")}</div>
+              <div style={{fontSize:10, letterSpacing:"0.14em", textTransform:"uppercase", color:C.gray, marginTop:8}}>{label}</div>
             </div>
-            {i<units.length-1 && <div style={{fontSize:30, fontWeight:300, opacity:0.5, margin:"0 4px", alignSelf:"flex-start"}}>:</div>}
+            {i<units.length-1 && <div style={{fontFamily:font, fontSize:32, color:C.goldSoft, lineHeight:1}}>:</div>}
           </div>
         ))}
       </div>
@@ -1032,6 +1389,85 @@ function CountdownTimer({ date }) {
 }
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
+// ─── AGENCY DASHBOARD ─────────────────────────────────────────────────────────
+function AgencyDashboard({ weddings, setWeddings, onOpen }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [nw, setNw] = useState({couple:"",date:"",city:"Москва",guests:"",budget:""});
+  const statusColor = {"В работе":"gold","Подготовка":"","Завершена":"g"};
+  const totalBudget = weddings.reduce((s,w)=>s+(w.budget||0),0);
+  const totalPaid = weddings.reduce((s,w)=>s+(w.paid||0),0);
+  const active = weddings.filter(w=>w.status!=="Завершена").length;
+  const add = () => {
+    if (!nw.couple) return;
+    setWeddings(p=>[...p,{...nw, id:Date.now(), guests:Number(nw.guests)||0, budget:Number(nw.budget)||0, paid:0, status:"Подготовка"}]);
+    setNw({couple:"",date:"",city:"Москва",guests:"",budget:""});
+    setShowAdd(false);
+  };
+  const del = (id) => setWeddings(p=>p.filter(w=>w.id!==id));
+
+  return (
+    <div className="td-page" style={S.page}>
+      <h2 style={S.h1}>Кабинет агентства</h2>
+      <p style={S.sub}>Все ваши свадьбы в одном месте. Сметы, гости, тайминг по каждому клиенту.</p>
+
+      {/* Сводка */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:16,marginBottom:24}}>
+        {[
+          {l:"Активных свадеб",v:active,c:C.dark},
+          {l:"Всего проектов",v:weddings.length,c:C.dark},
+          {l:"Суммарный бюджет",v:`${(totalBudget/1000000).toFixed(1)} млн ₽`,c:C.gold},
+          {l:"Получено оплат",v:`${(totalPaid/1000000).toFixed(1)} млн ₽`,c:C.teal},
+        ].map(s=>(
+          <div key={s.l} className="td-lift" style={{...S.card,textAlign:"center"}}>
+            <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:8}}>{s.l}</div>
+            <div style={{fontFamily:font,fontSize:26,color:s.c,fontWeight:400}}>{s.v}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+        <h3 style={{...S.h2,margin:0}}>Свадьбы клиентов</h3>
+        <button style={S.btn} onClick={()=>setShowAdd(!showAdd)}>+ Новая свадьба</button>
+      </div>
+
+      {showAdd && (
+        <div style={{...S.card,marginBottom:16,display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
+          <div style={{flex:"2 1 180px"}}><label style={S.label}>Пара</label><input style={S.input} value={nw.couple} onChange={e=>setNw(p=>({...p,couple:e.target.value}))} placeholder="Имя & Имя"/></div>
+          <div style={{flex:"0 1 140px"}}><label style={S.label}>Дата</label><input type="date" style={S.input} value={nw.date} onChange={e=>setNw(p=>({...p,date:e.target.value}))}/></div>
+          <div style={{flex:"1 1 120px"}}><label style={S.label}>Город</label><input style={S.input} value={nw.city} onChange={e=>setNw(p=>({...p,city:e.target.value}))}/></div>
+          <div style={{flex:"0 1 90px"}}><label style={S.label}>Гостей</label><input type="number" min="0" style={S.input} value={nw.guests} onChange={e=>setNw(p=>({...p,guests:e.target.value}))}/></div>
+          <div style={{flex:"1 1 120px"}}><label style={S.label}>Бюджет ₽</label><input type="number" min="0" style={S.input} value={nw.budget} onChange={e=>setNw(p=>({...p,budget:e.target.value}))}/></div>
+          <button style={S.btn} onClick={add}>Добавить</button>
+        </div>
+      )}
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:18}}>
+        {weddings.map(w=>{
+          const paidPct = w.budget>0 ? Math.round(w.paid/w.budget*100) : 0;
+          return (
+            <div key={w.id} className="td-lift" style={{...S.card,cursor:"pointer",position:"relative"}} onClick={()=>onOpen&&onOpen(w)}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
+                <div style={{fontFamily:font,fontSize:20,fontWeight:500}}>{w.couple}</div>
+                <span style={S.badge(statusColor[w.status])}>{w.status}</span>
+              </div>
+              <div style={{fontSize:13,color:C.gray,lineHeight:1.8,marginBottom:14}}>
+                {w.date && <div>{new Date(w.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"})}</div>}
+                <div>{w.city} · {w.guests} гостей</div>
+                <div>Бюджет: {fmt(w.budget)} ₽</div>
+              </div>
+              <div style={{fontSize:11,color:C.gray,marginBottom:5,display:"flex",justifyContent:"space-between"}}>
+                <span>Оплачено</span><span style={{color:C.teal,fontWeight:600}}>{paidPct}%</span>
+              </div>
+              <div style={S.bar}><div style={S.fill(paidPct)}/></div>
+              <button style={{...S.btnSm,position:"absolute",bottom:14,right:14,color:C.rose,borderColor:C.line,padding:"3px 9px"}} onClick={e=>{e.stopPropagation();del(w.id);}}>✕</button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Dashboard({ user, survey, cats, guests, onNav }) {
   const total = Number(survey?.budget)||1500000;
   const totalActual = cats.reduce((s,c)=>s+c.actual,0);
@@ -1044,12 +1480,12 @@ function Dashboard({ user, survey, cats, guests, onNav }) {
     {done:false,               text:"Выбрать подрядчиков"},
   ];
   return (
-    <div style={S.page}>
-      <h2 style={S.h1}>Добро пожаловать, {user?.name1} & {user?.name2} 🕊</h2>
+    <div className="td-page" style={S.page}>
+      <h2 style={S.h1}>{user?.name1} & {user?.name2}</h2>
       <p style={S.sub}>Всё для вашей свадьбы в одном месте · totday.app</p>
 
       {/* Live countdown */}
-      <div style={{marginBottom:22}}><CountdownTimer date={survey?.date}/></div>
+      <div style={{marginBottom:22}}><CountdownTimer date={survey?.date} names={`${user?.name1} & ${user?.name2}`}/></div>
 
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(155px,1fr))",gap:14,marginBottom:22}}>
         {[
@@ -1094,7 +1530,7 @@ function Dashboard({ user, survey, cats, guests, onNav }) {
           {tab:"guests", icon:"👥",title:"Гости",             desc:"RSVP и рассадка"},
           {tab:"invite", icon:"✉️",title:"Сайт гостей",      desc:"Создать и отправить"},
         ].map(n=>(
-          <div key={n.tab} style={{...S.card,cursor:"pointer"}} onClick={()=>onNav(n.tab)}>
+          <div key={n.tab} className="td-lift" style={{...S.card,cursor:"pointer"}} onClick={()=>onNav(n.tab)}>
             <div style={{fontSize:26,marginBottom:6}}>{n.icon}</div>
             <div style={{fontWeight:700,fontSize:14,marginBottom:3}}>{n.title}</div>
             <div style={{fontSize:11,color:C.gray}}>{n.desc}</div>
@@ -1113,21 +1549,40 @@ const TABS = [
   {id:"budget",   label:"Бюджет"},
   {id:"vendors",  label:"Подрядчики"},
   {id:"guests",   label:"Гости"},
+  {id:"timing",   label:"Тайминг"},
   {id:"invite",   label:"Сайт гостей"},
 ];
 
 export default function App() {
   const [user,       setUser]       = useState(()=>LS.get("td_user",null));
+  const [role,       setRole]       = useState(()=>LS.get("td_role","couple")); // couple | agency
+  const [agencyWeddings, setAgencyWeddings] = useState(()=>LS.get("td_agency_weddings",[
+    {id:1,couple:"Соня & Никита",  date:"2026-08-15",city:"Москва",guests:80, budget:1860000,status:"В работе",  paid:620000},
+    {id:2,couple:"Мария & Артём",  date:"2026-09-12",city:"Москва",guests:120,budget:2700000,status:"Подготовка",paid:300000},
+    {id:3,couple:"Ольга & Павел",  date:"2026-06-28",city:"Сочи",  guests:45, budget:1100000,status:"Завершена", paid:1100000},
+  ]));
+  const [openWedding, setOpenWedding] = useState(null);
+  const [screen,     setScreen]     = useState("landing"); // landing | minisurvey | auth
+  const [prefill,    setPrefill]    = useState(null); // данные мини-анкеты
   const [tab,        setTab]        = useState("dashboard");
   const [survey,     setSurvey]     = useState(()=>LS.get("td_survey",null));
   const [concept,    setConcept]    = useState(()=>LS.get("td_concept",null));
-  const [cats,       setCats]       = useState(()=>LS.get("td_cats",makeCatsFromBudget(1500000)));
+  const [cats,       setCats]       = useState(()=>LS.get("td_cats",makeCatsFromBudget(1500000,{guests:80,city:"Москва",format:"restaurant"},"comfort")));
   const [guests,     setGuests]     = useState(()=>LS.get("td_guests",[
-    {id:1,name:"Анна Петрова",   side:"Невесты",rsvp:"Придёт",   diet:"Нет",         kids:0,transfer:false},
-    {id:2,name:"Михаил Соколов", side:"Жениха", rsvp:"Ожидает",  diet:"Вегетарианец",kids:1,transfer:true},
-    {id:3,name:"Елена Смирнова", side:"Невесты",rsvp:"Не придёт",diet:"Нет",         kids:0,transfer:false},
+    {id:1,name:"Анна Петрова",   side:"Невесты",rsvp:"Придёт",   diet:"Нет",         kids:0,transfer:false,lodging:false,table:"1",relation:"сестра",inviteName:"Дорогая Анна",seatName:"Анна",hostNote:""},
+    {id:2,name:"Михаил Соколов", side:"Жениха", rsvp:"Ожидает",  diet:"Вегетарианец",kids:1,transfer:true,lodging:true,table:"2",relation:"друг",inviteName:"Уважаемый Михаил",seatName:"Михаил",hostNote:"любит петь"},
+    {id:3,name:"Елена Смирнова", side:"Невесты",rsvp:"Не придёт",diet:"Нет",         kids:0,transfer:false,lodging:false,table:"",relation:"коллега",inviteName:"",seatName:"",hostNote:""},
   ]));
   const [inviteData, setInviteData] = useState(()=>LS.get("td_invite",null));
+  const [timing,     setTiming]     = useState(()=>LS.get("td_timing",[
+    {id:1,block:"before",time:"16:00",title:"Обзвон всех подрядчиков координатором"},
+    {id:2,block:"before",time:"20:00",title:"Подготовить конверты для оплаты команды"},
+    {id:3,block:"day",time:"15:40",title:"ЗАГС"},
+    {id:4,block:"day",time:"16:40",title:"Трансфер"},
+    {id:5,block:"day",time:"17:00",title:"Праздничный банкет"},
+    {id:6,block:"day",time:"21:00",title:"Торт"},
+    {id:7,block:"day",time:"22:00",title:"Завершение мероприятия"},
+  ]));
   const [vendorCat,  setVendorCat]  = useState(null);
   const [showScenarios, setShowScenarios] = useState(false);
 
@@ -1138,6 +1593,9 @@ export default function App() {
   useEffect(()=>{ LS.set("td_cats",cats); },[cats]);
   useEffect(()=>{ LS.set("td_guests",guests); },[guests]);
   useEffect(()=>{ LS.set("td_invite",inviteData); },[inviteData]);
+  useEffect(()=>{ LS.set("td_timing",timing); },[timing]);
+  useEffect(()=>{ LS.set("td_role",role); },[role]);
+  useEffect(()=>{ LS.set("td_agency_weddings",agencyWeddings); },[agencyWeddings]);
 
   const handleSurvey1Complete = useCallback((d) => {
     setSurvey(d);
@@ -1147,8 +1605,11 @@ export default function App() {
 
   const handleScenarioChosen = useCallback((scenario) => {
     const totalBudget = scenario.total;
-    setSurvey(prev => ({...prev, budget: totalBudget, chosenScenario: scenario.tier}));
-    setCats(makeCatsFromBudget(totalBudget));
+    setSurvey(prev => {
+      const next = {...prev, budget: totalBudget, chosenScenario: scenario.tier};
+      setCats(makeCatsFromBudget(totalBudget, next, scenario.tier));
+      return next;
+    });
     setShowScenarios(false);
     setTab("budget");
   },[]);
@@ -1162,32 +1623,80 @@ export default function App() {
   const goVendors = useCallback((catId) => { setVendorCat(catId); setTab("vendors"); },[]);
 
   const logout = () => {
-    ["td_user","td_survey","td_concept","td_cats","td_guests","td_invite","td_txHistory","td_favs","td_contacted"].forEach(k=>LS.del(k));
+    ["td_user","td_survey","td_concept","td_cats","td_guests","td_invite","td_timing","td_txHistory","td_favs","td_contacted"].forEach(k=>LS.del(k));
     setUser(null);
+    setOpenWedding(null);
+    setScreen("landing");
   };
 
   const fullSurvey = survey?{...survey,concept}:null;
 
-  if (!user) return <AuthPage onLogin={u=>setUser(u)}/>;
+  if (!user) {
+    if (screen === "landing")
+      return <LandingPage
+        onStart={()=>{ setRole("couple"); setScreen("minisurvey"); }}
+        onLogin={()=>{ setRole("couple"); setScreen("auth"); }}
+        onAgency={()=>{ setRole("agency"); setScreen("auth"); }}/>;
+    if (screen === "minisurvey")
+      return <MiniSurvey onBack={()=>setScreen("landing")} onDone={(d)=>{ setPrefill(d); setScreen("auth"); }}/>;
+    // auth
+    return <AuthPage prefill={prefill} agency={role==="agency"} onBack={()=>setScreen("landing")} onLogin={(u)=>{
+      // если прошли мини-анкету — сохраняем её как стартовый survey
+      if (prefill) {
+        const seed = {city:prefill.city, guests:prefill.guests, date:prefill.date||"", budget:Number(prefill.budget)||0, season:"", format:"restaurant"};
+        setSurvey(seed);
+      }
+      setUser(u);
+      setTab(role==="agency" ? "agency" : "dashboard");
+    }}/>;
+  }
 
   return (
     <div style={S.app}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+      <style>{`
+        *{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+        button{transition:transform .2s,box-shadow .2s,border-color .2s,color .2s,background .2s}
+        button:active{transform:scale(.97)}
+        input:focus,select:focus,textarea:focus{border-color:${C.gold}!important;box-shadow:0 0 0 3px ${C.goldBg}}
+        @keyframes tdfade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+        .td-page>*{animation:tdfade .6s cubic-bezier(.2,.7,.2,1) both}
+        .td-page>*:nth-child(2){animation-delay:.05s}
+        .td-page>*:nth-child(3){animation-delay:.1s}
+        .td-page>*:nth-child(4){animation-delay:.15s}
+        .td-lift{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
+        .td-lift:hover{transform:translateY(-4px);box-shadow:${SHADOW_HOVER}}
+        ::selection{background:${C.goldBg};color:${C.dark}}
+      `}</style>
       <nav style={S.nav}>
-        <div style={S.logo}>🕊 TotDay</div>
+        <div style={S.logo}>Tot<span style={{color:C.gold}}>Day</span>{role==="agency"&&<span style={{fontFamily:fb,fontSize:11,fontWeight:600,color:C.gold,background:C.goldBg,padding:"2px 8px",borderRadius:6,marginLeft:8,letterSpacing:"0.04em"}}>AGENCY</span>}</div>
         <div style={{display:"flex",gap:2,flexWrap:"wrap"}}>
-          {TABS.filter(t=>t.id!=="scenarios").map(t=>(
-            <button key={t.id} style={S.tab(tab===t.id)} onClick={()=>setTab(t.id)}>{t.label}</button>
-          ))}
+          {role==="agency" ? (
+            <>
+              <button style={S.tab(tab==="agency")} onClick={()=>setTab("agency")}>Кабинет</button>
+              {openWedding && TABS.filter(t=>!["scenarios","dashboard"].includes(t.id)).map(t=>(
+                <button key={t.id} style={S.tab(tab===t.id)} onClick={()=>setTab(t.id)}>{t.label}</button>
+              ))}
+            </>
+          ) : (
+            TABS.filter(t=>t.id!=="scenarios").map(t=>(
+              <button key={t.id} style={S.tab(tab===t.id)} onClick={()=>setTab(t.id)}>{t.label}</button>
+            ))
+          )}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:10}}>
-          {survey?.date&&<span style={{fontSize:11,color:C.teal,fontWeight:700}}>📅 {new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"short"})}</span>}
-          <div style={{width:30,height:30,borderRadius:"50%",background:C.tealBg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,cursor:"pointer",fontWeight:700,color:C.teal}} onClick={logout} title="Выйти">
-            {user.name1?.[0]||"?"}
+          {role==="agency" && openWedding && <span style={{fontSize:12,color:C.gold,fontWeight:600}}>{openWedding.couple}</span>}
+          {role!=="agency" && survey?.date && <span style={{fontSize:11,color:C.gold,fontWeight:600}}>{new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"short"})}</span>}
+          <div style={{width:32,height:32,borderRadius:"50%",background:`linear-gradient(135deg,${C.gold},${C.goldSoft})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,cursor:"pointer",fontWeight:600,color:"#fff",fontFamily:font}} onClick={logout} title="Выйти">
+            {user.name1?.[0]||"А"}
           </div>
         </div>
       </nav>
 
+      {role==="agency" && tab==="agency" && (
+        <AgencyDashboard weddings={agencyWeddings} setWeddings={setAgencyWeddings} onOpen={(w)=>{ setOpenWedding(w); setTab("budget"); }}/>
+      )}
+      {!(role==="agency" && tab==="agency") && (<>
       {tab==="dashboard" && <Dashboard user={user} survey={fullSurvey} cats={cats} guests={guests} onNav={setTab}/>}
       {tab==="survey1"   && <Survey1Page onComplete={handleSurvey1Complete} initial={survey}/>}
       {tab==="scenarios" && survey && <ScenariosPage survey={survey} onChoose={handleScenarioChosen}/>}
@@ -1195,7 +1704,9 @@ export default function App() {
       {tab==="budget"    && <BudgetPage survey={fullSurvey||{city:"Москва",guests:80,budget:1500000,format:"medium"}} cats={cats} setCats={setCats} onGoToVendors={goVendors}/>}
       {tab==="vendors"   && <VendorsPage survey={fullSurvey} initCat={vendorCat}/>}
       {tab==="guests"    && <GuestsPage slug={makeSlug(user)} guests={guests} setGuests={setGuests}/>}
+      {tab==="timing"    && <TimingPage survey={fullSurvey} timing={timing} setTiming={setTiming}/>}
       {tab==="invite"    && <InvitePage survey={fullSurvey} user={user} inviteData={inviteData} setInviteData={setInviteData}/>}
+      </>)}
     </div>
   );
 }
