@@ -2,28 +2,28 @@ import { useState, useEffect, useCallback, Fragment } from "react";
 
 // ─── DESIGN SYSTEM · TotDay Luxury ───────────────────────────────────────────
 const C = {
-  bg:"#FAF7F2", white:"#FFFFFF",
-  sand:"#F2ECE2", lightGray:"#F5F1EC",
-  champ:"#EADCCB", champ2:"#F5EDE1",
-  dark:"#1F1B17", brown:"#1F1B17",
-  ink2:"#46413A", gray:"#9A9490", taupe:"#9A9490",
-  line:"#ECE7E0",
-  blush:"#F7D7D1", blushDark:"#C9847A", blushBg:"#FDF0EE",
-  gold:"#B89B5E", goldSoft:"#D9C9A3", goldBg:"#F6F0E2",
-  teal:"#3D7A6E", tealLight:"#86AE95", tealBg:"#DCEFEA",
-  rose:"#C9847A", roseBg:"#F7D7D1",
+  bg:"#F4F0E9", white:"#FFFFFF",
+  sand:"#F2E6DC", lightGray:"#F4EDE3",
+  champ:"#EBD9C8", champ2:"#F4EDE3",
+  dark:"#221D18", brown:"#221D18",
+  ink2:"#5C554B", gray:"#857E74", taupe:"#948D83",
+  line:"#ECE5DA",
+  blush:"#D2A296", blushDark:"#BD877C", blushBg:"#F4E6E2",
+  gold:"#D9B679", goldSoft:"#E8D4A0", goldBg:"#F4EDD9",
+  teal:"#5E8A7D", tealLight:"#86AE95", tealBg:"#E0EDEA",
+  rose:"#BD877C", roseBg:"#F4E6E2",
 };
-const font  = "'Playfair Display', serif";
-const fb    = "'Inter', system-ui, -apple-system, sans-serif";
-const GLASS = "rgba(255,255,255,0.82)";
-const SHADOW= "0 2px 16px rgba(31,27,23,0.07),0 1px 2px rgba(31,27,23,0.03)";
-const SHADOW_HOVER="0 8px 32px rgba(31,27,23,0.11),0 2px 4px rgba(31,27,23,0.05)";
-const BLUR  = "blur(24px) saturate(1.8)";
+const font  = "'Hanken Grotesk', system-ui, -apple-system, sans-serif";
+const fb    = "'Hanken Grotesk', system-ui, -apple-system, sans-serif";
+const GLASS = "#FFFFFF";
+const SHADOW= "0 1px 2px rgba(33,28,23,0.04),0 14px 30px -20px rgba(33,28,23,0.14)";
+const SHADOW_HOVER="0 1px 2px rgba(33,28,23,0.04),0 20px 40px -18px rgba(33,28,23,0.20)";
+const BLUR  = "none";
 
 const S = {
   app:   { fontFamily:fb, background:C.bg, minHeight:"100vh", color:C.dark },
   page:  { maxWidth:1040, margin:"0 auto", padding:"44px 36px" },
-  card:  { background:GLASS, backdropFilter:BLUR, WebkitBackdropFilter:BLUR, borderRadius:20, padding:28, border:"1px solid rgba(255,255,255,0.9)", boxShadow:SHADOW },
+  card:  { background:C.white, borderRadius:20, padding:28, border:`1px solid ${C.line}`, boxShadow:SHADOW },
   h1:    { fontFamily:font, fontSize:34, color:C.dark, fontWeight:600, letterSpacing:"-0.02em", marginBottom:6 },
   h2:    { fontFamily:font, fontSize:22, color:C.dark, fontWeight:600, letterSpacing:"-0.01em", marginBottom:14 },
   h3:    { fontFamily:font, fontSize:17, color:C.dark, fontWeight:500, marginBottom:10 },
@@ -42,7 +42,7 @@ const S = {
   fill:  (p,over)=>({ height:"100%", width:`${Math.min(Math.max(p,0),100)}%`, borderRadius:3, background:over?C.rose:`linear-gradient(90deg,${C.blush},${C.blushDark})`, transition:"width 1s cubic-bezier(.2,.7,.2,1)" }),
   tab:   (on)=>({ padding:"9px 16px", borderRadius:10, border:"none", cursor:"pointer", background:on?"rgba(255,255,255,0.9)":"transparent", color:on?C.dark:C.gray, fontSize:13.5, fontFamily:fb, fontWeight:on?600:500, transition:"all .18s", boxShadow:on?SHADOW:"none" }),
   logo:  { fontFamily:font, fontSize:26, color:C.dark, fontWeight:600 },
-  nav:   { background:GLASS, backdropFilter:BLUR, WebkitBackdropFilter:BLUR, borderBottom:`1px solid ${C.line}`, padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", height:64, position:"sticky", top:0, zIndex:200 },
+  nav:   { background:"#FBF9F5", borderBottom:`1px solid ${C.line}`, padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", height:64, position:"sticky", top:0, zIndex:200 },
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -197,10 +197,10 @@ function AuthPage({onLogin,prefill,onBack,agency}){
   const upd=k=>e=>setF(p=>({...p,[k]:e.target.value}));
   return(
     <div style={{minHeight:"100vh",background:`linear-gradient(135deg,${C.champ2},${C.bg} 55%,${C.champ})`,display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
       <div style={{...S.card,maxWidth:420,width:"100%"}}>
         <div style={{textAlign:"center",marginBottom:24}}>
-          <div style={{...S.logo,justifyContent:"center",display:"flex",marginBottom:4}}>Tot<span style={{color:C.blushDark}}>Day</span>{agency&&<span style={{fontFamily:fb,fontSize:10,fontWeight:700,color:C.blushDark,background:C.blushBg,padding:"2px 8px",borderRadius:6,marginLeft:8,verticalAlign:"middle"}}>AGENCY</span>}</div>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:2,marginBottom:4}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/>{agency&&<span style={{fontFamily:fb,fontSize:10,fontWeight:700,color:C.blushDark,background:C.blushBg,padding:"2px 8px",borderRadius:6,marginLeft:8}}>AGENCY</span>}</div>
           <p style={{color:C.gray,fontSize:14,marginTop:8}}>{agency?"Кабинет для свадебного агентства":prefill?"Почти готово — создайте аккаунт":"Ваша свадьба, понятная и красивая"}</p>
         </div>
         {prefill&&!agency&&(<div style={{background:C.blushBg,borderRadius:12,padding:"10px 14px",marginBottom:18,fontSize:13,color:C.ink2,textAlign:"center"}}>✓ {prefill.city} · {prefill.guests} гостей · смета готова</div>)}
@@ -247,12 +247,12 @@ function LandingPage({onStart,onLogin,onAgency}){
   ];
   return(
     <div style={{background:C.bg,minHeight:"100vh",color:C.dark,fontFamily:fb}}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
       <style>{`*{-webkit-font-smoothing:antialiased}button{transition:all .2s}button:active{transform:scale(.97)}@keyframes lf{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}.lf{animation:lf .7s cubic-bezier(.2,.7,.2,1) both}.lf2{animation:lf .7s .1s cubic-bezier(.2,.7,.2,1) both}.lf3{animation:lf .7s .2s cubic-bezier(.2,.7,.2,1) both}.lcard{transition:transform .25s,box-shadow .25s}.lcard:hover{transform:translateY(-4px);box-shadow:${SHADOW_HOVER}}`}</style>
       {/* NAV */}
       <nav style={{...S.nav,maxWidth:"none",position:"sticky",top:0,zIndex:200}}>
         <div style={{maxWidth:1200,margin:"0 auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-          <div style={S.logo}>Tot<span style={{color:C.blushDark}}>Day</span></div>
+          <div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
           <div style={{display:"flex",gap:24,alignItems:"center"}}>
             {["О проекте","Возможности","Площадки","Подрядчики"].map(l=>(
               <button key={l} style={{background:"none",border:"none",color:C.gray,fontSize:14,fontWeight:500,cursor:"pointer",fontFamily:fb}}>{l}</button>
@@ -357,7 +357,7 @@ function LandingPage({onStart,onLogin,onAgency}){
       </section>
 
       <footer style={{borderTop:`1px solid ${C.line}`,padding:"28px 48px",display:"flex",alignItems:"center",justifyContent:"space-between",color:C.gray,fontSize:13}}>
-        <div style={S.logo}>Tot<span style={{color:C.blushDark}}>Day</span></div>
+        <div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
         <span>© 2026 TotDay · Ваша свадьба, понятная и красивая</span>
       </footer>
     </div>
@@ -382,7 +382,7 @@ function MiniSurvey({onDone,onBack}){
   return(
     <div style={{minHeight:"100vh",background:`linear-gradient(135deg,${C.champ2},${C.bg} 55%,${C.champ})`,display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
       <div style={{maxWidth:520,width:"100%"}}>
-        <div style={{textAlign:"center",marginBottom:8}}><div style={S.logo}>Tot<span style={{color:C.blushDark}}>Day</span></div></div>
+        <div style={{textAlign:"center",marginBottom:8}}><div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div></div>
         <div style={{textAlign:"center",fontSize:12,color:C.blushDark,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:18}}>Шаг {step+1} из {steps.length}</div>
         <div style={{height:4,background:C.sand,borderRadius:2,marginBottom:28,overflow:"hidden"}}><div style={{height:"100%",width:`${(step+1)/steps.length*100}%`,background:`linear-gradient(90deg,${C.blush},${C.blushDark})`,borderRadius:2,transition:"width .4s"}}/></div>
         <div style={{...S.card,padding:"36px 28px"}}>
@@ -1103,18 +1103,18 @@ const SIDE_TABS=[
 function SideItem({id,label,icon,active,setTab}){
   const on=active===id;
   return(
-    <button onClick={()=>setTab(id)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",borderRadius:12,border:"none",background:on?C.white:"transparent",color:on?C.dark:C.gray,cursor:"pointer",fontSize:13.5,fontFamily:fb,fontWeight:on?600:400,transition:"all .18s",textAlign:"left",width:"100%",boxShadow:on?SHADOW:"none"}}>
-      <span style={{fontSize:16,width:22,textAlign:"center"}}>{icon}</span>
-      <span>{label}</span>
+    <button onClick={()=>setTab(id)} style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:10,padding:"11px 14px",borderRadius:12,border:on?`1px solid ${C.line}`:"1px solid transparent",background:on?C.white:"transparent",color:on?C.dark:C.gray,cursor:"pointer",fontSize:13.5,fontFamily:fb,fontWeight:on?600:500,transition:"all .15s",textAlign:"left",width:"100%",boxShadow:on?SHADOW:"none"}}>
+      <span style={{display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:15,width:20,textAlign:"center"}}>{icon}</span><span>{label}</span></span>
+      {on&&<span style={{width:6,height:6,borderRadius:"50%",background:C.blushDark,flexShrink:0}}/>}
     </button>
   );
 }
 
 function Sidebar({tab,setTab,role,user,survey,openWedding,logout}){
   return(
-    <aside style={{width:232,minHeight:"100vh",background:"rgba(253,251,248,0.96)",backdropFilter:BLUR,WebkitBackdropFilter:BLUR,borderRight:`1px solid ${C.line}`,display:"flex",flexDirection:"column",padding:"28px 14px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0,zIndex:100}}>
+    <aside style={{width:250,minHeight:"100vh",background:"#FBF9F5",borderRight:`1px solid ${C.line}`,display:"flex",flexDirection:"column",padding:"30px 18px 22px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0,zIndex:100}}>
       <div style={{padding:"0 10px 28px"}}>
-        <div style={{...S.logo,display:"flex",alignItems:"baseline",gap:2}}>Tot<span style={{color:C.blushDark}}>Day</span></div>
+        <div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
         {role==="agency"&&<div style={{fontSize:10,fontFamily:fb,color:C.blushDark,fontWeight:700,letterSpacing:"0.12em",textTransform:"uppercase",marginTop:2}}>AGENCY</div>}
       </div>
       <nav style={{flex:1,display:"flex",flexDirection:"column",gap:2}}>
@@ -1436,7 +1436,7 @@ export default function App(){
 
   return(
     <div style={{...S.app,display:"flex",minHeight:"100vh"}}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
       <style>{STYLES}</style>
       <Sidebar tab={tab} setTab={handleSetTab} role={role} user={user} survey={survey} openWedding={openWedding} logout={logout}/>
       <main style={{flex:1,overflow:"auto",minHeight:"100vh",background:C.bg}}>
