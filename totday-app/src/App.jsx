@@ -493,18 +493,16 @@ function ScenariosPage({survey,onChoose}){
   );
 }
 
-// ─── SURVEY 2 ─────────────────────────────────────────────────────────────────
-function Survey2Page({onComplete,initial}){
-  const[step,setStep]=useState(0);
-  const[d,setD]=useState(()=>({personality:[],feelings:[],memory:"",priorities:[],dontWant:[],guestType:"",guestComfort:3,likedPhotos:[],decorLevel:"",decorZones:[],program:[],nature:[],mustHave:"",...(initial||{})}));
-  const set=(k,v)=>setD(p=>({...p,[k]:v}));
-  const toggle=(k,v,max)=>{const arr=d[k];if(arr.includes(v)){set(k,arr.filter(x=>x!==v));return;}if(max&&arr.length>=max)return;set(k,[...arr,v]);};
-  const Chips=({field,max,opts,red})=>(
+// ─── SURVEY 2 HELPERS (top-level to avoid remount on parent re-render) ────────
+function Chips({d,toggle,field,max,opts,red}){
+  return(
     <div style={{display:"flex",flexWrap:"wrap",gap:8,marginTop:8}}>
       {opts.map(([v,l])=>{const on=d[field].includes(v);const dis=!on&&max&&d[field].length>=max;return<span key={v} style={{...(red?S.chipR(on):S.chip(on)),opacity:dis?0.4:1,cursor:dis?"not-allowed":"pointer"}} onClick={()=>!dis&&toggle(field,v,max)}>{l}</span>;})}
     </div>
   );
-  const Cards=({field,opts})=>(
+}
+function Cards({d,set,field,opts}){
+  return(
     <div style={{display:"flex",flexDirection:"column",gap:8,marginTop:8}}>
       {opts.map(([v,l,sub])=>(
         <div key={v} onClick={()=>set(field,v)} style={{...S.card,padding:"13px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12,border:`2px solid ${d[field]===v?C.blushDark:C.line}`,background:d[field]===v?C.blushBg:GLASS}}>
@@ -514,13 +512,20 @@ function Survey2Page({onComplete,initial}){
       ))}
     </div>
   );
+}
+// ─── SURVEY 2 ─────────────────────────────────────────────────────────────────
+function Survey2Page({onComplete,initial}){
+  const[step,setStep]=useState(0);
+  const[d,setD]=useState(()=>({personality:[],feelings:[],memory:"",priorities:[],dontWant:[],guestType:"",guestComfort:3,likedPhotos:[],decorLevel:"",decorZones:[],program:[],nature:[],mustHave:"",...(initial||{})}));
+  const set=(k,v)=>setD(p=>({...p,[k]:v}));
+  const toggle=(k,v,max)=>{const arr=d[k];if(arr.includes(v)){set(k,arr.filter(x=>x!==v));return;}if(max&&arr.length>=max)return;set(k,[...arr,v]);};
   const STEPS=[
-    {title:"Какие вы как пара?",sub:"До 3 вариантов",body:<Chips field="personality" max={3} opts={[["party","🎉 Шумные вечеринки"],["cozy","🏡 Уютные вечера"],["travel","✈️ Путешествия"],["gastro","🍽 Гастрономия"],["aesthetic","✨ Красивая эстетика"],["music","🎵 Музыка и танцы"],["unique","🌀 Необычные впечатления"],["nature","🌿 Природа"],["urban","🌆 Городская атмосфера"]]}/>},
-    {title:"Что хотите чувствовать?",sub:"До 3 вариантов",body:<Chips field="feelings" max={3} opts={[["fun","Веселье"],["romance","Романтику"],["cozy","Уют"],["wow","Вау-эффект"],["calm","Спокойствие"],["elegance","Элегантность"],["freedom","Свободу"],["warmth","Душевность"],["celebration","Праздник"]]}/>},
-    {title:"Что запомнят гости?",sub:"Один вариант",body:<Cards field="memory" opts={[["ceremony","💒 Церемония"],["atmosphere","✨ Атмосфера"],["dance","💃 Танцы"],["food","🍽 Еда"],["beauty","💐 Красота"],["emotions","❤️ Эмоции"],["talk","🥂 Общение"]]}/>},
-    {title:"Что важнее всего?",sub:"До 5 — сюда концентрируем бюджет",body:<Chips field="priorities" max={5} opts={[["food","🍽 Еда"],["photo","📷 Фото"],["video","🎬 Видео"],["music","🎵 Музыка"],["dance","💃 Танцы"],["decor","💐 Декор"],["ceremony","💒 Церемония"],["guests","👥 Комфорт гостей"],["budget","💰 Экономия"]]}/>},
-    {title:"Что точно НЕ хотите?",sub:"Передадим подрядчикам",body:<Chips field="dontWant" red opts={[["contests","Пошлые конкурсы"],["toasts","Длинные тосты"],["ransom","Выкуп"],["oldhost","Тамада старого формата"],["official","Много официоза"],["boring","Банкет как у всех"],["karaoke","Караоке"],["kids","Детские активности"],["envelopes","Сбор денег в конвертах"]]}/>},
-    {title:"Кто ваши гости?",sub:"Влияет на программу",body:<Cards field="guestType" opts={[["friends","👫 В основном друзья"],["friendsfamily","👨‍👩‍👧 Друзья и родители"],["family","👴 Большая семья"],["mixed","🏢 Семья и коллеги"],["diverse","🌍 Смешанная компания"]]}/>},
+    {title:"Какие вы как пара?",sub:"До 3 вариантов",body:<Chips d={d} toggle={toggle} field="personality" max={3} opts={[["party","🎉 Шумные вечеринки"],["cozy","🏡 Уютные вечера"],["travel","✈️ Путешествия"],["gastro","🍽 Гастрономия"],["aesthetic","✨ Красивая эстетика"],["music","🎵 Музыка и танцы"],["unique","🌀 Необычные впечатления"],["nature","🌿 Природа"],["urban","🌆 Городская атмосфера"]]}/>},
+    {title:"Что хотите чувствовать?",sub:"До 3 вариантов",body:<Chips d={d} toggle={toggle} field="feelings" max={3} opts={[["fun","Веселье"],["romance","Романтику"],["cozy","Уют"],["wow","Вау-эффект"],["calm","Спокойствие"],["elegance","Элегантность"],["freedom","Свободу"],["warmth","Душевность"],["celebration","Праздник"]]}/>},
+    {title:"Что запомнят гости?",sub:"Один вариант",body:<Cards d={d} set={set} field="memory" opts={[["ceremony","💒 Церемония"],["atmosphere","✨ Атмосфера"],["dance","💃 Танцы"],["food","🍽 Еда"],["beauty","💐 Красота"],["emotions","❤️ Эмоции"],["talk","🥂 Общение"]]}/>},
+    {title:"Что важнее всего?",sub:"До 5 — сюда концентрируем бюджет",body:<Chips d={d} toggle={toggle} field="priorities" max={5} opts={[["food","🍽 Еда"],["photo","📷 Фото"],["video","🎬 Видео"],["music","🎵 Музыка"],["dance","💃 Танцы"],["decor","💐 Декор"],["ceremony","💒 Церемония"],["guests","👥 Комфорт гостей"],["budget","💰 Экономия"]]}/>},
+    {title:"Что точно НЕ хотите?",sub:"Передадим подрядчикам",body:<Chips d={d} toggle={toggle} field="dontWant" red opts={[["contests","Пошлые конкурсы"],["toasts","Длинные тосты"],["ransom","Выкуп"],["oldhost","Тамада старого формата"],["official","Много официоза"],["boring","Банкет как у всех"],["karaoke","Караоке"],["kids","Детские активности"],["envelopes","Сбор денег в конвертах"]]}/>},
+    {title:"Кто ваши гости?",sub:"Влияет на программу",body:<Cards d={d} set={set} field="guestType" opts={[["friends","👫 В основном друзья"],["friendsfamily","👨‍👩‍👧 Друзья и родители"],["family","👴 Большая семья"],["mixed","🏢 Семья и коллеги"],["diverse","🌍 Смешанная компания"]]}/>},
     {title:"Важность комфорта гостей",sub:"Трансфер, отель, детская зона...",body:(
       <div style={{marginTop:16}}>
         <div style={{display:"flex",justifyContent:"space-between",gap:8}}>
@@ -541,10 +546,10 @@ function Survey2Page({onComplete,initial}){
         );})}
       </div>
     )},
-    {title:"Уровень декора",sub:"Влияет на бюджет",body:<Cards field="decorLevel" opts={[["min","🌿 Минимум","Чисто, акцент на пространстве"],["nice","✨ Аккуратно","Продуманные детали, флористика"],["wow","💐 Впечатляюще","Объёмные композиции, свет"],["grand","🏛 Максимум","Полная трансформация пространства"]]}/>},
-    {title:"Какие зоны оформить?",sub:"Каждая зона войдёт в смету",body:<Chips field="decorZones" opts={[["ceremony","💒 Зона церемонии"],["welcome","🥂 Welcome-зона"],["sweet","🍰 Сладкий стол"],["headtable","💍 Стол молодожёнов"],["photo","📸 Фотозона"],["gifts","🎁 Зона подарков"],["guest","🍽 Гостевые столы"],["lounge","🛋 Лаунж-зона"]]}/>},
-    {title:"Что включить в программу?",sub:"Дополнительные впечатления для гостей",body:<Chips field="program" opts={[["photobooth","📸 Фотобудка"],["fireworks","🎆 Фейерверк"],["live","🎸 Живая музыка"],["kids","🧸 Аниматор"],["fountains","❄️ Холодные фонтаны"],["cover","🎤 Кавер-группа"],["show","🎭 Шоу-программа"]]}/>},
-    {title:"Природные элементы?",sub:"Для подбора площадки",body:<Chips field="nature" opts={[["water","🌊 Водоём"],["forest","🌲 Лес"],["park","🌳 Парк"],["terrace","☀️ Терраса"],["none","🏛 Не важно"]]}/>},
+    {title:"Уровень декора",sub:"Влияет на бюджет",body:<Cards d={d} set={set} field="decorLevel" opts={[["min","🌿 Минимум","Чисто, акцент на пространстве"],["nice","✨ Аккуратно","Продуманные детали, флористика"],["wow","💐 Впечатляюще","Объёмные композиции, свет"],["grand","🏛 Максимум","Полная трансформация пространства"]]}/>},
+    {title:"Какие зоны оформить?",sub:"Каждая зона войдёт в смету",body:<Chips d={d} toggle={toggle} field="decorZones" opts={[["ceremony","💒 Зона церемонии"],["welcome","🥂 Welcome-зона"],["sweet","🍰 Сладкий стол"],["headtable","💍 Стол молодожёнов"],["photo","📸 Фотозона"],["gifts","🎁 Зона подарков"],["guest","🍽 Гостевые столы"],["lounge","🛋 Лаунж-зона"]]}/>},
+    {title:"Что включить в программу?",sub:"Дополнительные впечатления для гостей",body:<Chips d={d} toggle={toggle} field="program" opts={[["photobooth","📸 Фотобудка"],["fireworks","🎆 Фейерверк"],["live","🎸 Живая музыка"],["kids","🧸 Аниматор"],["fountains","❄️ Холодные фонтаны"],["cover","🎤 Кавер-группа"],["show","🎭 Шоу-программа"]]}/>},
+    {title:"Природные элементы?",sub:"Для подбора площадки",body:<Chips d={d} toggle={toggle} field="nature" opts={[["water","🌊 Водоём"],["forest","🌲 Лес"],["park","🌳 Парк"],["terrace","☀️ Терраса"],["none","🏛 Не важно"]]}/>},
     {title:"Что обязательно должно быть?",sub:"Живая группа, закат, сигарная зона...",body:<textarea style={{...S.input,minHeight:110,resize:"vertical",fontSize:14,marginTop:8}} placeholder={"Например:\n— Живая группа\n— Бар с коктейлями\n— Церемония на закате"} value={d.mustHave} onChange={e=>set("mustHave",e.target.value)}/>},
   ];
   const cur=STEPS[step];
@@ -1405,13 +1410,19 @@ export default function App(){
   },[survey]);
   const handleConcept=useCallback((d)=>{setConcept(d);setSurvey(prev=>prev?{...prev,concept:d}:null);setTab("budget");},[]);
   const goVendors=useCallback((catId)=>{setVendorCat(catId);setTab("vendors");},[]);
+  const handleSetTab=useCallback((newTab)=>{
+    if(newTab==="agency"&&openWedding){
+      setAgencyWeddings(prev=>prev.map(w=>w.id===openWedding.id?{...w,_cats:cats,_guests:guests,_timing:timing}:w));
+      setOpenWedding(null);
+    }
+    setTab(newTab);
+  },[openWedding,cats,guests,timing]);
   const logout=()=>{
     ["td_user","td_survey","td_concept","td_cats","td_guests","td_invite","td_timing","td_txHistory","td_favs","td_contacted","td_role","td_agency_weddings"].forEach(k=>LS.del(k));
     setUser(null);setRole("couple");setOpenWedding(null);setScreen("landing");
   };
   const fullSurvey=survey?{...survey,concept}:null;
 
-  const FONTS=`<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>`;
   const STYLES=`*{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}button{transition:all .2s}button:active{transform:scale(.97)}input:focus,select:focus,textarea:focus{border-color:${C.blushDark}!important;box-shadow:0 0 0 3px ${C.blushBg}}@keyframes tdfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.td-page>*{animation:tdfade .5s cubic-bezier(.2,.7,.2,1) both}.td-page>*:nth-child(2){animation-delay:.04s}.td-page>*:nth-child(3){animation-delay:.08s}.td-page>*:nth-child(4){animation-delay:.12s}`;
 
   if(!user){
@@ -1427,7 +1438,7 @@ export default function App(){
     <div style={{...S.app,display:"flex",minHeight:"100vh"}}>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
       <style>{STYLES}</style>
-      <Sidebar tab={tab} setTab={setTab} role={role} user={user} survey={survey} openWedding={openWedding} logout={logout}/>
+      <Sidebar tab={tab} setTab={handleSetTab} role={role} user={user} survey={survey} openWedding={openWedding} logout={logout}/>
       <main style={{flex:1,overflow:"auto",minHeight:"100vh",background:C.bg}}>
         {role==="agency"&&tab==="agency"&&<AgencyDashboard weddings={agencyWeddings} setWeddings={setAgencyWeddings} onOpen={(w)=>{setOpenWedding(w);setCats(w._cats||makeCatsFromBudget(w.budget||1500000,{guests:w.guests,city:w.city,format:"restaurant"},"comfort"));setGuests(w._guests||[]);setTiming(w._timing||[]);setTab("budget");}}/>}
         {!(role==="agency"&&tab==="agency")&&(<>
@@ -1445,4 +1456,3 @@ export default function App(){
     </div>
   );
 }
-
