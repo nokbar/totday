@@ -232,134 +232,99 @@ function AuthPage({onLogin,prefill,onBack,agency}){
 
 // ─── LANDING ──────────────────────────────────────────────────────────────────
 function LandingPage({onStart,onLogin,onAgency}){
-  const features=[
-    {icon:"🏛",t:"Площадки",d:"Тысячи мест для вашей свадьбы"},
-    {icon:"🤝",t:"Подрядчики",d:"Проверенные профессионалы"},
-    {icon:"💰",t:"Бюджет",d:"Удобный планер расходов"},
-    {icon:"👥",t:"Гости",d:"Список, приглашения и ответы"},
-    {icon:"✉️",t:"Сайт гостей",d:"Красивый сайт за 6 минут"},
-  ];
-  const cats=[
-    {icon:"🌿",label:"Подберите идеальную площадку",bg:`linear-gradient(135deg,${C.champ},${C.sand})`},
-    {icon:"🤝",label:"Найдите своих подрядчиков",bg:`linear-gradient(135deg,${C.blush},${C.champ})`},
-    {icon:"💰",label:"Планируйте бюджет без стресса",bg:`linear-gradient(135deg,${C.tealBg},${C.champ})`},
-    {icon:"✉️",label:"Создайте сайт для гостей",bg:`linear-gradient(135deg,${C.sand},${C.blush})`},
+  const featureCards=[
+    {label:"Площадки",sub:"Тысячи мест под формат",href:"vendors",bg:"linear-gradient(150deg,#F5EDE1,#EFE2D0)",svg:<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#9A7656" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V10l9-6 9 6v11"/><path d="M3 21h18"/><path d="M9 21v-6a3 3 0 0 1 6 0v6"/></svg>},
+    {label:"Подрядчики",sub:"Проверенные профи",href:"vendors",bg:"linear-gradient(150deg,#F6E9E4,#EFDBD3)",svg:<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#B07866" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="5.4"/><path d="M9 12.6L7.5 21l4.5-2.6L16.5 21 15 12.6"/></svg>},
+    {label:"Бюджет",sub:"Смета и трекер расходов",href:"budget",bg:"linear-gradient(150deg,#F3EDE3,#ECE3D4)",svg:<svg width="54" height="54" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#E2C9B2" strokeWidth="2.6"/><path d="M12 3a9 9 0 0 1 8.3 12.4" stroke="#B0573A" strokeWidth="2.6" strokeLinecap="round"/></svg>},
+    {label:"Гости",sub:"Список и подтверждения",href:"guests",bg:"linear-gradient(150deg,#ECF1EC,#E0EBE2)",svg:<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#5E8A7D" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="9" r="3.3"/><path d="M3.2 19.5a5.8 5.8 0 0 1 11.6 0"/><circle cx="17" cy="8" r="2.6" stroke="#9CC0AE"/><path d="M16.4 13.3a5 5 0 0 1 4.4 5" stroke="#9CC0AE"/></svg>},
+    {label:"Сайт гостей",sub:"Приглашение за 6 минут",href:"invite",bg:"linear-gradient(150deg,#F5EDE1,#EFE2D0)",svg:<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#9A7656" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg>},
   ];
   return(
-    <div style={{background:C.bg,minHeight:"100vh",color:C.dark,fontFamily:fb}}>
-      <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-      <style>{`*{-webkit-font-smoothing:antialiased}button{transition:all .2s}button:active{transform:scale(.97)}@keyframes lf{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}.lf{animation:lf .7s cubic-bezier(.2,.7,.2,1) both}.lf2{animation:lf .7s .1s cubic-bezier(.2,.7,.2,1) both}.lf3{animation:lf .7s .2s cubic-bezier(.2,.7,.2,1) both}.lcard{transition:transform .25s,box-shadow .25s}.lcard:hover{transform:translateY(-4px);box-shadow:${SHADOW_HOVER}}`}</style>
+    <div style={{background:C.bg,minHeight:"100vh",color:C.dark,fontFamily:fb,WebkitFontSmoothing:"antialiased"}}>
+      <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+      <style>{`*{-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}.lcard{transition:all .2s}.lcard:hover{transform:translateY(-4px);box-shadow:0 22px 44px -22px rgba(33,28,23,.26)}`}</style>
+
       {/* NAV */}
-      <nav style={{...S.nav,maxWidth:"none",position:"sticky",top:0,zIndex:200}}>
-        <div style={{maxWidth:1200,margin:"0 auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-          <div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
-          <div style={{display:"flex",gap:24,alignItems:"center"}}>
-            {["О проекте","Возможности","Площадки","Подрядчики"].map(l=>(
-              <button key={l} style={{background:"none",border:"none",color:C.gray,fontSize:14,fontWeight:500,cursor:"pointer",fontFamily:fb}}>{l}</button>
-            ))}
+      <nav style={{position:"sticky",top:0,zIndex:50,background:"rgba(251,249,245,.86)",backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)",borderBottom:`1px solid ${C.line}`}}>
+        <div style={{maxWidth:1200,margin:"0 auto",padding:"0 40px",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:1}}><span style={{fontSize:22,fontWeight:700,letterSpacing:"-.04em"}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
+          <div style={{display:"flex",gap:28,alignItems:"center"}}>
+            {["Возможности","Площадки","Подрядчики","О проекте"].map(l=><span key={l} style={{fontSize:13.5,fontWeight:500,color:C.gray,cursor:"pointer"}}>{l}</span>)}
+            <span style={{width:1,height:18,background:"#E2DACB",display:"inline-block"}}/>
+            <span style={{fontSize:13.5,fontWeight:600,color:"#A66B60",cursor:"pointer"}} onClick={onAgency}>Для агентств</span>
           </div>
-          <div style={{display:"flex",gap:10}}>
-            <button style={{background:"none",border:"none",color:C.gray,fontSize:13.5,fontWeight:600,cursor:"pointer",fontFamily:fb}} onClick={onAgency}>Для агентств</button>
-            <button style={{...S.btn,padding:"10px 22px",fontSize:13}} onClick={onLogin}>Войти</button>
-          </div>
+          <button style={{...S.btn,padding:"10px 22px",fontSize:13}} onClick={onLogin}>Войти</button>
         </div>
       </nav>
 
       {/* HERO */}
-      <section style={{position:"relative",overflow:"hidden",background:`linear-gradient(160deg,${C.white} 0%,${C.blush} 40%,${C.champ} 70%,${C.tealBg} 100%)`,minHeight:620}}>
-        <div style={{maxWidth:1200,margin:"0 auto",padding:"80px 48px",display:"grid",gridTemplateColumns:"1fr 420px",gap:60,alignItems:"center"}}>
-          <div>
-            <div className="lf" style={{fontSize:12,letterSpacing:"0.18em",textTransform:"uppercase",color:C.blushDark,fontWeight:600,marginBottom:16}}>Ваша история. Ваш день.</div>
-            <h1 className="lf2" style={{fontFamily:font,fontSize:"clamp(38px,5.5vw,66px)",lineHeight:1.05,letterSpacing:"-0.025em",fontWeight:600,margin:"0 0 22px",color:C.dark}}>
-              Планируйте свадьбу<br/><span style={{fontStyle:"italic",color:C.blushDark}}>мечты</span> вместе с TotDay
-            </h1>
-            <p className="lf2" style={{fontSize:17,color:C.ink2,lineHeight:1.65,marginBottom:36,maxWidth:480}}>Всё, что нужно для идеальной свадьбы — в одном месте. Красиво, удобно и с любовью.</p>
-            <div className="lf3" style={{display:"flex",gap:12,flexWrap:"wrap"}}>
-              <button style={{...S.btn,padding:"15px 36px",fontSize:15}} onClick={onStart}>Начать планирование</button>
-              <button style={{...S.btnO,padding:"15px 30px",fontSize:15}} onClick={onLogin}>Посмотреть возможности</button>
-            </div>
-          </div>
-          {/* Right: photo + countdown */}
-          <div style={{position:"relative"}}>
-            <div style={{borderRadius:24,overflow:"hidden",background:`linear-gradient(160deg,${C.champ},${C.blush})`,height:400,display:"flex",alignItems:"center",justifyContent:"center",fontSize:80,boxShadow:SHADOW}}>
-              💑
-            </div>
-            <div style={{position:"absolute",bottom:-20,right:-20,background:GLASS,backdropFilter:BLUR,WebkitBackdropFilter:BLUR,borderRadius:20,padding:"20px 28px",boxShadow:SHADOW,border:"1px solid rgba(255,255,255,0.9)",textAlign:"center"}}>
-              <div style={{fontSize:11,color:C.gray,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>До вашей свадьбы</div>
-              <div style={{fontFamily:font,fontSize:52,fontWeight:700,color:C.dark,lineHeight:1}}>423</div>
-              <div style={{fontSize:13,color:C.gray,marginTop:4}}>14 августа 2027</div>
+      <section style={{position:"relative",overflow:"hidden",minHeight:"calc(100vh - 66px)",display:"flex",alignItems:"center",backgroundImage:"linear-gradient(90deg,rgba(247,233,226,.96) 0%,rgba(247,233,226,.7) 34%,rgba(247,233,226,.15) 56%,rgba(247,233,226,0) 72%)",backgroundSize:"cover",backgroundPosition:"center"}}>
+        <div style={{maxWidth:1240,margin:"0 auto",padding:"48px 40px",width:"100%"}}>
+          <div style={{maxWidth:560}}>
+            <div style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"#A66B60",fontWeight:600,marginBottom:22}}>Планируйте легко · Празднуйте красиво</div>
+            <h1 style={{fontSize:"clamp(40px,5.5vw,66px)",lineHeight:1.02,letterSpacing:"-.035em",fontWeight:700,margin:"0 0 24px"}}>Создайте<br/>тот самый день</h1>
+            <p style={{fontSize:18,lineHeight:1.6,color:C.ink2,maxWidth:470,margin:"0 0 36px"}}>Современный способ организовать свадьбу. Бюджет, подрядчики, площадки и план подготовки — в одном месте.</p>
+            <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+              <button style={{...S.btn,padding:"16px 36px",fontSize:15}} onClick={onStart}>Начать планирование</button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FEATURES ROW */}
-      <section style={{maxWidth:1200,margin:"0 auto",padding:"56px 48px"}}>
-        <div style={{display:"flex",gap:32,justifyContent:"center",flexWrap:"wrap"}}>
-          {features.map(f=>(
-            <div key={f.t} style={{textAlign:"center",minWidth:100}}>
-              <div style={{width:56,height:56,borderRadius:16,background:GLASS,backdropFilter:BLUR,WebkitBackdropFilter:BLUR,border:`1px solid ${C.line}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,margin:"0 auto 10px",boxShadow:SHADOW}}>{f.icon}</div>
-              <div style={{fontSize:13,fontWeight:600,color:C.dark,marginBottom:3}}>{f.t}</div>
-              <div style={{fontSize:11,color:C.gray,maxWidth:90}}>{f.d}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CATEGORIES GRID */}
-      <section style={{maxWidth:1200,margin:"0 auto",padding:"0 48px 72px"}}>
+      {/* FEATURES */}
+      <section style={{maxWidth:1200,margin:"0 auto",padding:"52px 40px 72px"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:24}}>
-          <h2 style={{fontFamily:font,fontSize:28,fontWeight:600,letterSpacing:"-0.02em"}}>Всё для вашей идеальной свадьбы</h2>
-          <button style={{background:"none",border:"none",color:C.gray,fontSize:13,cursor:"pointer"}}>Смотреть возможности →</button>
+          <h2 style={{fontSize:30,fontWeight:700,letterSpacing:"-.025em",margin:0}}>Всё для вашего дня</h2>
+          <span style={{fontSize:13,color:"#A66B60",fontWeight:600,cursor:"pointer"}}>Смотреть возможности →</span>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
-          {cats.map((c,i)=>(
-            <div key={i} className="lcard" onClick={onStart} style={{borderRadius:20,overflow:"hidden",cursor:"pointer",boxShadow:SHADOW}}>
-              <div style={{height:160,background:c.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:52}}>{c.icon}</div>
-              <div style={{padding:"14px 18px",background:C.white}}>
-                <div style={{fontSize:14,fontWeight:600,color:C.dark}}>{c.label}</div>
-              </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:16}}>
+          {featureCards.map(fc=>(
+            <div key={fc.label} className="lcard" onClick={onLogin} style={{border:`1px solid #EBE4D8`,borderRadius:20,overflow:"hidden",background:C.white,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)",cursor:"pointer"}}>
+              <div style={{height:150,background:fc.bg,display:"flex",alignItems:"center",justifyContent:"center"}}>{fc.svg}</div>
+              <div style={{padding:"15px 17px"}}><div style={{fontSize:14,fontWeight:600}}>{fc.label}</div><div style={{fontSize:11.5,color:"#948D83",marginTop:3}}>{fc.sub}</div></div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* STATS + SOCIAL PROOF */}
-      <section style={{background:`linear-gradient(135deg,${C.champ2},${C.white} 40%,${C.blush})`,padding:"72px 48px"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center"}}>
+      {/* MISSION + STATS */}
+      <section style={{background:"linear-gradient(135deg,#F2ECE2 0%,#FFFFFF 42%,#F5E9E2 100%)",borderTop:`1px solid ${C.line}`,borderBottom:`1px solid ${C.line}`}}>
+        <div style={{maxWidth:1200,margin:"0 auto",padding:"72px 40px",display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center"}}>
           <div>
-            <h2 style={{fontFamily:font,fontSize:"clamp(26px,4vw,40px)",fontWeight:600,letterSpacing:"-0.02em",marginBottom:16}}>TotDay делает подготовку к свадьбе вдохновляющей</h2>
-            <p style={{fontSize:16,color:C.ink2,lineHeight:1.65,marginBottom:36}}>Присоединяйтесь к тысячам пар, которые уже планируют свой идеальный день.</p>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}}>
-              {[["10 000+","пар с нами"],["5 000+","площадок"],["2 000+","проверенных подрядчиков"],["98%","довольных пользователей"]].map(([n,l])=>(
-                <div key={l}>
-                  <div style={{fontFamily:font,fontSize:32,fontWeight:700,color:C.dark,marginBottom:2}}>{n}</div>
-                  <div style={{fontSize:13,color:C.gray}}>{l}</div>
-                </div>
+            <h2 style={{fontSize:38,fontWeight:700,letterSpacing:"-.025em",margin:"0 0 16px",lineHeight:1.1}}>TotDay — место, где рождаются свадьбы</h2>
+            <p style={{fontSize:16,color:C.ink2,lineHeight:1.6,margin:"0 0 36px"}}>Тысячи пар уже планируют свой день с TotDay — спокойно, красиво и с любовью к деталям.</p>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:26}}>
+              {[["10 000+","пар с нами"],["5 000+","площадок"],["2 000+","подрядчиков"],["98%","довольных пользователей"]].map(([n,l])=>(
+                <div key={l}><div style={{fontSize:34,fontWeight:700,letterSpacing:"-.02em"}}>{n}</div><div style={{fontSize:13,color:"#948D83",marginTop:2}}>{l}</div></div>
               ))}
             </div>
           </div>
-          <div style={{display:"flex",flexDirection:"column",gap:14}}>
-            <div style={{...S.card,padding:"20px 24px"}}>
-              <div style={{display:"flex",gap:3,marginBottom:8}}>{"★★★★★".split("").map((s,i)=><span key={i} style={{color:C.gold,fontSize:16}}>{s}</span>)}</div>
-              <p style={{fontSize:14,color:C.ink2,lineHeight:1.6,marginBottom:10}}>"TotDay помог нам организовать свадьбу мечты! Очень удобно и красиво."</p>
-              <div style={{fontSize:12,color:C.gray}}>Иван и Мария · Поженились 21.06.2024</div>
+          <div style={{background:C.white,border:`1px solid #EBE4D8`,borderRadius:20,padding:"28px 30px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 18px 40px -24px rgba(33,28,23,.2)"}}>
+            <div style={{display:"flex",gap:3,marginBottom:14}}>{[...Array(5)].map((_,i)=><span key={i} style={{color:C.blushDark}}>★</span>)}</div>
+            <p style={{fontSize:17,lineHeight:1.6,color:C.dark,margin:"0 0 18px",fontWeight:500}}>«TotDay снял с нас весь стресс подготовки. Бюджет, гости, подрядчики — наконец всё в одном месте и по-настоящему красиво.»</p>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:"50%",background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#6E5A4E"}}>И</div>
+              <div><div style={{fontSize:13.5,fontWeight:600}}>Иван и Мария</div><div style={{fontSize:12,color:"#948D83"}}>Поженились 21 июня 2025</div></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section style={{maxWidth:1200,margin:"0 auto",padding:"72px 48px",textAlign:"center"}}>
-        <h2 style={{fontFamily:font,fontSize:"clamp(26px,4vw,42px)",fontWeight:600,letterSpacing:"-0.02em",marginBottom:16}}>Начнём планировать?</h2>
-        <p style={{color:C.ink2,fontSize:16,marginBottom:32,maxWidth:420,margin:"0 auto 32px"}}>Пара вопросов — и вы увидите смету своей свадьбы. Бесплатно.</p>
-        <button style={{...S.btn,padding:"15px 40px",fontSize:15}} onClick={onStart}>Начать →</button>
+      <section style={{maxWidth:1200,margin:"0 auto",padding:"84px 40px",textAlign:"center"}}>
+        <h2 style={{fontSize:40,fontWeight:700,letterSpacing:"-.025em",margin:"0 0 16px"}}>Планируйте легко. Празднуйте красиво.</h2>
+        <p style={{fontSize:16,color:C.ink2,maxWidth:440,margin:"0 auto 34px"}}>Пара вопросов — и вы увидите смету своей свадьбы. Бесплатно.</p>
+        <button style={{...S.btn,padding:"16px 42px",fontSize:15}} onClick={onStart}>Начать →</button>
       </section>
 
-      <footer style={{borderTop:`1px solid ${C.line}`,padding:"28px 48px",display:"flex",alignItems:"center",justifyContent:"space-between",color:C.gray,fontSize:13}}>
-        <div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
-        <span>© 2026 TotDay · Ваша свадьба, понятная и красивая</span>
+      {/* FOOTER */}
+      <footer style={{borderTop:`1px solid ${C.line}`}}>
+        <div style={{maxWidth:1200,margin:"0 auto",padding:"28px 40px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:1}}><span style={{fontSize:18,fontWeight:700,letterSpacing:"-.03em"}}>totday</span><span style={{width:5,height:5,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
+          <span style={{fontSize:12.5,color:"#948D83"}}>© 2026 TotDay · Ваша свадьба, понятная и красивая</span>
+        </div>
       </footer>
+
     </div>
   );
 }
@@ -605,153 +570,238 @@ function BudgetPage({survey,cats,setCats,onGoToVendors}){
   const addCat=()=>{if(!newCat.name)return;const id="custom_"+Date.now();setCats(prev=>[...prev,{id,name:newCat.name,icon:newCat.icon||"✨",pct:0,market:"—",rec:"—",items:[],plan:Number(newCat.plan)||0,avans:0,actual:0,expanded:false,itemActuals:{}}]);setNewCat({name:"",icon:"✨",plan:""});setShowAddCat(false);};
   const budgetPct=totalBudget>0?totalActual/totalBudget*100:0;
   return(
-    <div className="td-page" style={S.page}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12,marginBottom:8}}>
-        <div><h2 style={S.h1}>Бюджет свадьбы</h2><p style={S.sub}>{survey?.city} · {guests} гостей · {FORMATS.find(f=>f.id===survey?.format)?.label||""}</p></div>
-        <div style={{display:"flex",gap:6}}>
-          <button style={S.tab(activeTab==="plan")} onClick={()=>setActiveTab("plan")}>📋 Смета</button>
-          <button style={S.tab(activeTab==="tracker")} onClick={()=>setActiveTab("tracker")}>💳 Трекер</button>
+    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",gap:16,flexWrap:"wrap"}}>
+        <div>
+          <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Бюджет свадьбы</div>
+          <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>{survey?.city||"Город"} · {guests} гостей · {FORMATS.find(f=>f.id===survey?.format)?.label||""}</div>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{display:"flex",gap:3,background:"#EFE9DE",borderRadius:12,padding:4}}>
+            {[["plan","Смета"],["tracker","Трекер"]].map(([id,label])=>(
+              <span key={id} onClick={()=>setActiveTab(id)} style={{padding:"8px 16px",borderRadius:9,background:activeTab===id?"#FFFFFF":"transparent",fontSize:13,fontWeight:activeTab===id?600:500,color:activeTab===id?"#221D18":"#857E74",cursor:"pointer",boxShadow:activeTab===id?"0 1px 2px rgba(33,28,23,.05)":"none",transition:"all .15s"}}>{label}</span>
+            ))}
+          </div>
+          <button style={{padding:"10px 18px",borderRadius:999,border:"1px solid #DDD5C8",background:"#FBF9F5",color:"#221D18",cursor:"pointer",fontFamily:fb,fontSize:13,fontWeight:600}}>Экспорт</button>
         </div>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(155px,1fr))",gap:14,marginBottom:18}}>
-        <div style={{...S.card,textAlign:"center"}}>
-          <div style={{fontSize:18,marginBottom:4}}>💰</div>
-          <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:4}}>Общий бюджет</div>
-          {editingBudget?(
-            <input type="number" min="0" autoFocus style={{...S.input,textAlign:"center",fontWeight:700,fontSize:16,color:C.dark,padding:"4px 8px"}} value={budgetInput} onChange={e=>setBudgetInput(e.target.value)} onFocus={e=>e.target.select()} onBlur={()=>applyNewBudget(budgetInput)} onKeyDown={e=>{if(e.key==="Enter")applyNewBudget(budgetInput);if(e.key==="Escape")setEditingBudget(false);}}/>
-          ):(
-            <div style={{fontFamily:font,fontSize:18,color:C.dark,fontWeight:700,cursor:"pointer",borderBottom:`1px dashed ${C.blushDark}`}} onClick={()=>{setBudgetInput(String(totalBudget));setEditingBudget(true);}}>{fmt(totalBudget)} ₽</div>
-          )}
-          <div style={{fontSize:9,color:C.gray,marginTop:4}}>нажмите чтобы изменить</div>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:22,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)"}}>
+          <div style={{fontSize:10.5,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:12}}>Общий бюджет</div>
+          {editingBudget
+            ?<input autoFocus type="number" style={{fontSize:22,fontWeight:700,letterSpacing:"-.03em",width:"100%",border:"none",outline:"none",background:"transparent",fontFamily:fb,marginBottom:6,padding:0}} value={budgetInput} onChange={e=>setBudgetInput(e.target.value)} onBlur={()=>applyNewBudget(budgetInput)} onKeyDown={e=>{if(e.key==="Enter")applyNewBudget(budgetInput);if(e.key==="Escape")setEditingBudget(false);}}/>
+            :<div onClick={()=>{setBudgetInput(String(totalBudget));setEditingBudget(true);}} style={{fontSize:23,fontWeight:700,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",marginBottom:6,cursor:"pointer",borderBottom:"1px dashed #D2A296"}}>{fmt(totalBudget)} ₽</div>
+          }
+          <div style={{fontSize:12,color:"#948D83"}}>≈ {fmt(Math.round(totalBudget/Math.max(1,guests)))} ₽ на гостя</div>
         </div>
-        {[
-          {l:"Запланировано",v:`${fmt(totalPlan)} ₽`,c:totalPlan>totalBudget?C.rose:C.taupe,icon:"📋",warn:totalPlan>totalBudget?`превышает на ${fmt(totalPlan-totalBudget)} ₽`:""},
-          {l:"Свободно в плане",v:`${fmt(totalBudget-totalPlan)} ₽`,c:(totalBudget-totalPlan)>=0?C.teal:C.rose,icon:"📊"},
-          {l:"Потрачено",v:`${fmt(totalActual)} ₽`,c:C.rose,icon:"💳"},
-          {l:"Остаток денег",v:`${fmt(leftBudget)} ₽`,c:leftBudget>=0?C.teal:C.rose,icon:leftBudget>=0?"✅":"⚠️"},
-        ].map(s=>(
-          <div key={s.l} style={{...S.card,textAlign:"center"}}>
-            <div style={{fontSize:18,marginBottom:4}}>{s.icon}</div>
-            <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:4}}>{s.l}</div>
-            <div style={{fontFamily:font,fontSize:18,color:s.c,fontWeight:700}}>{s.v}</div>
-            {s.warn&&<div style={{fontSize:10,color:C.rose,marginTop:2}}>{s.warn}</div>}
-          </div>
-        ))}
-      </div>
-      <div style={{...S.card,padding:"14px 20px",marginBottom:18}}>
-        <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:C.gray,marginBottom:6}}><span>Израсходовано бюджета</span><span style={{color:C.teal,fontWeight:700}}>{Math.round(budgetPct)}%</span></div>
-        <div style={S.bar}><div style={S.fill(budgetPct,totalActual>totalBudget)}/></div>
-      </div>
-      {activeTab==="plan"&&(
-        <div style={S.card}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}>
-            <h3 style={{...S.h2,margin:0}}>По категориям</h3>
-            <button style={S.btn} onClick={()=>setShowAddCat(true)}>+ Добавить</button>
-          </div>
-          {showAddCat&&(
-            <div style={{background:C.blushBg,borderRadius:10,padding:16,marginBottom:16,display:"flex",gap:10,flexWrap:"wrap",alignItems:"flex-end"}}>
-              <div style={{flex:"2 1 150px"}}><label style={S.label}>Название</label><input style={S.input} value={newCat.name} onChange={e=>setNewCat(p=>({...p,name:e.target.value}))} placeholder="Шоу-программа"/></div>
-              <div style={{flex:"0 0 75px"}}><label style={S.label}>Иконка</label><input style={S.input} value={newCat.icon} onChange={e=>setNewCat(p=>({...p,icon:e.target.value}))}/></div>
-              <div style={{flex:"1 1 110px"}}><label style={S.label}>План ₽</label><input type="number" style={S.input} value={newCat.plan} onChange={e=>setNewCat(p=>({...p,plan:e.target.value}))} placeholder="50000"/></div>
-              <button style={S.btn} onClick={addCat}>Добавить</button>
-              <button style={S.btnO} onClick={()=>setShowAddCat(false)}>Отмена</button>
-            </div>
-          )}
-          <div style={{display:"grid",gridTemplateColumns:"28px 1fr 100px 100px 100px 100px 70px",gap:8,padding:"6px 0 10px",borderBottom:`2px solid ${C.line}`,fontSize:10,color:C.gray,letterSpacing:"0.07em",textTransform:"uppercase",fontWeight:600}}>
-            <div/><div>Категория</div><div style={{textAlign:"right"}}>План</div><div style={{textAlign:"right"}}>Аванс</div><div style={{textAlign:"right"}}>К доплате</div><div style={{textAlign:"right"}}>Факт</div><div/>
-          </div>
-          {cats.map((c,i)=>{
-            const over=c.actual>c.plan&&c.plan>0;
-            const pUsed=c.plan>0?Math.min(100,Math.round(c.actual/c.plan*100)):0;
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:22,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)"}}>
+          <div style={{fontSize:10.5,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:12}}>Запланировано</div>
+          <div style={{fontSize:23,fontWeight:700,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",marginBottom:6,color:totalPlan>totalBudget?"#A66B60":"#221D18"}}>{fmt(totalPlan)} ₽</div>
+          <div style={{fontSize:12,color:"#948D83"}}>распределено по {cats.length} категориям</div>
+        </div>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:22,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)"}}>
+          <div style={{fontSize:10.5,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:12}}>Потрачено</div>
+          <div style={{fontSize:23,fontWeight:700,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",marginBottom:6,color:"#5E8A7D"}}>{fmt(totalActual)} ₽</div>
+          <div style={{fontSize:12,color:"#948D83"}}>{totalBudget>0?Math.round(totalActual/totalBudget*100):0}% бюджета</div>
+        </div>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:22,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)"}}>
+          <div style={{fontSize:10.5,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:12}}>Остаток</div>
+          <div style={{fontSize:23,fontWeight:700,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap",marginBottom:6,color:leftBudget>=0?"#221D18":"#A66B60"}}>{fmt(Math.abs(leftBudget))} ₽</div>
+          <div style={{fontSize:12,color:"#948D83"}}>{leftBudget>=0?"свободно к оплате":"перерасход бюджета"}</div>
+        </div>
+      </section>
+
+      <section style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+          <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Структура</div>
+          <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em",marginBottom:18}}>Распределение бюджета</div>
+          {(()=>{
+            const CIRC=2*Math.PI*70;
+            const DC=["#BD877C","#D2A296","#5E8A7D","#E3C2A8","#CBB892","#E5DBCB"];
+            const sorted=[...cats].sort((a,b)=>b.plan-a.plan);
+            const top5=sorted.slice(0,5);
+            const restPlan=sorted.slice(5).reduce((s,c)=>s+c.plan,0);
+            const allSegs=[...top5.map((c,i)=>({name:c.name,plan:c.plan,color:DC[i]})),...(restPlan>0?[{name:`Остальные ${cats.length-5} категорий`,plan:restPlan,color:DC[5]}]:[])];
+            let cum=0;
+            const segs=allSegs.map(s=>{const pct=totalPlan>0?s.plan/totalPlan:0;const arc=pct*CIRC;const rot=cum*360-90;cum+=pct;return{...s,pct,arc,rot};});
+            const mln=totalBudget>=1000000?(totalBudget/1000000).toFixed(2).replace(".",",")+' млн':(totalBudget/1000).toFixed(0)+' тыс';
             return(
-              <div key={c.id} style={{borderBottom:i<cats.length-1?`1px solid ${C.lightGray}`:"none"}}>
-                <div style={{display:"grid",gridTemplateColumns:"28px 1fr 100px 100px 100px 100px 70px",gap:8,padding:"12px 0",alignItems:"center",cursor:"pointer"}} onClick={()=>toggleExpand(c.id)}>
-                  <span style={{fontSize:13,fontFamily:font,color:C.ink2,width:28,height:28,borderRadius:8,background:C.sand,display:"flex",alignItems:"center",justifyContent:"center"}}>{(c.name||"?").slice(0,2)}</span>
-                  <div>
-                    <div style={{fontSize:13.5,fontWeight:500,display:"flex",alignItems:"center",gap:6}}>{c.name}{over&&<span style={S.badge("r")}>перерасход</span>}</div>
-                    <div style={{fontSize:10,color:C.blushDark,marginTop:2}}>{c.rec}</div>
-                    <div style={{marginTop:5,paddingRight:8}}><div style={S.bar}><div style={S.fill(pUsed,over)}/></div></div>
-                  </div>
-                  <div style={{textAlign:"right"}} onClick={e=>e.stopPropagation()}>
-                    {editPlanId===c.id?(
-                      <input type="number" min="0" autoFocus style={{...S.input,width:"100%",padding:"3px 7px",fontSize:13,textAlign:"right"}} value={c.plan===0?"":c.plan} placeholder="0" onChange={e=>updatePlan(c.id,e.target.value)} onFocus={e=>e.target.select()} onBlur={()=>setEditPlanId(null)} onKeyDown={e=>e.key==="Enter"&&setEditPlanId(null)}/>
-                    ):(
-                      <span style={{fontSize:13,color:C.dark,fontWeight:500,cursor:"text",borderBottom:`1px dashed ${C.blushDark}`}} onClick={()=>setEditPlanId(c.id)}>{fmt(c.plan)} ₽</span>
-                    )}
-                  </div>
-                  <div style={{textAlign:"right"}} onClick={e=>e.stopPropagation()}>
-                    {editAvansId===c.id?(
-                      <input type="number" min="0" autoFocus style={{...S.input,width:"100%",padding:"3px 7px",fontSize:13,textAlign:"right"}} value={(c.avans||0)===0?"":c.avans} placeholder="0" onChange={e=>updateAvans(c.id,e.target.value)} onFocus={e=>e.target.select()} onBlur={()=>setEditAvansId(null)} onKeyDown={e=>e.key==="Enter"&&setEditAvansId(null)}/>
-                    ):(
-                      <span style={{fontSize:13,color:C.gray,cursor:"text",borderBottom:`1px dashed ${C.line}`}} onClick={()=>setEditAvansId(c.id)}>{fmt(c.avans||0)} ₽</span>
-                    )}
-                  </div>
-                  <div style={{textAlign:"right",fontSize:13,fontWeight:600,color:C.ink2}}>{fmt(Math.max(0,c.plan-(c.avans||0)))} ₽</div>
-                  <div style={{textAlign:"right",fontSize:13,color:over?C.rose:C.teal,fontWeight:500}}>{fmt(c.actual)} ₽</div>
-                  <div style={{display:"flex",gap:4,justifyContent:"flex-end"}} onClick={e=>e.stopPropagation()}>
-                    <button style={{...S.btnSm,color:C.teal,padding:"3px 8px"}} onClick={()=>onGoToVendors(c.id)}>→</button>
-                    <button style={{...S.btnSm,color:C.rose,padding:"3px 8px"}} onClick={()=>removeCat(c.id)}>✕</button>
+              <div style={{display:"flex",alignItems:"center",gap:26}}>
+                <div style={{position:"relative",width:180,height:180,flexShrink:0}}>
+                  <svg width="180" height="180" viewBox="0 0 180 180">
+                    <circle cx="90" cy="90" r="70" fill="none" stroke="#F1EBE1" strokeWidth="22"/>
+                    {segs.map((s,i)=><circle key={i} cx="90" cy="90" r="70" fill="none" stroke={s.color} strokeWidth="22" strokeDasharray={`${s.arc} ${CIRC}`} transform={`rotate(${s.rot} 90 90)`}/>)}
+                  </svg>
+                  <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+                    <div style={{fontSize:18,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums"}}>{mln}</div>
+                    <div style={{fontSize:10,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",marginTop:2}}>бюджет ₽</div>
                   </div>
                 </div>
+                <div style={{flex:1,display:"flex",flexDirection:"column",gap:11}}>
+                  {segs.map((s,i)=>(
+                    <div key={i} style={{display:"flex",alignItems:"center",gap:10}}>
+                      <span style={{width:9,height:9,borderRadius:3,background:s.color,flexShrink:0}}/>
+                      <span style={{flex:1,fontSize:12.5,color:"#5C554B"}}>{s.name}</span>
+                      <span style={{fontSize:12.5,fontWeight:600,fontVariantNumeric:"tabular-nums"}}>{Math.round(s.pct*100)}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+          <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Платежи</div>
+          <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em",marginBottom:4}}>График по месяцам</div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:22}}>Плановые выплаты до даты свадьбы</div>
+          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",gap:8,height:140,paddingBottom:2}}>
+            {[33,39,29,36,58,72,91,117,130].map((h,i)=>(
+              <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+                <div style={{width:"100%",maxWidth:26,height:h,background:["#E3C2A8","#E3C2A8","#E3C2A8","#E0B79B","#D9A892","#CF9A85","#C68F7D","#BD877C","#221D18"][i],borderRadius:"6px 6px 3px 3px"}}/>
+                <span style={{fontSize:10,color:i===8?"#5C554B":"#A39C92",fontWeight:i===8?600:400}}>{["Авг","Окт","Дек","Фев","Апр","Май","Июн","Июл","Авг"][i]}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",marginTop:14,paddingTop:14,borderTop:"1px solid #F1EBE1",fontSize:12}}>
+            <span style={{color:"#948D83"}}>Пик выплат — месяц свадьбы</span>
+            <span style={{fontWeight:600}}>{fmt(Math.round(totalPlan*0.22))} ₽</span>
+          </div>
+        </div>
+      </section>
+
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+        <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:16}}>
+          <div>
+            <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Освоение бюджета</div>
+            <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em"}}>Оплачено и законтрактовано</div>
+          </div>
+          <div style={{fontSize:30,fontWeight:700,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums"}}>{Math.round(budgetPct)}%</div>
+        </div>
+        {(()=>{
+          const totAvans=cats.reduce((s,c)=>s+(c.avans||0),0);
+          const paidW=totalBudget>0?Math.min(100,totalActual/totalBudget*100):0;
+          const avansW=totalBudget>0?Math.min(100-paidW,Math.max(0,totAvans-totalActual)/totalBudget*100):0;
+          return(
+            <>
+              <div style={{display:"flex",height:14,borderRadius:8,overflow:"hidden",background:"#EFE8DD"}}>
+                <div style={{width:`${paidW}%`,background:"#BD877C"}}/>
+                <div style={{width:`${avansW}%`,background:"#E3C2A8"}}/>
+              </div>
+              <div style={{display:"flex",gap:26,marginTop:16,flexWrap:"wrap"}}>
+                <div style={{display:"flex",alignItems:"center",gap:9}}><span style={{width:10,height:10,borderRadius:3,background:"#BD877C",flexShrink:0}}/><span style={{fontSize:12.5,color:"#5C554B"}}>Оплачено</span><span style={{fontSize:12.5,fontWeight:600}}>{fmt(totalActual)} ₽</span></div>
+                <div style={{display:"flex",alignItems:"center",gap:9}}><span style={{width:10,height:10,borderRadius:3,background:"#E3C2A8",flexShrink:0}}/><span style={{fontSize:12.5,color:"#5C554B"}}>Авансы</span><span style={{fontSize:12.5,fontWeight:600}}>{fmt(totAvans)} ₽</span></div>
+                <div style={{display:"flex",alignItems:"center",gap:9}}><span style={{width:10,height:10,borderRadius:3,background:"#EFE8DD",border:"1px solid #E2DACB",flexShrink:0}}/><span style={{fontSize:12.5,color:"#5C554B"}}>Свободно</span><span style={{fontSize:12.5,fontWeight:600}}>{fmt(Math.max(0,totalBudget-totalActual-totAvans))} ₽</span></div>
+              </div>
+            </>
+          );
+        })()}
+      </section>
+
+      {activeTab==="plan"&&(
+        <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:16}}>
+            <div>
+              <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Детализация</div>
+              <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em"}}>Категории сметы</div>
+            </div>
+            <button style={{background:"none",border:"none",color:"#A66B60",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}} onClick={()=>setShowAddCat(v=>!v)}>{showAddCat?"Скрыть ✕":"+ Добавить"}</button>
+          </div>
+          {showAddCat&&(
+            <div style={{background:"#FBF9F5",border:"1px solid #EBE4D8",borderRadius:12,padding:"16px 18px",marginBottom:18,display:"flex",gap:12,flexWrap:"wrap",alignItems:"flex-end"}}>
+              <div style={{flex:"2 1 150px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Название</div><input style={{border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,width:"100%",background:"#FBF9F5"}} value={newCat.name} onChange={e=>setNewCat(p=>({...p,name:e.target.value}))} placeholder="Шоу-программа"/></div>
+              <div style={{flex:"1 1 110px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>План ₽</div><input type="number" style={{border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,width:"100%",background:"#FBF9F5"}} value={newCat.plan} onChange={e=>setNewCat(p=>({...p,plan:e.target.value}))} placeholder="50000"/></div>
+              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={addCat}>Добавить</button>
+              <button style={{padding:"11px 18px",borderRadius:999,background:"transparent",color:"#857E74",fontSize:13,fontWeight:500,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}} onClick={()=>setShowAddCat(false)}>Отмена</button>
+            </div>
+          )}
+          <div style={{display:"grid",gridTemplateColumns:"34px 1fr 120px 150px 110px 64px",gap:14,padding:"0 0 11px",borderBottom:"1px solid #ECE5DA",fontSize:10,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,alignItems:"center"}}>
+            <div/><div>Категория</div><div style={{textAlign:"right"}}>План</div><div>Прогресс</div><div style={{textAlign:"right"}}>Факт</div><div style={{textAlign:"right"}}>%</div>
+          </div>
+          {cats.map((c,i)=>{
+            const pct=c.plan>0?Math.min(100,Math.round(c.actual/c.plan*100)):0;
+            const over=c.actual>c.plan&&c.plan>0;
+            const done=pct>=100;
+            return(
+              <div key={c.id}>
+                <div style={{display:"grid",gridTemplateColumns:"34px 1fr 120px 150px 110px 64px",gap:14,padding:"13px 0",borderBottom:i<cats.length-1?"1px solid #F1EBE1":"none",alignItems:"center"}}>
+                  <span onClick={()=>toggleExpand(c.id)} style={{width:34,height:34,borderRadius:10,background:"#F1EBE1",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#7A7266",cursor:"pointer",flexShrink:0}}>{(c.name||"?").slice(0,2)}</span>
+                  <div style={{cursor:"pointer"}} onClick={()=>toggleExpand(c.id)}>
+                    <div style={{fontSize:13.5,fontWeight:500}}>{c.name}{over&&<span style={{marginLeft:6,fontSize:10.5,color:"#A66B60",background:"#F5E4E0",padding:"2px 7px",borderRadius:6}}>перерасход</span>}</div>
+                    {c.rec&&<div style={{fontSize:10.5,color:"#A66B60",marginTop:2}}>{c.rec}</div>}
+                  </div>
+                  <div style={{textAlign:"right"}} onClick={e=>e.stopPropagation()}>
+                    {editPlanId===c.id
+                      ?<input type="number" autoFocus style={{border:"1px solid #E2DACB",borderRadius:8,padding:"4px 8px",fontSize:13,textAlign:"right",width:"100%",fontFamily:fb,outline:"none"}} value={c.plan===0?"":c.plan} onChange={e=>updatePlan(c.id,e.target.value)} onBlur={()=>setEditPlanId(null)} onKeyDown={e=>e.key==="Enter"&&setEditPlanId(null)}/>
+                      :<span style={{fontSize:13,fontVariantNumeric:"tabular-nums",cursor:"text",borderBottom:"1px dashed #D2A296"}} onClick={()=>setEditPlanId(c.id)}>{fmt(c.plan)} ₽</span>
+                    }
+                  </div>
+                  <div><div style={{height:5,borderRadius:5,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${Math.min(100,pct)}%`,background:over?"#A66B60":done?"#5E8A7D":"#BD877C",borderRadius:5}}/></div></div>
+                  <div style={{textAlign:"right",fontSize:13,fontWeight:600,fontVariantNumeric:"tabular-nums",color:over?"#A66B60":"#221D18"}}>{fmt(c.actual)} ₽</div>
+                  <div style={{textAlign:"right",fontSize:12.5,fontVariantNumeric:"tabular-nums",color:done?"#5E8A7D":"#948D83",fontWeight:done?600:400}}>{pct}</div>
+                </div>
                 {c.expanded&&(
-                  <div style={{background:C.lightGray,borderRadius:10,padding:"10px 14px",marginBottom:10,marginLeft:36}}>
-                    <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:8}}>Детализация</div>
-                    {c.items.length>0?c.items.map(item=>(
-                      <div key={item} style={{display:"flex",alignItems:"center",gap:10,padding:"5px 0",borderBottom:`1px solid ${C.sand}`}}>
-                        <span style={{flex:1,fontSize:13}}>{item}</span>
-                        <input type="number" min="0" style={{...S.input,width:130,padding:"4px 8px",fontSize:12,background:C.white}} placeholder="0" value={c.itemActuals[item]||""} onFocus={e=>e.target.select()} onChange={e=>updateItemActual(c.id,item,e.target.value)}/>
-                        <span style={{fontSize:11,color:C.gray,flexShrink:0}}>₽</span>
+                  <div style={{background:"#FBF9F5",borderRadius:10,padding:"12px 16px",marginBottom:8,marginLeft:48}}>
+                    <div style={{display:"flex",gap:16,flexWrap:"wrap",marginBottom:8,alignItems:"flex-end"}}>
+                      <div style={{flex:"1 1 120px"}}>
+                        <div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Аванс ₽</div>
+                        {editAvansId===c.id
+                          ?<input type="number" autoFocus style={{border:"1px solid #E2DACB",borderRadius:8,padding:"6px 10px",fontSize:13,fontFamily:fb,width:"100%",outline:"none"}} value={(c.avans||0)===0?"":c.avans} onChange={e=>updateAvans(c.id,e.target.value)} onBlur={()=>setEditAvansId(null)} onKeyDown={e=>e.key==="Enter"&&setEditAvansId(null)}/>
+                          :<span style={{fontSize:13,cursor:"text",borderBottom:"1px dashed #D2A296",display:"inline-block"}} onClick={()=>setEditAvansId(c.id)}>{fmt(c.avans||0)} ₽</span>
+                        }
                       </div>
-                    )):<p style={{color:C.gray,fontSize:12,margin:0}}>Нет подстатей</p>}
-                    <div style={{display:"flex",justifyContent:"flex-end",marginTop:8,fontSize:12}}><span style={{color:C.gray}}>Итого факт: </span><strong style={{color:C.teal,marginLeft:6}}>{fmt(c.actual)} ₽</strong></div>
+                      <div style={{flex:"1 1 120px"}}><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>К доплате</div><span style={{fontSize:13,fontWeight:600}}>{fmt(Math.max(0,c.plan-(c.avans||0)))} ₽</span></div>
+                      <button style={{padding:"7px 14px",borderRadius:999,background:"transparent",color:"#5E8A7D",fontSize:12,fontWeight:600,border:"1px solid #5E8A7D",cursor:"pointer",fontFamily:fb}} onClick={()=>onGoToVendors(c.id)}>→ Подрядчик</button>
+                      <button style={{padding:"7px 14px",borderRadius:999,background:"transparent",color:"#A66B60",fontSize:12,fontWeight:600,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}} onClick={()=>removeCat(c.id)}>Удалить</button>
+                    </div>
+                    {c.items.length>0&&c.items.map(item=>(
+                      <div key={item} style={{display:"flex",alignItems:"center",gap:10,padding:"5px 0",borderBottom:"1px solid #ECE5DA"}}>
+                        <span style={{flex:1,fontSize:13}}>{item}</span>
+                        <input type="number" min="0" style={{width:120,padding:"4px 8px",border:"1px solid #E2DACB",borderRadius:8,fontSize:12,fontFamily:fb,outline:"none"}} placeholder="0" value={c.itemActuals[item]||""} onFocus={e=>e.target.select()} onChange={e=>updateItemActual(c.id,item,e.target.value)}/>
+                        <span style={{fontSize:11,color:"#948D83"}}>₽</span>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
             );
           })}
-          {(()=>{
-            const totAvans=cats.reduce((s,c)=>s+(c.avans||0),0);
-            const toPay=Math.max(0,totalPlan-totAvans);
-            return(
-              <div style={{marginTop:18,borderTop:`2px solid ${C.line}`,paddingTop:16}}>
-                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:13}}><span style={{color:C.gray}}>Итого по смете</span><strong style={{fontFamily:font,fontSize:16}}>{fmt(totalPlan)} ₽</strong></div>
-                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:13,color:C.gray}}><span>Внесено авансов</span><span>−{fmt(totAvans)} ₽</span></div>
-                <div style={{display:"flex",justifyContent:"space-between",padding:"7px 0",fontSize:13,borderBottom:`1px solid ${C.line}`}}><span style={{color:C.gray}}>Осталось доплатить</span><strong style={{color:C.blushDark}}>{fmt(toPay)} ₽</strong></div>
-                <p style={{fontSize:11,color:C.gray,marginTop:10,lineHeight:1.5}}>Сервисный сбор площадки (10%) и возвратный депозит — справочно, не входят в сумму сметы.</p>
-              </div>
-            );
-          })()}
-        </div>
+          <div style={{display:"flex",justifyContent:"flex-end",gap:34,marginTop:18,paddingTop:16,borderTop:"1px solid #ECE5DA"}}>
+            <div style={{textAlign:"right"}}><div style={{fontSize:11,color:"#A39C92",marginBottom:3}}>Итого план</div><div style={{fontSize:16,fontWeight:700,fontVariantNumeric:"tabular-nums"}}>{fmt(totalPlan)} ₽</div></div>
+            <div style={{textAlign:"right"}}><div style={{fontSize:11,color:"#A39C92",marginBottom:3}}>Оплачено</div><div style={{fontSize:16,fontWeight:700,color:"#5E8A7D",fontVariantNumeric:"tabular-nums"}}>{fmt(totalActual)} ₽</div></div>
+            <div style={{textAlign:"right"}}><div style={{fontSize:11,color:"#A39C92",marginBottom:3}}>Осталось</div><div style={{fontSize:16,fontWeight:700,color:"#A66B60",fontVariantNumeric:"tabular-nums"}}>{fmt(Math.max(0,totalPlan-totalActual))} ₽</div></div>
+          </div>
+        </section>
       )}
+
       {activeTab==="tracker"&&(
-        <div style={{display:"flex",flexDirection:"column",gap:18}}>
-          <div style={S.card}>
-            <h3 style={S.h3}>Добавить расход</h3>
-            <div style={{display:"flex",gap:10,flexWrap:"wrap",alignItems:"flex-end"}}>
-              <div style={{flex:"1 1 150px"}}><label style={S.label}>Категория</label><select style={S.select} value={newTx.catId} onChange={e=>setNewTx(p=>({...p,catId:e.target.value}))}>{cats.map(c=><option key={c.id} value={c.id}>{c.icon} {c.name}</option>)}</select></div>
-              <div style={{flex:"1 1 110px"}}><label style={S.label}>Сумма ₽</label><input type="number" style={S.input} placeholder="50 000" value={newTx.amount} onChange={e=>setNewTx(p=>({...p,amount:e.target.value}))}/></div>
-              <div style={{flex:"2 1 180px"}}><label style={S.label}>Комментарий</label><input style={S.input} placeholder="Аванс фотографу" value={newTx.note} onChange={e=>setNewTx(p=>({...p,note:e.target.value}))}/></div>
-              <button style={S.btn} onClick={addActual}>+ Добавить</button>
+        <div style={{display:"flex",flexDirection:"column",gap:20}}>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>Добавить расход</div>
+            <div style={{display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
+              <div style={{flex:"1 1 150px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Категория</div><select style={{border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%"}} value={newTx.catId} onChange={e=>setNewTx(p=>({...p,catId:e.target.value}))}>{cats.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
+              <div style={{flex:"1 1 110px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Сумма ₽</div><input type="number" style={{border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"}} placeholder="50 000" value={newTx.amount} onChange={e=>setNewTx(p=>({...p,amount:e.target.value}))}/></div>
+              <div style={{flex:"2 1 180px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Комментарий</div><input style={{border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"}} placeholder="Аванс фотографу" value={newTx.note} onChange={e=>setNewTx(p=>({...p,note:e.target.value}))}/></div>
+              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={addActual}>+ Добавить</button>
             </div>
           </div>
-          <div style={S.card}>
-            <h3 style={S.h3}>История</h3>
-            {txHistory.length===0?<p style={{color:C.gray,fontSize:13,textAlign:"center",padding:"20px 0"}}>Расходов пока нет</p>:txHistory.map((tx,i)=>{const cat=cats.find(c=>c.id===tx.catId);return(
-              <div key={tx.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"11px 0",borderBottom:i<txHistory.length-1?`1px solid ${C.lightGray}`:"none"}}>
-                <div style={{display:"flex",gap:8,alignItems:"center"}}><span style={{fontSize:18}}>{cat?.icon||"✨"}</span><div><div style={{fontSize:13,fontWeight:600}}>{tx.note||cat?.name}</div><div style={{fontSize:11,color:C.gray}}>{cat?.name} · {tx.date}</div></div></div>
-                <span style={{fontSize:14,fontWeight:700,color:C.rose}}>−{fmt(tx.amount)} ₽</span>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>История расходов</div>
+            {txHistory.length===0?<p style={{color:"#948D83",fontSize:13,textAlign:"center",padding:"20px 0"}}>Расходов пока нет</p>:txHistory.map((tx,i)=>{const cat=cats.find(c=>c.id===tx.catId);return(
+              <div key={tx.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"11px 0",borderBottom:i<txHistory.length-1?"1px solid #F1EBE1":"none"}}>
+                <div style={{display:"flex",gap:10,alignItems:"center"}}><span style={{width:34,height:34,borderRadius:10,background:"#F1EBE1",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#7A7266",flexShrink:0}}>{(cat?.name||"?").slice(0,2)}</span><div><div style={{fontSize:13,fontWeight:600}}>{tx.note||cat?.name}</div><div style={{fontSize:11,color:"#948D83"}}>{cat?.name} · {tx.date}</div></div></div>
+                <span style={{fontSize:14,fontWeight:700,color:"#A66B60"}}>−{fmt(tx.amount)} ₽</span>
               </div>
             );})}
           </div>
-          <div style={S.card}>
-            <h3 style={S.h3}>План / Факт</h3>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>План / Факт</div>
             {cats.map(c=>(
-              <div key={c.id} style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
-                <span style={{width:20,fontSize:14,flexShrink:0}}>{c.icon}</span>
-                <span style={{flex:1,fontSize:12,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.name}</span>
-                <span style={{fontSize:11,color:C.gray,width:90,textAlign:"right",flexShrink:0}}>план {fmt(c.plan)}</span>
-                <span style={{fontSize:12,fontWeight:700,color:c.actual>c.plan&&c.plan>0?C.rose:C.teal,width:90,textAlign:"right",flexShrink:0}}>факт {fmt(c.actual)}</span>
-                <div style={{width:70,flexShrink:0}}><div style={S.bar}><div style={S.fill(c.plan>0?c.actual/c.plan*100:0,c.actual>c.plan&&c.plan>0)}/></div></div>
+              <div key={c.id} style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
+                <span style={{width:28,height:28,borderRadius:8,background:"#F1EBE1",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:"#7A7266",flexShrink:0}}>{(c.name||"?").slice(0,2)}</span>
+                <span style={{flex:1,fontSize:12.5,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.name}</span>
+                <span style={{fontSize:11,color:"#948D83",flexShrink:0}}>план {fmt(c.plan)} ₽</span>
+                <span style={{fontSize:12.5,fontWeight:700,color:c.actual>c.plan&&c.plan>0?"#A66B60":"#5E8A7D",flexShrink:0}}>факт {fmt(c.actual)} ₽</span>
+                <div style={{width:70,flexShrink:0}}><div style={{height:4,borderRadius:4,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${Math.min(100,c.plan>0?c.actual/c.plan*100:0)}%`,background:c.actual>c.plan&&c.plan>0?"#A66B60":"#BD877C"}}/></div></div>
               </div>
             ))}
           </div>
@@ -778,50 +828,63 @@ function VendorsPage({survey,initCat}){
     const freeOk=!date||!v.busy.includes(date);
     return catOk&&searchOk&&freeOk;
   });
+  const GR=[["repeating-linear-gradient(135deg,#E9DDCB 0 8px,#E2D3BC 8px 16px)"],["repeating-linear-gradient(135deg,#EBDDD7 0 8px,#E4D0C8 8px 16px)"],["repeating-linear-gradient(135deg,#E7DEC9 0 8px,#E0D4BA 8px 16px)"],["repeating-linear-gradient(135deg,#DEE5DD 0 8px,#D5DFD2 8px 16px)"]];
   return(
-    <div className="td-page" style={S.page}>
-      <h2 style={S.h1}>Подрядчики</h2>
-      <p style={S.sub}>{date?`Свободные на ${new Date(date).toLocaleDateString("ru")} · `:""}{survey?.city||"Москва"}</p>
-      <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:16}}>
-        <span style={S.chip(activeCat==="all")} onClick={()=>setActiveCat("all")}>Все</span>
-        {avail.map(c=><span key={c.id} style={S.chip(activeCat===c.id)} onClick={()=>setActiveCat(c.id)}>{c.icon} {c.name}</span>)}
+    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div>
+        <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Подрядчики</div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>{date?`Свободные на ${new Date(date).toLocaleDateString("ru")} · `:""}{survey?.city||"Москва"}</div>
       </div>
-      <input style={{...S.input,maxWidth:300,marginBottom:20}} placeholder="Поиск..." value={search} onChange={e=>setSearch(e.target.value)}/>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(290px,1fr))",gap:18}}>
-        {filtered.map(v=>{
+      <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+        <span onClick={()=>setActiveCat("all")} style={{padding:"9px 16px",borderRadius:999,background:activeCat==="all"?"#221D18":"#FBF9F5",color:activeCat==="all"?"#FBF9F5":"#6E665C",border:activeCat==="all"?"none":"1px solid #E2DACB",fontSize:12.5,fontWeight:activeCat==="all"?600:500,cursor:"pointer"}}>Все</span>
+        {avail.map(c=><span key={c.id} onClick={()=>setActiveCat(c.id)} style={{padding:"9px 16px",borderRadius:999,background:activeCat===c.id?"#221D18":"#FBF9F5",color:activeCat===c.id?"#FBF9F5":"#6E665C",border:activeCat===c.id?"none":"1px solid #E2DACB",fontSize:12.5,fontWeight:activeCat===c.id?600:500,cursor:"pointer"}}>{c.name}</span>)}
+      </div>
+      <div style={{display:"flex",alignItems:"center",gap:10,background:"#FFFFFF",border:"1px solid #E2DACB",borderRadius:12,padding:"11px 16px",maxWidth:340}}>
+        <span style={{fontSize:14,color:"#B0A99E"}}>⌕</span>
+        <input style={{border:"none",outline:"none",fontSize:13,fontFamily:fb,background:"transparent",color:"#221D18",width:"100%"}} placeholder="Поиск по имени…" value={search} onChange={e=>setSearch(e.target.value)}/>
+      </div>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
+        {filtered.map((v,vi)=>{
           const cat=catMap[v.cat];
+          const isFav=favs.includes(v.id);
+          const isDone=contacted.includes(v.id);
           return(
-            <div key={v.id} style={{...S.card,display:"flex",flexDirection:"column",position:"relative"}}>
-              <div style={{position:"absolute",top:12,right:12,cursor:"pointer",fontSize:18}} onClick={()=>setFavs(f=>f.includes(v.id)?f.filter(x=>x!==v.id):[...f,v.id])}>{favs.includes(v.id)?"❤️":"🤍"}</div>
-              <div style={{display:"flex",gap:10,marginBottom:10}}>
-                <div style={{width:42,height:42,borderRadius:10,background:C.blushBg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{cat?.icon}</div>
-                <div><div style={{fontWeight:700,fontSize:14}}>{v.name}</div><div style={{fontSize:11,color:C.gray}}>{cat?.name} · {v.city}</div></div>
+            <div key={v.id} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:20,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)",display:"flex",flexDirection:"column",position:"relative"}}>
+              <span onClick={()=>setFavs(f=>f.includes(v.id)?f.filter(x=>x!==v.id):[...f,v.id])} style={{position:"absolute",top:18,right:18,fontSize:16,color:isFav?"#BD877C":"#D8CFC0",cursor:"pointer"}}>{isFav?"♥":"♡"}</span>
+              <div style={{display:"flex",gap:12,marginBottom:13}}>
+                <div style={{width:46,height:46,borderRadius:12,background:GR[vi%4][0],flexShrink:0}}/>
+                <div><div style={{fontSize:14.5,fontWeight:700}}>{v.name}</div><div style={{fontSize:11.5,color:"#A39C92"}}>{cat?.name} · {v.city}</div></div>
               </div>
-              <p style={{fontSize:12,color:C.gray,lineHeight:1.6,flex:1,margin:"0 0 10px"}}>{v.desc}</p>
-              <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:12}}>{v.tags.map(t=><span key={t} style={S.badge("")}>{t}</span>)}</div>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:10,borderTop:`1px solid ${C.line}`}}>
-                <div><div style={{fontWeight:700,color:C.teal,fontSize:14}}>от {fmt(v.priceFrom)} ₽</div><div style={{fontSize:10,color:C.gray}}>⭐ {v.rating} · {v.reviews} отзывов</div></div>
-                {contacted.includes(v.id)?<span style={S.badge("g")}>✓ Запрос отправлен</span>:<button style={S.btn} onClick={()=>setModal(v)}>Связаться</button>}
+              <p style={{fontSize:12.5,color:"#6E665C",lineHeight:1.6,flex:1,margin:"0 0 12px"}}>{v.desc}</p>
+              <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:14}}>
+                {v.tags.map(t=><span key={t} style={{fontSize:10.5,color:"#7A7266",background:"#F1EBE1",padding:"3px 9px",borderRadius:7}}>{t}</span>)}
+              </div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:13,borderTop:"1px solid #F1EBE1"}}>
+                <div><div style={{fontSize:14,fontWeight:700,color:"#5E8A7D"}}>от {fmt(v.priceFrom)} ₽</div><div style={{fontSize:10.5,color:"#A39C92"}}>★ {v.rating} · {v.reviews} отзывов</div></div>
+                {isDone
+                  ?<span style={{padding:"8px 12px",borderRadius:999,background:"#EAF0EC",color:"#5E8A7D",fontSize:11.5,fontWeight:600}}>✓ Запрос отправлен</span>
+                  :<button onClick={()=>setModal(v)} style={{padding:"8px 16px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:12,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>Связаться</button>
+                }
               </div>
             </div>
           );
         })}
-        {filtered.length===0&&<div style={{...S.card,gridColumn:"1/-1",textAlign:"center",padding:40}}><div style={{fontSize:32,marginBottom:10}}>🔍</div><p style={{color:C.gray}}>Подрядчики не найдены</p></div>}
-      </div>
+        {filtered.length===0&&<div style={{gridColumn:"1/-1",textAlign:"center",padding:60,color:"#948D83",fontSize:14}}>Подрядчики не найдены</div>}
+      </section>
       {modal&&(
         <div style={{position:"fixed",inset:0,background:"rgba(31,27,23,0.5)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}}>
-          <div style={{...S.card,maxWidth:460,width:"100%"}}>
-            <h3 style={S.h2}>Запрос — {modal.name}</h3>
-            <div style={{background:C.lightGray,borderRadius:10,padding:14,fontSize:13,lineHeight:1.9,marginBottom:18}}>
+          <div style={{background:"#FFFFFF",borderRadius:20,padding:28,maxWidth:460,width:"100%",boxShadow:"0 24px 60px -10px rgba(33,28,23,.3)"}}>
+            <div style={{fontSize:18,fontWeight:700,letterSpacing:"-.02em",marginBottom:16}}>Запрос — {modal.name}</div>
+            <div style={{background:"#FBF9F5",borderRadius:12,padding:"14px 16px",fontSize:13,lineHeight:1.9,marginBottom:20,border:"1px solid #EBE4D8"}}>
               <b>Дата:</b> {survey?.date?new Date(survey.date).toLocaleDateString("ru"):survey?.season||"не указана"}<br/>
               <b>Город:</b> {survey?.city||"—"}<br/>
               <b>Гостей:</b> {survey?.guests||"—"}<br/>
               <b>Формат:</b> {FORMATS.find(f=>f.id===survey?.format)?.label||"—"}<br/>
-              {survey?.concept?.mustHave&&<><b>Обязательно:</b> {survey.concept.mustHave}<br/></>}
+              {survey?.concept?.mustHave&&<><b>Пожелания:</b> {survey.concept.mustHave}<br/></>}
             </div>
             <div style={{display:"flex",gap:10}}>
-              <button style={S.btn} onClick={()=>{setContacted(p=>[...p,modal.id]);setModal(null);}}>✓ Отправить запрос</button>
-              <button style={S.btnO} onClick={()=>setModal(null)}>Отмена</button>
+              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={()=>{setContacted(p=>[...p,modal.id]);setModal(null);}}>✓ Отправить запрос</button>
+              <button style={{padding:"11px 18px",borderRadius:999,background:"transparent",color:"#857E74",fontSize:13,fontWeight:500,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}} onClick={()=>setModal(null)}>Отмена</button>
             </div>
           </div>
         </div>
@@ -843,72 +906,73 @@ function GuestsPage({slug,guests,setGuests}){
   const add=()=>{if(!form.name)return;setGuests(p=>[...p,{...form,id:Date.now()}]);setForm({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});};
   const upd=(id,patch)=>setGuests(p=>p.map(g=>g.id===id?{...g,...patch}:g));
   const del=(id)=>setGuests(p=>p.filter(g=>g.id!==id));
+  const RSVP_STYLE={"Придёт":{color:"#5E8A7D",bg:"#EAF0EC"},"Ожидает":{color:"#C49A52",bg:"#F6EFDE"},"Не придёт":{color:"#A66B60",bg:"#F5E4E0"}};
+  const inp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"};
   return(
-    <div className="td-page" style={S.page}>
-      <h2 style={S.h1}>Список гостей</h2>
-      <p style={S.sub}>Ссылка: <strong style={{color:C.blushDark}}>totday.app/{slug}</strong></p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:14,marginBottom:22}}>
-        {[{l:"Всего",v:stats.total,c:C.dark},{l:"Подтверждено",v:stats.yes,c:C.teal},{l:"Ожидает",v:stats.wait,c:C.gold},{l:"Трансфер",v:stats.transfer,c:C.ink2},{l:"Проживание",v:stats.lodging,c:C.ink2}].map(s=>(
-          <div key={s.l} style={{...S.card,textAlign:"center"}}>
-            <div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:6}}>{s.l}</div>
-            <div style={{fontFamily:font,fontSize:28,color:s.c,fontWeight:600}}>{s.v}</div>
+    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div>
+        <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Список гостей</div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Ссылка для подтверждений · <span style={{color:"#A66B60",fontWeight:600}}>totday.app/{slug}</span></div>
+      </div>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:16}}>
+        {[["Всего",stats.total,"#221D18"],["Подтвердили",stats.yes,"#5E8A7D"],["Ожидаем",stats.wait,"#C49A52"],["Трансфер",stats.transfer,"#221D18"],["Проживание",stats.lodging,"#221D18"]].map(([l,v,c])=>(
+          <div key={l} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:20,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)",textAlign:"center"}}>
+            <div style={{fontSize:10.5,letterSpacing:".12em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:8}}>{l}</div>
+            <div style={{fontSize:30,fontWeight:700,letterSpacing:"-.02em",color:c}}>{v}</div>
           </div>
         ))}
-      </div>
-      <div style={{...S.card,marginBottom:20}}>
-        <h3 style={S.h3}>Добавить гостя</h3>
-        <div style={{display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
-          <div style={{flex:"2 1 160px"}}><label style={S.label}>Имя и фамилия</label><input style={S.input} value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Имя Фамилия"/></div>
-          <div style={{flex:"1 1 120px"}}><label style={S.label}>Кем приходится</label><input style={S.input} value={form.relation} onChange={e=>setForm(p=>({...p,relation:e.target.value}))} placeholder="друг, тётя…"/></div>
-          <div style={{flex:"1 1 100px"}}><label style={S.label}>Сторона</label><select style={S.select} value={form.side} onChange={e=>setForm(p=>({...p,side:e.target.value}))}>{["Жениха","Невесты","Общий"].map(s=><option key={s}>{s}</option>)}</select></div>
-          <div style={{flex:"1 1 100px"}}><label style={S.label}>RSVP</label><select style={S.select} value={form.rsvp} onChange={e=>setForm(p=>({...p,rsvp:e.target.value}))}>{RSVP.map(s=><option key={s}>{s}</option>)}</select></div>
-          <button style={S.btn} onClick={add}>+ Добавить</button>
+      </section>
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+        <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>Добавить гостя</div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
+          <div style={{flex:"2 1 180px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Имя и фамилия</div><input style={inp} value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Имя Фамилия" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
+          <div style={{flex:"1 1 130px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Кем приходится</div><input style={inp} value={form.relation} onChange={e=>setForm(p=>({...p,relation:e.target.value}))} placeholder="друг, тётя…"/></div>
+          <div style={{flex:"1 1 110px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Сторона</div><select style={{...inp,cursor:"pointer"}} value={form.side} onChange={e=>setForm(p=>({...p,side:e.target.value}))}>{["Невесты","Жениха","Общий"].map(s=><option key={s}>{s}</option>)}</select></div>
+          <button onClick={add} style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>+ Добавить</button>
         </div>
-      </div>
-      <div style={S.card}>
-        <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap",alignItems:"center"}}>
-          <div style={{display:"flex",gap:6}}>{["Все",...RSVP].map(f=><button key={f} style={S.tab(filter===f)} onClick={()=>setFilter(f)}>{f}</button>)}</div>
-          <input style={{...S.input,width:190}} placeholder="Поиск..." value={search} onChange={e=>setSearch(e.target.value)}/>
+      </section>
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+        <div style={{display:"flex",gap:6,marginBottom:16,background:"#EFE9DE",borderRadius:12,padding:4,width:"fit-content"}}>
+          {["Все",...RSVP].map(f=><span key={f} onClick={()=>setFilter(f)} style={{padding:"7px 16px",borderRadius:9,background:filter===f?"#FFFFFF":"transparent",fontSize:12.5,fontWeight:filter===f?600:500,color:filter===f?"#221D18":"#857E74",cursor:"pointer",boxShadow:filter===f?"0 1px 2px rgba(33,28,23,.05)":"none"}}>{f}</span>)}
         </div>
-        <div style={{overflowX:"auto"}}>
-          <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
-            <thead><tr style={{borderBottom:`2px solid ${C.line}`}}>{["Имя","Кем приходится","Сторона","RSVP","Стол","Трансфер","Прожив.",""].map(h=><th key={h} style={{padding:"9px 10px",textAlign:"left",fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600}}>{h}</th>)}</tr></thead>
-            <tbody>{filtered.map(g=>(
-              <Fragment key={g.id}>
-                <tr style={{borderBottom:expanded===g.id?"none":`1px solid ${C.line}`}}>
-                  <td style={{padding:"11px 10px",fontWeight:500}}>{g.name}</td>
-                  <td style={{padding:"11px 10px",color:C.gray}}>{g.relation||"—"}</td>
-                  <td style={{padding:"11px 10px",color:C.gray}}>{g.side}</td>
-                  <td style={{padding:"11px 10px"}}><span style={S.badge(RC[g.rsvp])}>{g.rsvp}</span></td>
-                  <td style={{padding:"11px 10px",color:C.gray}}>{g.table||"—"}</td>
-                  <td style={{padding:"11px 10px"}}>{g.transfer?"✓":"—"}</td>
-                  <td style={{padding:"11px 10px"}}>{g.lodging?"✓":"—"}</td>
-                  <td style={{padding:"11px 10px",textAlign:"right"}}><button style={{...S.btnSm,padding:"4px 10px"}} onClick={()=>setExpanded(expanded===g.id?null:g.id)}>{expanded===g.id?"Скрыть":"Детали"}</button></td>
-                </tr>
-                {expanded===g.id&&(
-                  <tr style={{borderBottom:`1px solid ${C.line}`,background:C.bg}}>
-                    <td colSpan={8} style={{padding:"14px 10px"}}>
-                      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12}}>
-                        <div><label style={S.label}>Обращение в приглашении</label><input style={S.input} value={g.inviteName||""} onChange={e=>upd(g.id,{inviteName:e.target.value})} placeholder="Дорогая Анна…"/></div>
-                        <div><label style={S.label}>Имя на карточке</label><input style={S.input} value={g.seatName||""} onChange={e=>upd(g.id,{seatName:e.target.value})} placeholder="Анна"/></div>
-                        <div><label style={S.label}>№ стола</label><input style={S.input} value={g.table||""} onChange={e=>upd(g.id,{table:e.target.value})} placeholder="3"/></div>
-                        <div><label style={S.label}>Питание</label><select style={S.select} value={g.diet||"Нет"} onChange={e=>upd(g.id,{diet:e.target.value})}>{["Нет","Вегетарианец","Веган","Без глютена","Халяль"].map(s=><option key={s}>{s}</option>)}</select></div>
-                        <div><label style={S.label}>Дети</label><input type="number" min="0" style={S.input} value={g.kids||0} onFocus={e=>e.target.select()} onChange={e=>upd(g.id,{kids:Math.max(0,Number(e.target.value)||0)})}/></div>
-                        <div><label style={S.label}>Комментарий ведущему</label><input style={S.input} value={g.hostNote||""} onChange={e=>upd(g.id,{hostNote:e.target.value})} placeholder="тамада, поёт…"/></div>
-                        <div style={{display:"flex",gap:16,alignItems:"flex-end",paddingBottom:8}}>
-                          <label style={{display:"flex",alignItems:"center",gap:6,fontSize:13,cursor:"pointer"}}><input type="checkbox" checked={!!g.transfer} onChange={e=>upd(g.id,{transfer:e.target.checked})}/>Трансфер</label>
-                          <label style={{display:"flex",alignItems:"center",gap:6,fontSize:13,cursor:"pointer"}}><input type="checkbox" checked={!!g.lodging} onChange={e=>upd(g.id,{lodging:e.target.checked})}/>Проживание</label>
-                        </div>
-                        <div style={{display:"flex",alignItems:"flex-end",paddingBottom:6}}><button style={{...S.btnSm,color:C.rose,borderColor:C.roseBg}} onClick={()=>del(g.id)}>Удалить</button></div>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </Fragment>
-            ))}</tbody>
-          </table>
+        <div style={{display:"grid",gridTemplateColumns:"1.4fr 1fr .8fr 1fr .6fr .8fr .8fr",gap:12,padding:"0 6px 12px",borderBottom:"1px solid #ECE5DA",fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600}}>
+          {["Имя","Кем приходится","Сторона","RSVP","Стол","Трансфер","Прожив."].map(h=><div key={h}>{h}</div>)}
         </div>
-      </div>
+        {filtered.map((g,i)=>(
+          <Fragment key={g.id}>
+            <div onClick={()=>setExpanded(expanded===g.id?null:g.id)} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr .8fr 1fr .6fr .8fr .8fr",gap:12,padding:"13px 6px",borderBottom:i<filtered.length-1?"1px solid #F1EBE1":"none",alignItems:"center",fontSize:13,cursor:"pointer"}}>
+              <div style={{fontWeight:500}}>{g.name}</div>
+              <div style={{color:"#857E74"}}>{g.relation||"—"}</div>
+              <div style={{color:"#857E74"}}>{g.side}</div>
+              <div onClick={e=>e.stopPropagation()}>
+                <select value={g.rsvp} onChange={e=>upd(g.id,{rsvp:e.target.value})} style={{border:"none",background:"transparent",fontFamily:fb,cursor:"pointer",padding:0,fontSize:11.5,fontWeight:600,color:(RSVP_STYLE[g.rsvp]||{}).color}}>
+                  {RSVP.map(r=><option key={r}>{r}</option>)}
+                </select>
+              </div>
+              <div style={{color:"#857E74"}}>{g.table||"—"}</div>
+              <div style={{color:g.transfer?"#5E8A7D":"#857E74"}}>{g.transfer?"✓":"—"}</div>
+              <div style={{color:g.lodging?"#5E8A7D":"#857E74"}}>{g.lodging?"✓":"—"}</div>
+            </div>
+            {expanded===g.id&&(
+              <div style={{background:"#FBF9F5",borderRadius:12,padding:"14px 16px",marginBottom:8,border:"1px solid #EBE4D8"}}>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12,marginBottom:12}}>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Обращение в приглашении</div><input style={inp} value={g.inviteName||""} onChange={e=>upd(g.id,{inviteName:e.target.value})} placeholder="Дорогая Анна…"/></div>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Имя на карточке</div><input style={inp} value={g.seatName||""} onChange={e=>upd(g.id,{seatName:e.target.value})} placeholder="Анна"/></div>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>№ стола</div><input style={inp} value={g.table||""} onChange={e=>upd(g.id,{table:e.target.value})} placeholder="3"/></div>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Питание</div><select style={{...inp,cursor:"pointer"}} value={g.diet||"Нет"} onChange={e=>upd(g.id,{diet:e.target.value})}>{["Нет","Вегетарианец","Веган","Без глютена","Халяль"].map(s=><option key={s}>{s}</option>)}</select></div>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Комментарий ведущему</div><input style={inp} value={g.hostNote||""} onChange={e=>upd(g.id,{hostNote:e.target.value})} placeholder="тамада, поёт…"/></div>
+                </div>
+                <div style={{display:"flex",gap:20,alignItems:"center",flexWrap:"wrap"}}>
+                  <label style={{display:"flex",alignItems:"center",gap:6,fontSize:13,cursor:"pointer"}}><input type="checkbox" checked={!!g.transfer} onChange={e=>upd(g.id,{transfer:e.target.checked})}/>Трансфер</label>
+                  <label style={{display:"flex",alignItems:"center",gap:6,fontSize:13,cursor:"pointer"}}><input type="checkbox" checked={!!g.lodging} onChange={e=>upd(g.id,{lodging:e.target.checked})}/>Проживание</label>
+                  <button style={{marginLeft:"auto",padding:"7px 14px",borderRadius:999,background:"transparent",color:"#A66B60",fontSize:12,fontWeight:600,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}} onClick={()=>del(g.id)}>Удалить</button>
+                </div>
+              </div>
+            )}
+          </Fragment>
+        ))}
+        {filtered.length===0&&<div style={{textAlign:"center",padding:40,color:"#948D83",fontSize:14}}>Гостей не найдено</div>}
+      </section>
     </div>
   );
 }
@@ -921,34 +985,45 @@ function TimingPage({survey,timing,setTiming}){
   const del=(id)=>setTiming(p=>p.filter(t=>t.id!==id));
   const upd=(id,patch)=>setTiming(p=>p.map(t=>t.id===id?{...t,...patch}:t));
   const dateStr=survey?.date?new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}):"";
+  const tinp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",outline:"none"};
   return(
-    <div className="td-page" style={S.page}>
-      <h2 style={S.h1}>Тайминг дня</h2>
-      <p style={S.sub}>Расписание свадьбы{dateStr?` · ${dateStr}`:""}</p>
-      <div style={{...S.card,marginBottom:20}}>
-        <h3 style={S.h3}>Добавить пункт</h3>
-        <div style={{display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
-          <div style={{flex:"1 1 140px"}}><label style={S.label}>Блок</label><select style={S.select} value={form.block} onChange={e=>setForm(p=>({...p,block:e.target.value}))}>{blocks.map(b=><option key={b.id} value={b.id}>{b.label}</option>)}</select></div>
-          <div style={{flex:"0 1 110px"}}><label style={S.label}>Время</label><input type="time" style={S.input} value={form.time} onChange={e=>setForm(p=>({...p,time:e.target.value}))}/></div>
-          <div style={{flex:"3 1 220px"}}><label style={S.label}>Событие</label><input style={S.input} value={form.title} onChange={e=>setForm(p=>({...p,title:e.target.value}))} placeholder="Сбор гостей, церемония…" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
-          <button style={S.btn} onClick={add}>+ Добавить</button>
-        </div>
+    <div style={{maxWidth:900,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div>
+        <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Тайминг дня</div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Расписание свадьбы{dateStr?` · ${dateStr}`:""}</div>
       </div>
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+        <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>Добавить пункт</div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
+          <div style={{flex:"1 1 150px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Блок</div><select style={{...tinp,width:"100%",cursor:"pointer"}} value={form.block} onChange={e=>setForm(p=>({...p,block:e.target.value}))}>{blocks.map(b=><option key={b.id} value={b.id}>{b.label}</option>)}</select></div>
+          <div style={{flex:"0 1 110px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Время</div><input type="time" style={{...tinp,width:"100%"}} value={form.time} onChange={e=>setForm(p=>({...p,time:e.target.value}))}/></div>
+          <div style={{flex:"3 1 220px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Событие</div><input style={{...tinp,width:"100%"}} value={form.title} onChange={e=>setForm(p=>({...p,title:e.target.value}))} placeholder="Сбор гостей, церемония…" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
+          <button onClick={add} style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>+ Добавить</button>
+        </div>
+      </section>
       {blocks.map(b=>{
         const items=timing.filter(t=>t.block===b.id).sort((a,z)=>(a.time||"").localeCompare(z.time||""));
+        const dotBg=b.id==="before"?"#D8CFC0":"#BD877C";
         return(
-          <div key={b.id} style={{...S.card,marginBottom:18}}>
-            <div style={{fontSize:11,letterSpacing:"0.14em",textTransform:"uppercase",color:C.blushDark,fontWeight:600,marginBottom:14}}>{b.label}</div>
-            {items.length===0?<p style={{color:C.gray,fontSize:13,margin:0}}>Пока пусто</p>:(
-              <div>{items.map((t,i)=>(
-                <div key={t.id} style={{display:"grid",gridTemplateColumns:"78px 1fr 36px",gap:14,alignItems:"center",padding:"13px 0",borderTop:i>0?`1px solid ${C.line}`:"none"}}>
-                  <input style={{...S.input,padding:"6px 10px",fontFamily:font,fontSize:16,textAlign:"center"}} value={t.time||""} onChange={e=>upd(t.id,{time:e.target.value})} placeholder="—:—"/>
-                  <input style={{...S.input,padding:"8px 12px",border:"none",background:"transparent",fontSize:14.5}} value={t.title} onChange={e=>upd(t.id,{title:e.target.value})}/>
-                  <button style={{...S.btnSm,color:C.rose,padding:"5px 9px"}} onClick={()=>del(t.id)}>✕</button>
-                </div>
-              ))}</div>
+          <section key={b.id} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"26px 28px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+            <div style={{fontSize:11,letterSpacing:".16em",textTransform:"uppercase",color:"#A66B60",fontWeight:600,marginBottom:20}}>{b.label}</div>
+            {items.length===0?<p style={{color:"#948D83",fontSize:13,margin:0}}>Пока пусто</p>:(
+              <div style={{position:"relative",paddingLeft:30}}>
+                <div style={{position:"absolute",left:5,top:8,bottom:8,width:1.5,background:"#EAE0D2"}}/>
+                {items.map((t,i)=>{
+                  const isLast=i===items.length-1&&b.id==="day";
+                  return(
+                    <div key={t.id} style={{position:"relative",display:"grid",gridTemplateColumns:"78px 1fr 32px",gap:18,alignItems:"baseline",padding:"11px 0",borderTop:i>0?"1px solid #F4EEE5":"none"}}>
+                      <span style={{position:"absolute",left:-29,top:16,width:9,height:9,borderRadius:"50%",background:isLast?"#221D18":dotBg,border:"2px solid #FBF9F5"}}/>
+                      <input style={{fontSize:17,fontWeight:700,letterSpacing:"-.01em",fontVariantNumeric:"tabular-nums",border:"none",background:"transparent",fontFamily:fb,outline:"none",color:b.id==="before"?"#6E665C":"#221D18",padding:0,width:"100%"}} value={t.time||""} onChange={e=>upd(t.id,{time:e.target.value})} placeholder="—:—"/>
+                      <input style={{fontSize:14,fontWeight:500,border:"none",background:"transparent",fontFamily:fb,outline:"none",width:"100%",padding:0}} value={t.title} onChange={e=>upd(t.id,{title:e.target.value})}/>
+                      <button onClick={()=>del(t.id)} style={{background:"none",border:"none",color:"#D8CFC0",fontSize:16,cursor:"pointer",padding:0,lineHeight:1}}>✕</button>
+                    </div>
+                  );
+                })}
+              </div>
             )}
-          </div>
+          </section>
         );
       })}
     </div>
@@ -957,30 +1032,26 @@ function TimingPage({survey,timing,setTiming}){
 
 // ─── INVITE PREVIEW (top-level to avoid remount bug) ─────────────────────────
 function InvitePreview({t,c,survey}){
+  const dateStr=survey?.date?new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}):"";
   return(
-    <div style={{background:t.bg,color:t.textColor,borderRadius:14,padding:"36px 28px",fontFamily:font,border:`1px solid ${t.accent}30`}}>
-      <div style={{textAlign:"center",marginBottom:24}}>
-        <div style={{fontSize:12,letterSpacing:"0.18em",textTransform:"uppercase",color:t.accent,marginBottom:10}}>Приглашение</div>
-        <h1 style={{fontSize:26,margin:"0 0 10px",lineHeight:1.2}}>{c.title}</h1>
-        {survey?.date&&<div style={{fontSize:14,color:t.accent}}>{new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"})}</div>}
+    <div style={{background:t.bg,borderRadius:16,padding:"38px 30px",color:t.textColor,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)",border:`1px solid ${t.accent}30`}}>
+      <div style={{textAlign:"center",marginBottom:26}}>
+        <div style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:t.accent,marginBottom:12}}>Приглашение</div>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:32,lineHeight:1.15,marginBottom:10}}>{c.title}</div>
+        {dateStr&&<div style={{fontSize:13,color:t.accent,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>{dateStr}</div>}
       </div>
-      <div style={{textAlign:"center",fontSize:13,lineHeight:1.8,opacity:0.85,marginBottom:20}}>{c.text}</div>
-      <div style={{borderTop:`1px solid ${t.accent}40`,borderBottom:`1px solid ${t.accent}40`,padding:"14px 0",margin:"0 0 18px",textAlign:"center"}}>
-        <div style={{fontSize:10,letterSpacing:"0.1em",textTransform:"uppercase",color:t.accent,marginBottom:5}}>Место</div>
-        <div style={{fontSize:14,fontWeight:600}}>{c.venue}</div>
-        <div style={{fontSize:11,opacity:0.7,marginTop:3}}>{c.address}</div>
+      <div style={{textAlign:"center",fontSize:13,lineHeight:1.8,color:t.textColor,opacity:.85,marginBottom:24}}>{c.text}</div>
+      <div style={{borderTop:`1px solid ${t.accent}45`,borderBottom:`1px solid ${t.accent}45`,padding:"16px 0",marginBottom:22,textAlign:"center"}}>
+        <div style={{fontSize:10,letterSpacing:".12em",textTransform:"uppercase",color:t.accent,marginBottom:5}}>Место</div>
+        <div style={{fontSize:15,fontWeight:600,fontFamily:"'Cormorant Garamond',serif"}}>{c.venue}</div>
+        <div style={{fontSize:11.5,opacity:.7,marginTop:3}}>{c.address}</div>
       </div>
-      {c.program&&<div style={{marginBottom:18}}>
-        <div style={{fontSize:10,letterSpacing:"0.1em",textTransform:"uppercase",color:t.accent,marginBottom:8,textAlign:"center"}}>Программа</div>
-        {c.program.split("\n").map((l,i)=><div key={i} style={{fontSize:12,padding:"4px 0",borderBottom:`1px solid ${t.accent}20`,opacity:0.85}}>{l}</div>)}
-      </div>}
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:22}}>
-        {[["Дресс-код",c.dresscode],["Пожелания",c.wishes]].map(([l,v])=>(
-          <div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,letterSpacing:"0.1em",textTransform:"uppercase",color:t.accent,marginBottom:4}}>{l}</div><div style={{fontSize:11,opacity:0.8}}>{v}</div></div>
-        ))}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:26}}>
+        <div style={{textAlign:"center"}}><div style={{fontSize:9.5,letterSpacing:".1em",textTransform:"uppercase",color:t.accent,marginBottom:4}}>Дресс-код</div><div style={{fontSize:11.5,opacity:.8}}>{c.dresscode}</div></div>
+        <div style={{textAlign:"center"}}><div style={{fontSize:9.5,letterSpacing:".1em",textTransform:"uppercase",color:t.accent,marginBottom:4}}>Начало</div><div style={{fontSize:11.5,opacity:.8}}>17:00</div></div>
       </div>
       <div style={{textAlign:"center"}}>
-        <button style={{padding:"10px 26px",borderRadius:26,border:`2px solid ${t.accent}`,background:t.accent,color:t.id==="luxury"?C.dark:C.white,cursor:"pointer",fontSize:12,fontFamily:font}}>Подтвердить участие</button>
+        <span style={{display:"inline-block",padding:"11px 28px",borderRadius:999,background:t.accent,color:t.bg,fontSize:12,fontFamily:"'Cormorant Garamond',serif",letterSpacing:".04em",cursor:"pointer"}}>Подтвердить участие</span>
       </div>
     </div>
   );
@@ -990,48 +1061,49 @@ function InvitePreview({t,c,survey}){
 function InvitePage({survey,user,inviteData,setInviteData}){
   const[copied,setCopied]=useState(false);
   const{tmplId="classic",content={}}=inviteData||{};
-  const defaultContent={title:`Свадьба ${user?.name2||"Жениха"} & ${user?.name1||"Невесты"}`,venue:"Название площадки",address:"Адрес",text:"Мы рады пригласить вас разделить с нами этот особенный день!",dresscode:"Праздничный дресс-код",wishes:"Цветы и тёплые слова — лучший подарок",program:"17:00 Сбор гостей\n18:00 Выездная церемония\n19:00 Банкет"};
+  const defaultContent={title:`Свадьба ${user?.name2||"Жениха"} & ${user?.name1||"Невесты"}`,venue:"Loft Riverside",address:"Москва, Овчинниковская наб., 20",text:"Мы рады пригласить вас разделить с нами этот особенный день!",dresscode:"Праздничный, оттенки пыльной розы",wishes:"",program:""};
   const c={...defaultContent,...content};
   const t=INVITE_TEMPLATES.find(x=>x.id===tmplId)||INVITE_TEMPLATES[0];
   const slug=makeSlug(user);
   const setTmpl=(id)=>setInviteData(p=>({...(p||{}),tmplId:id}));
   const upd=k=>e=>setInviteData(p=>({...(p||{}),content:{...c,[k]:e.target.value}}));
+  const finp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"};
   return(
-    <div className="td-page" style={S.page}>
-      <h2 style={S.h1}>Сайт гостей</h2>
-      <p style={S.sub}>Персональный сайт — гости подтвердят участие онлайн</p>
-      <div style={{...S.card,marginBottom:20}}>
-        <h3 style={S.h3}>Шаблон</h3>
-        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+    <div style={{maxWidth:1160,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+      <div>
+        <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Сайт гостей</div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Персональная страница — гости подтвердят участие онлайн</div>
+      </div>
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+        <div style={{fontSize:14,fontWeight:600,marginBottom:16}}>Шаблон</div>
+        <div style={{display:"flex",gap:16,flexWrap:"wrap"}}>
           {INVITE_TEMPLATES.map(t2=>(
-            <div key={t2.id} onClick={()=>setTmpl(t2.id)} style={{cursor:"pointer",textAlign:"center"}}>
-              <div style={{width:70,height:44,borderRadius:8,background:t2.bg,border:`3px solid ${tmplId===t2.id?t2.accent:C.line}`,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:t2.accent,fontFamily:font,fontSize:13}}>Aa</span></div>
-              <div style={{fontSize:11,color:tmplId===t2.id?C.blushDark:C.gray,marginTop:3,fontWeight:tmplId===t2.id?700:400}}>{t2.name}</div>
+            <div key={t2.id} onClick={()=>setTmpl(t2.id)} style={{textAlign:"center",cursor:"pointer"}}>
+              <div style={{width:78,height:50,borderRadius:10,background:t2.bg,border:`2.5px solid ${tmplId===t2.id?t2.accent:"#E2DACB"}`,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Cormorant Garamond',serif",fontSize:18,color:t2.accent}}>Aa</div>
+              <div style={{fontSize:11,fontWeight:tmplId===t2.id?700:500,color:tmplId===t2.id?"#A66B60":"#948D83",marginTop:5}}>{t2.name}</div>
             </div>
           ))}
         </div>
-      </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
-        <div style={S.card}>
-          <h3 style={S.h3}>Редактор</h3>
-          <div style={{display:"flex",flexDirection:"column",gap:12}}>
-            {[["title","Заголовок"],["venue","Площадка"],["address","Адрес"],["dresscode","Дресс-код"],["wishes","Пожелания"]].map(([k,l])=>(
-              <div key={k}><label style={S.label}>{l}</label><input style={S.input} value={c[k]} onChange={upd(k)}/></div>
+      </section>
+      <section style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+          <div style={{fontSize:14,fontWeight:600,marginBottom:16}}>Редактор</div>
+          <div style={{display:"flex",flexDirection:"column",gap:14}}>
+            {[["title","Заголовок"],["venue","Площадка"],["address","Адрес"],["dresscode","Дресс-код"]].map(([k,l])=>(
+              <div key={k}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>{l}</div><input style={finp} value={c[k]} onChange={upd(k)}/></div>
             ))}
-            <div><label style={S.label}>Приветствие</label><textarea style={{...S.input,minHeight:70,resize:"vertical"}} value={c.text} onChange={upd("text")}/></div>
-            <div><label style={S.label}>Программа</label><textarea style={{...S.input,minHeight:70,resize:"vertical"}} value={c.program} onChange={upd("program")}/></div>
+            <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Приветствие</div><textarea style={{...finp,minHeight:60,resize:"vertical",lineHeight:1.5}} value={c.text} onChange={upd("text")}/></div>
           </div>
         </div>
-        <div>
-          <div style={{...S.card,marginBottom:14}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:13,color:C.teal,fontWeight:700}}>totday.app/{slug}</span>
-              <button style={{...S.btn,padding:"6px 14px",fontSize:11}} onClick={()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);}}>{copied?"✓ Скопировано":"Копировать"}</button>
-            </div>
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:14,padding:"14px 18px",boxShadow:"0 1px 2px rgba(33,28,23,.03)",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <span style={{fontSize:13,color:"#5E8A7D",fontWeight:700}}>totday.app/{slug}</span>
+            <button onClick={()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{padding:"7px 15px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:11.5,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>{copied?"✓ Скопировано":"Копировать"}</button>
           </div>
           <InvitePreview t={t} c={c} survey={survey}/>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
@@ -1090,49 +1162,58 @@ function BudgetDonut({cats,total}){
 
 // ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 const SIDE_TABS=[
-  {id:"dashboard",label:"Главная",       icon:"🏠"},
-  {id:"survey1",  label:"Быстрый расчёт",icon:"📋"},
-  {id:"survey2",  label:"Концепция",     icon:"🎨"},
-  {id:"budget",   label:"Бюджет",        icon:"💰"},
-  {id:"vendors",  label:"Подрядчики",    icon:"🤝"},
-  {id:"guests",   label:"Гости",         icon:"👥"},
-  {id:"timing",   label:"Тайминг",       icon:"🗓"},
-  {id:"invite",   label:"Сайт гостей",   icon:"✉️"},
+  {id:"dashboard",label:"Главная"},
+  {id:"budget",   label:"Бюджет"},
+  {id:"guests",   label:"Гости"},
+  {id:"vendors",  label:"Подрядчики"},
+  {id:"timing",   label:"Тайминг"},
+  {id:"survey2",  label:"Концепция"},
+  {id:"invite",   label:"Сайт гостей"},
 ];
 
-function SideItem({id,label,icon,active,setTab}){
+function SideItem({id,label,active,setTab}){
   const on=active===id;
   return(
-    <button onClick={()=>setTab(id)} style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:10,padding:"11px 14px",borderRadius:12,border:on?`1px solid ${C.line}`:"1px solid transparent",background:on?C.white:"transparent",color:on?C.dark:C.gray,cursor:"pointer",fontSize:13.5,fontFamily:fb,fontWeight:on?600:500,transition:"all .15s",textAlign:"left",width:"100%",boxShadow:on?SHADOW:"none"}}>
-      <span style={{display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:15,width:20,textAlign:"center"}}>{icon}</span><span>{label}</span></span>
+    <button onClick={()=>setTab(id)} style={{display:"flex",alignItems:"center",justifyContent:on?"space-between":"flex-start",gap:10,padding:"11px 14px",borderRadius:12,border:on?`1px solid #EAE3D7`:"1px solid transparent",background:on?C.white:"transparent",color:on?C.dark:"#857E74",cursor:"pointer",fontSize:13.5,fontFamily:fb,fontWeight:on?600:500,transition:"all .15s",textAlign:"left",width:"100%",boxShadow:on?"0 1px 2px rgba(33,28,23,.04)":"none"}}>
+      <span>{label}</span>
       {on&&<span style={{width:6,height:6,borderRadius:"50%",background:C.blushDark,flexShrink:0}}/>}
     </button>
   );
 }
 
 function Sidebar({tab,setTab,role,user,survey,openWedding,logout}){
+  const agencyTabs=[
+    {id:"agency",  label:"Все свадьбы"},
+    {id:"budget",  label:"Финансы"},
+    {id:"vendors", label:"База подрядчиков"},
+    {id:"dashboard",label:"Кабинет пары"},
+  ];
+  const tabs=role==="agency"?(openWedding?SIDE_TABS:agencyTabs):SIDE_TABS;
+  const dateStr=survey?.date?new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"short",year:"numeric"}):"";
   return(
     <aside style={{width:250,minHeight:"100vh",background:"#FBF9F5",borderRight:`1px solid ${C.line}`,display:"flex",flexDirection:"column",padding:"30px 18px 22px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0,zIndex:100}}>
-      <div style={{padding:"0 10px 28px"}}>
-        <div style={{display:"flex",alignItems:"center",gap:2}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-0.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
-        {role==="agency"&&<div style={{fontSize:10,fontFamily:fb,color:C.blushDark,fontWeight:700,letterSpacing:"0.12em",textTransform:"uppercase",marginTop:2}}>AGENCY</div>}
+      <div style={{padding:"0 12px 30px"}}>
+        <div style={{display:"flex",alignItems:"baseline",gap:1}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
+        {role==="agency"&&<div style={{fontSize:10,fontFamily:fb,color:"#A66B60",fontWeight:700,letterSpacing:".16em",textTransform:"uppercase",marginTop:3}}>для агентств</div>}
       </div>
-      <nav style={{flex:1,display:"flex",flexDirection:"column",gap:2}}>
-        {role==="agency"&&<SideItem id="agency" label="Все свадьбы" icon="🏢" active={tab} setTab={setTab}/>}
-        {(role==="agency"?(openWedding?SIDE_TABS:[]):SIDE_TABS).map(t=>(
-          <SideItem key={t.id} {...t} active={tab} setTab={setTab}/>
+      <div style={{fontSize:10,letterSpacing:".18em",textTransform:"uppercase",color:"#B0A99E",fontWeight:600,padding:"0 14px 12px"}}>
+        {role==="agency"&&!openWedding?"Кабинет":"Планирование"}
+      </div>
+      <nav style={{display:"flex",flexDirection:"column",gap:3}}>
+        {tabs.map(t=>(
+          <SideItem key={t.id} id={t.id} label={t.label} active={tab} setTab={setTab}/>
         ))}
       </nav>
       {user&&(
-        <div style={{padding:"16px 10px 0",borderTop:`1px solid ${C.line}`,marginTop:16}}>
-          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-            <div style={{width:36,height:36,borderRadius:"50%",background:`linear-gradient(135deg,${C.blush},${C.champ})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:C.dark,flexShrink:0}}>{user.name1?.[0]||"А"}</div>
-            <div style={{flex:1,overflow:"hidden"}}>
-              <div style={{fontSize:13,fontWeight:600,color:C.dark,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{user.name1} & {user.name2}</div>
-              {survey?.date&&<div style={{fontSize:11,color:C.gray}}>{new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"short",year:"numeric"})}</div>}
+        <div style={{marginTop:"auto",paddingTop:18,borderTop:`1px solid ${C.line}`}}>
+          <div style={{display:"flex",alignItems:"center",gap:11,padding:"0 6px 12px"}}>
+            <div style={{width:38,height:38,borderRadius:"50%",background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#6E5A4E",flexShrink:0}}>{user.name1?.[0]||"С"}</div>
+            <div style={{overflow:"hidden"}}>
+              <div style={{fontSize:13,fontWeight:600,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{user.name1} & {user.name2}</div>
+              {dateStr&&<div style={{fontSize:11,color:"#A39C92"}}>{dateStr}</div>}
             </div>
           </div>
-          <button style={{...S.btnO,width:"100%",fontSize:12,padding:"8px 14px"}} onClick={logout}>Выйти</button>
+          <button style={{display:"block",textAlign:"center",width:"100%",padding:"9px 14px",borderRadius:11,border:"1px solid #E4DCCF",color:"#857E74",background:"transparent",cursor:"pointer",fontSize:12,fontWeight:600,fontFamily:fb,transition:"all .15s"}} onClick={logout}>Выйти</button>
         </div>
       )}
     </aside>
@@ -1144,157 +1225,164 @@ function Dashboard({user,survey,cats,guests,onNav}){
   const total=Number(survey?.budget)||1500000;
   const totalActual=cats.reduce((s,c)=>s+c.actual,0);
   const confirmedGuests=guests.filter(g=>g.rsvp==="Придёт").length;
+  const waitingGuests=guests.filter(g=>g.rsvp==="Ожидает").length;
+  const noGuests=guests.filter(g=>g.rsvp==="Не придёт").length;
   const tasks=[
-    {done:!!survey?.format,           text:"Пройти быстрый расчёт"},
-    {done:!!survey?.concept,          text:"Заполнить концепцию"},
-    {done:cats.some(c=>c.actual>0),   text:"Добавить первый расход"},
-    {done:guests.length>3,            text:"Внести список гостей"},
-    {done:false,                      text:"Создать сайт гостей"},
-    {done:false,                      text:"Выбрать подрядчиков"},
+    {done:!!survey?.format,         text:"Пройти быстрый расчёт"},
+    {done:!!survey?.concept,        text:"Заполнить концепцию"},
+    {done:cats.some(c=>c.actual>0), text:"Добавить первый расход"},
+    {done:guests.length>3,          text:"Внести список гостей"},
+    {done:false,                    text:"Выбрать фотографа"},
+    {done:false,                    text:"Создать сайт гостей"},
   ];
   const progress=Math.round(tasks.filter(t=>t.done).length/tasks.length*100);
   const daysUntil=survey?.date?Math.max(0,Math.floor((new Date(survey.date)-new Date())/86400000)):null;
   const dateStr=survey?.date?new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}):"";
-
+  const topCats=cats.filter(c=>c.plan>0).slice(0,5);
+  const CARD={background:C.white,border:"1px solid #EBE4D8",borderRadius:18,padding:22,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)"};
+  const CARD20={...CARD,borderRadius:20,padding:24};
+  const LBL={fontSize:10.5,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600};
+  const PAT=["repeating-linear-gradient(135deg,#E9DDCB 0 11px,#E2D3BC 11px 22px)","repeating-linear-gradient(135deg,#EBDDD7 0 11px,#E4D0C8 11px 22px)","repeating-linear-gradient(135deg,#DEE5DD 0 11px,#D5DFD2 11px 22px)"];
   return(
-    <div style={S.page}>
-      {/* HERO */}
-      <p style={{fontSize:14,color:C.gray,marginBottom:16}}>Доброе утро, {user?.name1} и {user?.name2}! 🌅</p>
-      <div style={{background:`linear-gradient(145deg,${C.white} 0%,${C.blush} 45%,${C.champ} 80%,${C.tealBg} 100%)`,borderRadius:24,padding:"40px 44px",marginBottom:24,boxShadow:SHADOW,border:`1px solid ${C.line}`,display:"grid",gridTemplateColumns:"1fr 260px",gap:40,alignItems:"center",minHeight:220}}>
+    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:22}}>
+      {/* HEADER */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <div>
-          <div style={{fontSize:13,color:C.ink2,fontWeight:500,marginBottom:10}}>До вашей свадьбы</div>
-          {daysUntil!==null?(
-            <div style={{display:"flex",alignItems:"baseline",gap:8,marginBottom:10}}>
-              <span style={{fontFamily:font,fontSize:88,fontWeight:700,color:C.dark,lineHeight:1,letterSpacing:"-0.04em"}}>{daysUntil}</span>
-              <span style={{fontSize:18,color:C.ink2,fontWeight:600,letterSpacing:"0.06em",textTransform:"uppercase"}}>дней</span>
-            </div>
-          ):(
-            <div style={{fontFamily:font,fontSize:28,color:C.gray,marginBottom:10}}>Укажите дату свадьбы</div>
-          )}
-          {dateStr&&<div style={{fontSize:14,color:C.ink2,marginBottom:20}}>{dateStr}{survey?.city?` · ${survey.city}`:""}</div>}
-          <div style={{marginBottom:24,maxWidth:340}}>
-            <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:C.gray,marginBottom:6}}><span>Общий прогресс подготовки</span><span style={{fontWeight:700,color:C.dark}}>{progress}%</span></div>
-            <div style={{...S.bar,height:6}}><div style={{...S.fill(progress),background:`linear-gradient(90deg,${C.blush},${C.blushDark})`}}/></div>
+          <div style={{fontSize:21,fontWeight:600,letterSpacing:"-.02em"}}>Доброе утро, {user?.name1} и {user?.name2}</div>
+          <div style={{fontSize:13.5,color:"#948D83",marginTop:3}}>{daysUntil!==null?`До свадьбы осталось ${daysUntil} дней — вы идёте по плану.`:"Укажите дату свадьбы для отсчёта."}</div>
+        </div>
+        {(dateStr||survey?.city)&&<span style={{padding:"9px 16px",borderRadius:999,border:"1px solid #E6DFD2",background:"#FBF9F5",fontSize:12.5,fontWeight:500,color:"#6E665C"}}>{[dateStr,survey?.city].filter(Boolean).join(" · ")}</span>}
+      </div>
+
+      {/* HERO */}
+      <section style={{border:"1px solid #EBE4D8",borderRadius:22,padding:"38px 40px",background:"linear-gradient(135deg,#FFFFFF 0%,#F8F0E9 52%,#F2E6DC 100%)",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 18px 40px -22px rgba(33,28,23,.16)",display:"grid",gridTemplateColumns:"1fr 290px",gap:44,alignItems:"center"}}>
+        <div>
+          <div style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"#A66B60",fontWeight:600,marginBottom:14}}>До вашего дня</div>
+          <div style={{display:"flex",alignItems:"baseline",gap:14,marginBottom:8}}>
+            <span style={{fontSize:92,fontWeight:700,lineHeight:.82,letterSpacing:"-.05em",color:C.dark,fontVariantNumeric:"tabular-nums"}}>{daysUntil??"-"}</span>
+            <span style={{fontSize:17,fontWeight:600,letterSpacing:".04em",textTransform:"uppercase",color:"#5C554B"}}>дней</span>
           </div>
-          <div style={{display:"flex",gap:10}}>
-            <button style={{...S.btn,padding:"11px 22px",fontSize:13}} onClick={()=>onNav("budget")}>Продолжить планирование</button>
-            <button style={{...S.btnO,padding:"10px 20px",fontSize:13}} onClick={()=>onNav("survey1")}>Посмотреть план</button>
+          {dateStr&&<div style={{fontSize:14,color:"#6E665C",marginBottom:26}}>{dateStr}{survey?.city?` · ${survey.city}`:""}</div>}
+          <div style={{maxWidth:380,marginBottom:26}}>
+            <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"#857E74",marginBottom:8}}><span>Готовность к свадьбе</span><span style={{fontWeight:700,color:C.dark}}>{progress}%</span></div>
+            <div style={{height:6,borderRadius:6,background:"#EAE0D2",overflow:"hidden"}}><div style={{height:"100%",width:`${progress}%`,borderRadius:6,background:`linear-gradient(90deg,${C.blush},${C.blushDark})`}}/></div>
+          </div>
+          <div style={{display:"flex",gap:11}}>
+            <button style={{...S.btn,padding:"13px 26px",fontSize:13.5}} onClick={()=>onNav("budget")}>Продолжить планирование</button>
+            <button style={{...S.btnO,padding:"12px 24px",fontSize:13.5}} onClick={()=>onNav("survey1")}>Весь план</button>
           </div>
         </div>
-        <div style={{borderRadius:20,background:`linear-gradient(160deg,${C.sand},${C.champ})`,height:200,display:"flex",alignItems:"center",justifyContent:"center",fontSize:80,boxShadow:"inset 0 2px 12px rgba(31,27,23,0.06)"}}>💑</div>
-      </div>
+        <div style={{background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",borderRadius:18,height:218,display:"flex",alignItems:"center",justifyContent:"center",fontSize:72}}>💑</div>
+      </section>
 
       {/* STATS */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:24}}>
-        <div style={{...S.card,padding:"20px 22px",cursor:"pointer"}} onClick={()=>onNav("budget")}>
-          <div style={{fontSize:11,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:6}}>Бюджет</div>
-          <div style={{fontFamily:font,fontSize:22,color:C.dark,fontWeight:600,marginBottom:8}}>{fmt(total)} ₽</div>
-          <div style={{display:"flex",flexDirection:"column",gap:3,fontSize:12,color:C.gray}}>
-            <span>Пол.: <strong style={{color:C.teal}}>{fmt(totalActual)} ₽</strong></span>
-            <span>Ост.: <strong style={{color:totalActual>total?C.rose:C.ink2}}>{fmt(Math.max(0,total-totalActual))} ₽</strong></span>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
+        <div style={{...CARD,cursor:"pointer"}} onClick={()=>onNav("budget")}>
+          <div style={{...LBL,marginBottom:12}}>Бюджет</div>
+          <div style={{fontSize:25,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums",marginBottom:14}}>{fmt(total)} ₽</div>
+          <div style={{display:"flex",flexDirection:"column",gap:4,fontSize:12,marginBottom:13}}>
+            <div style={{display:"flex",justifyContent:"space-between"}}><span style={{color:"#948D83"}}>Потрачено</span><span style={{fontWeight:600,color:C.teal}}>{fmt(totalActual)} ₽</span></div>
+            <div style={{display:"flex",justifyContent:"space-between"}}><span style={{color:"#948D83"}}>Остаток</span><span style={{fontWeight:600,color:C.dark}}>{fmt(Math.max(0,total-totalActual))} ₽</span></div>
           </div>
-          <div style={{...S.bar,marginTop:10,height:4}}><div style={S.fill(total>0?totalActual/total*100:0)}/></div>
+          <div style={{height:4,borderRadius:4,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${total>0?Math.min(100,totalActual/total*100):0}%`,background:C.blushDark,borderRadius:4}}/></div>
         </div>
-        <div style={{...S.card,padding:"20px 22px",cursor:"pointer"}} onClick={()=>onNav("guests")}>
-          <div style={{fontSize:11,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:6}}>Гости</div>
-          <div style={{fontFamily:font,fontSize:22,color:C.dark,fontWeight:600,marginBottom:4}}>{guests.length||survey?.guests||0}</div>
-          <div style={{fontSize:12,color:C.gray,marginBottom:10}}>пригл. · <strong style={{color:C.teal}}>{confirmedGuests} подтв.</strong></div>
-          <div style={{display:"flex"}}>
-            {guests.slice(0,5).map((g,i)=>(
-              <div key={g.id} style={{width:26,height:26,borderRadius:"50%",background:`hsl(${i*55+10},55%,78%)`,border:`2px solid ${C.white}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,marginLeft:i>0?-7:0}}>{g.name?.[0]||"?"}</div>
+        <div style={{...CARD,cursor:"pointer"}} onClick={()=>onNav("guests")}>
+          <div style={{...LBL,marginBottom:12}}>Гости</div>
+          <div style={{fontSize:25,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums",marginBottom:6}}>{guests.length||survey?.guests||0}</div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>{confirmedGuests} подтвердили · {waitingGuests} ждём</div>
+          <div style={{display:"flex",gap:10,marginBottom:9,fontSize:10.5,color:"#857E74"}}>
+            <span style={{display:"flex",alignItems:"center",gap:5}}><span style={{width:8,height:8,borderRadius:"50%",background:C.teal,display:"inline-block"}}/>Придут {confirmedGuests}</span>
+            <span style={{display:"flex",alignItems:"center",gap:5}}><span style={{width:8,height:8,borderRadius:"50%",background:C.gold,display:"inline-block"}}/>Ждём {waitingGuests}</span>
+          </div>
+          {guests.length>0&&<div style={{display:"flex",height:7,borderRadius:7,overflow:"hidden",gap:2}}>
+            <div style={{width:`${confirmedGuests/guests.length*100}%`,background:C.teal,borderRadius:"7px 0 0 7px"}}/>
+            <div style={{width:`${waitingGuests/guests.length*100}%`,background:C.gold}}/>
+            <div style={{flex:1,background:"#D7CFC2",borderRadius:"0 7px 7px 0"}}/>
+          </div>}
+        </div>
+        <div style={{...CARD,cursor:"pointer"}} onClick={()=>onNav("vendors")}>
+          <div style={{...LBL,marginBottom:12}}>Подрядчики</div>
+          <div style={{display:"flex",alignItems:"baseline",gap:6,marginBottom:6}}><span style={{fontSize:25,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums"}}>4</span><span style={{fontSize:15,color:"#A39C92",fontWeight:500}}>/ {VENDORS.length}</span></div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>подтверждено из доступных</div>
+          <div style={{display:"flex",gap:5}}>{Array.from({length:Math.min(VENDORS.length,13)}).map((_,i)=><span key={i} style={{flex:1,height:4,borderRadius:4,background:i<4?C.blushDark:"#EFE8DD"}}/>)}</div>
+        </div>
+        <div style={CARD}>
+          <div style={{...LBL,marginBottom:12}}>Готовность</div>
+          <div style={{fontSize:25,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums",marginBottom:6}}>{progress}%</div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>{tasks.filter(t=>!t.done).length} задач осталось</div>
+          <div style={{height:4,borderRadius:4,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${progress}%`,background:C.blushDark,borderRadius:4}}/></div>
+        </div>
+      </section>
+
+      {/* VENDORS + CHECKLIST */}
+      <section style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
+        <div style={CARD20}>
+          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:18}}>
+            <div><div style={{...LBL,marginBottom:5}}>Подобрано для вас</div><div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em"}}>Подрядчики в вашем стиле</div></div>
+            <button style={{background:"none",border:"none",color:"#A66B60",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}} onClick={()=>onNav("vendors")}>Смотреть все →</button>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}}>
+            {[{label:"Площадки",cnt:VENDORS.filter(v=>v.cat==="venue").length,from:"150 000",sub:"варианта",pat:PAT[0]},{label:"Фотографы",cnt:VENDORS.filter(v=>v.cat==="photo").length,from:"60 000",sub:"автора",pat:PAT[1]},{label:"Декор",cnt:VENDORS.filter(v=>v.cat==="decor").length,from:"80 000",sub:"студии",pat:PAT[2]}].map(c=>(
+              <div key={c.label} onClick={()=>onNav("vendors")} style={{border:"1px solid #EEE7DB",borderRadius:16,overflow:"hidden",cursor:"pointer"}}>
+                <div style={{height:112,background:c.pat,position:"relative",display:"flex",alignItems:"flex-end",padding:10}}>
+                  <span style={{fontSize:10,letterSpacing:".16em",textTransform:"uppercase",color:C.dark,background:"rgba(251,249,245,.85)",padding:"4px 9px",borderRadius:999,fontWeight:600}}>{c.cnt} {c.sub}</span>
+                </div>
+                <div style={{padding:"13px 14px"}}><div style={{fontSize:13.5,fontWeight:600,marginBottom:2}}>{c.label}</div><div style={{fontSize:11.5,color:"#A39C92"}}>от {c.from} ₽</div></div>
+              </div>
             ))}
-            {guests.length>5&&<div style={{width:26,height:26,borderRadius:"50%",background:C.line,border:`2px solid ${C.white}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:C.gray,marginLeft:-7}}>+{guests.length-5}</div>}
           </div>
         </div>
-        <div style={{...S.card,padding:"20px 22px",cursor:"pointer"}} onClick={()=>onNav("vendors")}>
-          <div style={{fontSize:11,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:6}}>Подрядчики</div>
-          <div style={{fontFamily:font,fontSize:22,color:C.dark,fontWeight:600,marginBottom:4}}>4 <span style={{fontSize:14,color:C.gray}}>из {VENDORS.length}</span></div>
-          <div style={{fontSize:12,color:C.gray}}>выбрано</div>
-        </div>
-        <div style={{...S.card,padding:"20px 22px"}}>
-          <div style={{fontSize:11,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:6}}>Чек-лист</div>
-          <div style={{fontFamily:font,fontSize:22,color:C.dark,fontWeight:600,marginBottom:4}}>{progress}%</div>
-          <div style={{fontSize:12,color:C.gray,marginBottom:10}}>выполнено</div>
-          <div style={{...S.bar,height:4}}><div style={S.fill(progress)}/></div>
-        </div>
-      </div>
-
-      {/* RECOMMENDATIONS */}
-      <div style={{marginBottom:24}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-          <h3 style={{...S.h3,margin:0}}>Рекомендуем для вас</h3>
-          <button style={{background:"none",border:"none",color:C.gray,fontSize:13,cursor:"pointer",fontFamily:fb}} onClick={()=>onNav("vendors")}>Смотреть все →</button>
-        </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}}>
-          {DEFAULT_CATS.slice(0,4).map((cat,i)=>{
-            const vc=VENDORS.filter(v=>v.cat===cat.id);
-            const bgs=[`linear-gradient(135deg,${C.blush},${C.champ})`,`linear-gradient(135deg,${C.champ},${C.tealBg})`,`linear-gradient(135deg,${C.tealBg},${C.sand})`,`linear-gradient(135deg,${C.sand},${C.blush})`];
-            return(
-              <div key={cat.id} onClick={()=>onNav("vendors")} style={{...S.card,padding:0,overflow:"hidden",cursor:"pointer"}}>
-                <div style={{height:96,background:bgs[i],display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,position:"relative"}}>
-                  {cat.icon}
-                  {vc.length>0&&<div style={{position:"absolute",top:8,right:8,background:C.dark,color:C.white,borderRadius:20,fontSize:9,fontWeight:700,padding:"2px 7px"}}>{vc.length}</div>}
-                </div>
-                <div style={{padding:"12px 14px"}}>
-                  <div style={{fontSize:13,fontWeight:600,color:C.dark,marginBottom:2}}>{cat.name}</div>
-                  <div style={{fontSize:11,color:C.gray}}>{vc.length>0?`${vc.length} варианта`:"Выбрать"}</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* BOTTOM ROW */}
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:18,marginBottom:24}}>
-        <div style={S.card}>
-          <h3 style={{...S.h3,marginBottom:14}}>Ближайшие задачи</h3>
+        <div style={CARD20}>
+          <div style={{...LBL,marginBottom:5}}>Чек-лист</div>
+          <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em",marginBottom:16}}>Ближайшие задачи</div>
           {tasks.map((t,i)=>(
-            <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"7px 0",borderBottom:i<tasks.length-1?`1px solid ${C.line}`:"none"}}>
-              <div style={{width:18,height:18,borderRadius:"50%",border:`2px solid ${t.done?C.teal:C.line}`,background:t.done?C.teal:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                {t.done&&<span style={{color:C.white,fontSize:9,fontWeight:700}}>✓</span>}
-              </div>
-              <span style={{fontSize:12.5,color:t.done?C.gray:C.dark,textDecoration:t.done?"line-through":"none",flex:1}}>{t.text}</span>
+            <div key={i} style={{display:"flex",alignItems:"center",gap:11,padding:"9px 0",borderBottom:i<tasks.length-1?"1px solid #F1EBE1":"none"}}>
+              {t.done
+                ?<span style={{width:19,height:19,borderRadius:"50%",background:C.teal,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,color:C.white,fontSize:10,fontWeight:700}}>✓</span>
+                :<span style={{width:19,height:19,borderRadius:"50%",border:"2px solid #E2DACB",flexShrink:0,display:"inline-block"}}/>
+              }
+              <span style={{fontSize:13,color:t.done?"#A39C92":C.dark,textDecoration:t.done?"line-through":"none"}}>{t.text}</span>
             </div>
           ))}
         </div>
-        <div style={{...S.card,display:"flex",flexDirection:"column",alignItems:"center"}}>
-          <h3 style={{...S.h3,marginBottom:14,alignSelf:"flex-start"}}>Расходы по категориям</h3>
-          <BudgetDonut cats={cats} total={total}/>
-          <div style={{fontSize:18,fontFamily:font,color:C.dark,marginBottom:2}}>{fmt(total)} ₽</div>
-          <div style={{fontSize:11,color:C.gray,marginBottom:10}}>бюджет</div>
-          {cats.slice(0,3).map((c,i)=>{
-            const COLORS=["#F7D7D1","#EADCCB","#DCEFEA"];
-            return(
-              <div key={c.id} style={{display:"flex",justifyContent:"space-between",width:"100%",fontSize:12,color:C.gray,marginTop:4}}>
-                <span style={{display:"flex",alignItems:"center",gap:6}}><span style={{width:8,height:8,borderRadius:"50%",background:COLORS[i],display:"inline-block"}}/>  {c.name}</span>
-                <span style={{color:C.dark,fontWeight:600}}>{fmt(c.plan)} ₽</span>
-              </div>
-            );
-          })}
-        </div>
-        <div style={S.card}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-            <h3 style={{...S.h3,margin:0}}>Площадки</h3>
-            <button style={{background:"none",border:"none",color:C.gray,fontSize:11,cursor:"pointer",fontFamily:fb}} onClick={()=>onNav("vendors")}>Все →</button>
-          </div>
-          {VENDORS.filter(v=>v.cat==="venue").map((v,i)=>(
-            <div key={v.id} onClick={()=>onNav("vendors")} style={{display:"flex",gap:12,padding:"10px 0",borderBottom:i<2?`1px solid ${C.line}`:"none",cursor:"pointer",alignItems:"center"}}>
-              <div style={{width:44,height:44,borderRadius:10,background:`linear-gradient(135deg,${C.champ},${C.sand})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>🏛</div>
-              <div><div style={{fontSize:13,fontWeight:600,color:C.dark,marginBottom:2}}>{v.name}</div><div style={{fontSize:11,color:C.gray}}>от {fmt(v.priceFrom)} ₽</div></div>
-            </div>
-          ))}
-        </div>
-      </div>
+      </section>
 
-      {/* INVITE CTA */}
-      <div style={{...S.card,display:"flex",justifyContent:"space-between",alignItems:"center",padding:"24px 32px",background:`linear-gradient(135deg,${C.white},${C.blush})`}}>
-        <div>
-          <div style={{fontFamily:font,fontSize:20,color:C.dark,marginBottom:6}}>Создайте сайт-приглашение для гостей</div>
-          <div style={{fontSize:13,color:C.gray}}>Красивый сайт с вашей историей и всей важной информацией</div>
+      {/* BUDGET + VENUES */}
+      <section style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
+        <div style={CARD20}>
+          <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:18}}>
+            <div><div style={{...LBL,marginBottom:5}}>Смета</div><div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em"}}>Бюджет по категориям</div></div>
+            <button style={{background:"none",border:"none",color:"#A66B60",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}} onClick={()=>onNav("budget")}>Открыть бюджет →</button>
+          </div>
+          {topCats.map((c,i)=>(
+            <div key={c.id} style={{display:"flex",alignItems:"center",gap:14,padding:"11px 0",borderBottom:i<topCats.length-1?"1px solid #F1EBE1":"none"}}>
+              <span style={{width:34,height:34,borderRadius:10,background:"#F1EBE1",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#7A7266",flexShrink:0,letterSpacing:".02em"}}>{c.name.slice(0,2)}</span>
+              <div style={{flex:1,minWidth:0}}><div style={{fontSize:13.5,fontWeight:500}}>{c.name}</div><div style={{fontSize:11,color:"#A39C92"}}>план {fmt(c.plan)} ₽</div></div>
+              <div style={{width:150,flexShrink:0}}><div style={{height:5,borderRadius:5,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${c.plan>0?Math.min(100,c.actual/c.plan*100):0}%`,background:c.actual>=c.plan&&c.plan>0?C.teal:C.blushDark,borderRadius:5}}/></div></div>
+              <div style={{width:90,textAlign:"right",flexShrink:0,fontSize:13,fontWeight:600,fontVariantNumeric:"tabular-nums"}}>{fmt(c.actual)} ₽</div>
+            </div>
+          ))}
         </div>
-        <button style={{...S.btn,flexShrink:0}} onClick={()=>onNav("invite")}>Создать сайт</button>
-      </div>
+        <div style={CARD20}>
+          <div style={{...LBL,marginBottom:5}}>Площадки</div>
+          <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em",marginBottom:16}}>Свободны на дату</div>
+          {VENDORS.filter(v=>v.cat==="venue").map((v,i)=>(
+            <div key={v.id} onClick={()=>onNav("vendors")} style={{display:"flex",gap:12,alignItems:"center",padding:"11px 0",borderBottom:i<2?"1px solid #F1EBE1":"none",cursor:"pointer"}}>
+              <div style={{width:46,height:46,borderRadius:12,background:PAT[i]||PAT[0],flexShrink:0}}/>
+              <div style={{flex:1}}><div style={{fontSize:13.5,fontWeight:600}}>{v.name}</div><div style={{fontSize:11.5,color:"#A39C92"}}>от {fmt(v.priceFrom)} ₽ · ★ {v.rating}</div></div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{border:"1px solid #EBE4D8",borderRadius:20,padding:"28px 34px",background:"linear-gradient(120deg,#FBF9F5 0%,#F5E9E2 100%)",display:"flex",alignItems:"center",justifyContent:"space-between",gap:24}}>
+        <div>
+          <div style={{fontSize:20,fontWeight:600,letterSpacing:"-.01em",marginBottom:6}}>Создайте сайт-приглашение для гостей</div>
+          <div style={{fontSize:13.5,color:"#857E74"}}>Ваша история, программа дня и онлайн-подтверждение — на одной красивой странице.</div>
+        </div>
+        <button style={{...S.btn,flexShrink:0,padding:"13px 28px",fontSize:13.5}} onClick={()=>onNav("invite")}>Создать сайт</button>
+      </section>
     </div>
   );
 }
@@ -1309,50 +1397,72 @@ function AgencyDashboard({weddings,setWeddings,onOpen}){
   const active=weddings.filter(w=>w.status!=="Завершена").length;
   const add=()=>{if(!nw.couple)return;setWeddings(p=>[...p,{...nw,id:Date.now(),guests:Number(nw.guests)||0,budget:Number(nw.budget)||0,paid:0,status:"Подготовка"}]);setNw({couple:"",date:"",city:"Москва",guests:"",budget:""});setShowAdd(false);};
   const del=(id)=>setWeddings(p=>p.filter(w=>w.id!==id));
+  const STATUS_STYLE={"В работе":{bg:"#F6EFDE",color:"#B8902F"},"Подготовка":{bg:"#F1EBE1",color:"#857E74"},"Завершена":{bg:"#EAF0EC",color:"#5E8A7D"}};
+  const ainp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",outline:"none"};
   return(
-    <div className="td-page" style={S.page}>
-      <h2 style={S.h1}>Кабинет агентства</h2>
-      <p style={S.sub}>Все ваши свадьбы в одном месте.</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:16,marginBottom:24}}>
-        {[{l:"Активных",v:active,c:C.dark},{l:"Проектов",v:weddings.length,c:C.dark},{l:"Суммарный бюджет",v:`${(totalBudget/1000000).toFixed(1)} млн ₽`,c:C.gold},{l:"Получено",v:`${(totalPaid/1000000).toFixed(1)} млн ₽`,c:C.teal}].map(s=>(
-          <div key={s.l} style={{...S.card,textAlign:"center"}}><div style={{fontSize:10,color:C.gray,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:8}}>{s.l}</div><div style={{fontFamily:font,fontSize:26,color:s.c,fontWeight:600}}>{s.v}</div></div>
+    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",gap:16,flexWrap:"wrap"}}>
+        <div>
+          <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Кабинет агентства</div>
+          <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Все ваши свадьбы и финансы — в одном месте</div>
+        </div>
+        <button onClick={()=>setShowAdd(v=>!v)} style={{padding:"11px 22px",borderRadius:999,border:"none",background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}}>+ Новая свадьба</button>
+      </div>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
+        {[["Активных",active,"#221D18"],["Проектов",weddings.length,"#221D18"],["Суммарный бюджет",(totalBudget/1000000).toFixed(1)+" млн ₽","#A66B60"],["Получено",(totalPaid/1000000).toFixed(1)+" млн ₽","#5E8A7D"]].map(([l,v,col])=>(
+          <div key={l} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:20,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)",textAlign:"center"}}>
+            <div style={{fontSize:10.5,letterSpacing:".12em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:8}}>{l}</div>
+            <div style={{fontSize:30,fontWeight:700,letterSpacing:"-.02em",color:col}}>{v}</div>
+          </div>
         ))}
-      </div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-        <h3 style={{...S.h2,margin:0}}>Свадьбы</h3>
-        <button style={S.btn} onClick={()=>setShowAdd(!showAdd)}>+ Новая свадьба</button>
-      </div>
+      </section>
       {showAdd&&(
-        <div style={{...S.card,marginBottom:16,display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
-          <div style={{flex:"2 1 180px"}}><label style={S.label}>Пара</label><input style={S.input} value={nw.couple} onChange={e=>setNw(p=>({...p,couple:e.target.value}))} placeholder="Имя & Имя"/></div>
-          <div style={{flex:"0 1 140px"}}><label style={S.label}>Дата</label><input type="date" style={S.input} value={nw.date} onChange={e=>setNw(p=>({...p,date:e.target.value}))}/></div>
-          <div style={{flex:"1 1 120px"}}><label style={S.label}>Город</label><input style={S.input} value={nw.city} onChange={e=>setNw(p=>({...p,city:e.target.value}))}/></div>
-          <div style={{flex:"0 1 90px"}}><label style={S.label}>Гостей</label><input type="number" min="0" style={S.input} value={nw.guests} onChange={e=>setNw(p=>({...p,guests:e.target.value}))}/></div>
-          <div style={{flex:"1 1 120px"}}><label style={S.label}>Бюджет ₽</label><input type="number" min="0" style={S.input} value={nw.budget} onChange={e=>setNw(p=>({...p,budget:e.target.value}))}/></div>
-          <button style={S.btn} onClick={add}>Добавить</button>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)",display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
+          <div style={{flex:"2 1 180px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Пара</div><input style={{...ainp,width:"100%"}} value={nw.couple} onChange={e=>setNw(p=>({...p,couple:e.target.value}))} placeholder="Имя & Имя"/></div>
+          <div style={{flex:"0 1 140px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Дата</div><input type="date" style={{...ainp,width:"100%"}} value={nw.date} onChange={e=>setNw(p=>({...p,date:e.target.value}))}/></div>
+          <div style={{flex:"1 1 120px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Город</div><input style={{...ainp,width:"100%"}} value={nw.city} onChange={e=>setNw(p=>({...p,city:e.target.value}))}/></div>
+          <div style={{flex:"0 1 90px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Гостей</div><input type="number" min="0" style={{...ainp,width:"100%"}} value={nw.guests} onChange={e=>setNw(p=>({...p,guests:e.target.value}))}/></div>
+          <div style={{flex:"1 1 120px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Бюджет ₽</div><input type="number" min="0" style={{...ainp,width:"100%"}} value={nw.budget} onChange={e=>setNw(p=>({...p,budget:e.target.value}))}/></div>
+          <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={add}>Добавить</button>
         </div>
       )}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:18}}>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
         {weddings.map(w=>{
           const paidPct=w.budget>0?Math.round(w.paid/w.budget*100):0;
+          const ss=STATUS_STYLE[w.status]||STATUS_STYLE["Подготовка"];
           return(
-            <div key={w.id} style={{...S.card,cursor:"pointer",position:"relative"}} onClick={()=>onOpen&&onOpen(w)}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
-                <div style={{fontFamily:font,fontSize:20,fontWeight:600}}>{w.couple}</div>
-                <span style={S.badge(statusColor[w.status])}>{w.status}</span>
+            <div key={w.id} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:22,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)",cursor:"pointer",position:"relative"}} onClick={()=>onOpen&&onOpen(w)}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}}>
+                <div style={{fontSize:19,fontWeight:700,letterSpacing:"-.01em"}}>{w.couple}</div>
+                <span style={{padding:"4px 11px",borderRadius:8,background:ss.bg,color:ss.color,fontSize:11,fontWeight:600}}>{w.status}</span>
               </div>
-              <div style={{fontSize:13,color:C.gray,lineHeight:1.8,marginBottom:14}}>
+              <div style={{fontSize:13,color:"#857E74",lineHeight:1.8,marginBottom:16}}>
                 {w.date&&<div>{new Date(w.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"})}</div>}
                 <div>{w.city} · {w.guests} гостей</div>
                 <div>Бюджет: {fmt(w.budget)} ₽</div>
               </div>
-              <div style={{fontSize:11,color:C.gray,marginBottom:5,display:"flex",justifyContent:"space-between"}}><span>Оплачено</span><span style={{color:C.teal,fontWeight:600}}>{paidPct}%</span></div>
-              <div style={S.bar}><div style={S.fill(paidPct)}/></div>
-              <button style={{...S.btnSm,position:"absolute",bottom:14,right:14,color:C.rose,padding:"3px 9px"}} onClick={e=>{e.stopPropagation();del(w.id);}}>✕</button>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:11,color:"#948D83",marginBottom:6}}><span>Оплачено</span><span style={{color:"#5E8A7D",fontWeight:600}}>{paidPct}%</span></div>
+              <div style={{height:6,borderRadius:6,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${paidPct}%`,background:w.status==="Завершена"?"#5E8A7D":"#BD877C",borderRadius:6}}/></div>
+              <button onClick={e=>{e.stopPropagation();del(w.id);}} style={{position:"absolute",bottom:14,right:14,background:"none",border:"none",color:"#D8CFC0",fontSize:16,cursor:"pointer",padding:4}}>✕</button>
             </div>
           );
         })}
-      </div>
+      </section>
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+        <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>Финансы агентства</div>
+        <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em",marginBottom:4}}>Поступления по месяцам</div>
+        <div style={{fontSize:12,color:"#948D83",marginBottom:24}}>Оплаты от пар по всем проектам</div>
+        <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",gap:12,height:140,borderBottom:"1px solid #ECE5DA"}}>
+          {[54,78,62,96,120,88].map((h,i)=>(
+            <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",height:"100%",justifyContent:"flex-end"}}>
+              <div style={{width:"100%",maxWidth:32,height:h,background:["#E3C2A8","#E3C2A8","#E3C2A8","#D2A296","#BD877C","#D2A296"][i],borderRadius:"6px 6px 0 0"}}/>
+            </div>
+          ))}
+        </div>
+        <div style={{display:"flex",justifyContent:"space-between",gap:12,marginTop:9}}>
+          {["Янв","Фев","Мар","Апр","Май","Июн"].map(m=><span key={m} style={{flex:1,textAlign:"center",fontSize:11,color:"#948D83"}}>{m}</span>)}
+        </div>
+      </section>
     </div>
   );
 }
