@@ -258,7 +258,7 @@ function LandingPage({onStart,onLogin,onAgency}){
       </nav>
 
       {/* HERO */}
-      <section style={{position:"relative",overflow:"hidden",minHeight:"calc(100vh - 66px)",display:"flex",alignItems:"center",backgroundImage:"linear-gradient(90deg,rgba(247,233,226,.96) 0%,rgba(247,233,226,.7) 34%,rgba(247,233,226,.15) 56%,rgba(247,233,226,0) 72%)",backgroundSize:"cover",backgroundPosition:"center"}}>
+      <section style={{position:"relative",overflow:"hidden",minHeight:"calc(100vh - 66px)",display:"flex",alignItems:"center",backgroundImage:"linear-gradient(90deg,rgba(247,233,226,.96) 0%,rgba(247,233,226,.7) 34%,rgba(247,233,226,.15) 56%,rgba(247,233,226,0) 72%),url(/hero-wedding.png)",backgroundSize:"cover",backgroundPosition:"center right"}}>
         <div style={{maxWidth:1240,margin:"0 auto",padding:"48px 40px",width:"100%"}}>
           <div style={{maxWidth:560}}>
             <div style={{fontSize:11,letterSpacing:".2em",textTransform:"uppercase",color:"#A66B60",fontWeight:600,marginBottom:22}}>Планируйте легко · Празднуйте красиво</div>
