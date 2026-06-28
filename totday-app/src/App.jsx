@@ -56,6 +56,45 @@ const LS = {
   del:(k)=>{ try{localStorage.removeItem(k);}catch{}},
 };
 
+// ─── SVG-ИКОНКИ (взамен эмодзи, line-art стиль лендинга) ──────────────────────
+const ICO = {
+  spring:<path d="M12 22V11M12 11c-3.5 0-5-2.5-5-5 3.5 0 5 2 5 5zm0 0c0-3.5 1.8-6 5.2-6 0 3.5-1.7 6-5.2 6z"/>,
+  summer:<g><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7"/></g>,
+  autumn:<path d="M12 21V9M12 9c0-3 2-5 5-5 0 3-2 5-5 5zm0 1c0-3-2-5-5-5 0 3 2 5 5 5z"/>,
+  winter:<path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9M12 6l-2.2 2M12 6l2.2 2M12 18l-2.2-2M12 18l2.2-2"/>,
+  unknown:<g><circle cx="12" cy="12" r="9"/><path d="M9.2 9.4a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4M12 17.6v.01"/></g>,
+  restaurant:<g><path d="M6 3v7a3 3 0 0 0 6 0V3M9 11v10"/><path d="M17 3c-1.6 1-2.4 3-2.4 5.2 0 2 .9 3.4 2.4 4.3V21"/></g>,
+  loft:<g><path d="M3 21V9l9-5 9 5v12"/><path d="M3 21h18M9 21v-6h6v6M8 9.5h2M14 9.5h2"/></g>,
+  outdoor:<path d="M12 22v-6M12 16c-3.6 0-6-2.6-6-6.5C6 6 9 3 12 3s6 3 6 6.5c0 3.9-2.4 6.5-6 6.5z"/>,
+  destination:<path d="M3 12.5l18-7-7 18-2.6-7.8L3 12.5z"/>,
+  intimate:<path d="M12 20s-7-4.5-7-9.5A3.5 3.5 0 0 1 12 7a3.5 3.5 0 0 1 7 3.5C19 15.5 12 20 12 20z"/>,
+  host:<g><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3M9 20h6"/></g>,
+  dj:<g><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.2"/></g>,
+  photo:<g><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></g>,
+  video:<g><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></g>,
+  decor:<path d="M12 21c4-3 7-6 7-10a3.4 3.4 0 0 0-6.2-1.9L12 10l-.8-.9A3.4 3.4 0 0 0 5 11c0 4 3 7 7 10z"/>,
+  florist:<g><path d="M12 22v-7"/><circle cx="12" cy="9" r="3"/><path d="M12 9c-1-2.5-3.5-3-5.5-2 .5 2.3 2.5 3.5 5.5 2zm0 0c1-2.5 3.5-3 5.5-2-.5 2.3-2.5 3.5-5.5 2z"/></g>,
+  makeup:<g><path d="M9 3h6l-1 6h-4L9 3z"/><path d="M10 9v9a2 2 0 0 0 4 0V9"/></g>,
+  cake:<g><path d="M4 21V11h16v10M4 16h16M12 11V7M12 4v.01"/><path d="M3 21h18"/></g>,
+  cover:<g><circle cx="7" cy="17" r="3"/><circle cx="17" cy="15" r="3"/><path d="M10 17V5l10-2v12"/></g>,
+  transport:<g><path d="M3 14l2-6h14l2 6v3h-2M3 14v3h2M3 14h18"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></g>,
+  basic:<path d="M12 22v-6M12 16c-3.6 0-6-2.6-6-6.5C6 6 9 3 12 3s6 3 6 6.5c0 3.9-2.4 6.5-6 6.5z"/>,
+  comfort:<path d="M12 3l2.2 5.6L20 9l-4.4 3.4L17 18l-5-3.2L7 18l1.4-5.6L4 9l5.8-.4L12 3z"/>,
+  premium:<g><path d="M5 8l3 3 4-6 4 6 3-3-1.5 11H6.5L5 8z"/><path d="M6 21h12"/></g>,
+  // — служебные —
+  pin:<g><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.3"/></g>,
+  gallery:<g><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.4-2h5.2L16 6"/></g>,
+  gift:<g><rect x="4" y="9" width="16" height="4" rx="1"/><path d="M5 13v8h14v-8M12 9v12"/><path d="M12 9C12 9 10.6 5 8.4 5.6 6.7 6.1 8 9 12 9zm0 0c0 0 1.4-4 3.6-3.4C17.3 6.1 16 9 12 9z"/></g>,
+  rings:<g><circle cx="9.3" cy="14" r="4.6"/><circle cx="14.7" cy="14" r="4.6"/><path d="M7.6 9.4L9.3 6h2.2"/><path d="M16.4 9.4L14.7 6h-2.2"/></g>,
+};
+function Ico({name,size=22,color="#9A7656",stroke=1.5,style}){
+  const g=ICO[name];
+  if(!g)return null;
+  return(
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,...style}}>{g}</svg>
+  );
+}
+
 // ─── STATIC DATA ─────────────────────────────────────────────────────────────
 const CITIES = ["Москва","Санкт-Петербург","Сочи","Казань","Екатеринбург","Другой город"];
 const FORMATS = [
@@ -542,7 +581,7 @@ function Survey1Page({onComplete,initial}){
   const STEPS=[
     {title:"Когда планируете свадьбу?",sub:"Дата влияет на доступность подрядчиков",ok:d.season||d.date,body:(
       <div style={{display:"flex",flexDirection:"column",gap:18}}>
-        <div><label style={S.label}>Сезон</label><div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:6}}>{[["🌸","Весна"],["☀️","Лето"],["🍂","Осень"],["❄️","Зима"],["🤷","Пока не знаю"]].map(([ic,s])=><span key={s} style={S.chip(d.season===s)} onClick={()=>set("season",s)}>{ic} {s}</span>)}</div></div>
+        <div><label style={S.label}>Сезон</label><div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:6}}>{[["spring","Весна"],["summer","Лето"],["autumn","Осень"],["winter","Зима"],["unknown","Пока не знаю"]].map(([ic,s])=><span key={s} style={{...S.chip(d.season===s),gap:7}} onClick={()=>set("season",s)}><Ico name={ic} size={17} color={d.season===s?"#FBF9F5":"#9A7656"}/>{s}</span>)}</div></div>
         <div><label style={S.label}>Точная дата</label><input type="date" style={{...S.input,maxWidth:220}} value={d.date} onChange={e=>set("date",e.target.value)}/></div>
         <div><label style={S.label}>Альтернативные даты</label><input style={{...S.input,maxWidth:320}} placeholder="июнь–июль, любая суббота" value={d.altDates} onChange={e=>set("altDates",e.target.value)}/></div>
         <div><label style={S.label}>Заявление в ЗАГС подано?</label><div style={{display:"flex",gap:8,marginTop:6}}>{["Да","Нет","Пока нет"].map(o=><span key={o} style={S.chip(d.zags===o)} onClick={()=>set("zags",o)}>{o}</span>)}</div></div>
@@ -560,7 +599,7 @@ function Survey1Page({onComplete,initial}){
       <div style={{display:"flex",flexDirection:"column",gap:10}}>
         {FORMATS.map(f=>(
           <div key={f.id} onClick={()=>set("format",f.id)} style={{...S.card,padding:"14px 18px",cursor:"pointer",display:"flex",alignItems:"center",gap:14,border:`2px solid ${d.format===f.id?C.blushDark:C.line}`,background:d.format===f.id?C.blushBg:GLASS}}>
-            <span style={{fontSize:22}}>{f.icon}</span>
+            <Ico name={f.id} size={22} color={d.format===f.id?"#B0573A":"#9A7656"}/>
             <div style={{flex:1}}><div style={{fontWeight:600,fontSize:14}}>{f.label}</div><div style={{fontSize:12,color:C.gray}}>{f.sub}</div></div>
             {d.format===f.id&&<span style={{color:C.blushDark}}>✓</span>}
           </div>
@@ -569,7 +608,7 @@ function Survey1Page({onComplete,initial}){
     )},
     {title:"Какие подрядчики нужны?",sub:"Подберём под ваш формат — можно выбрать несколько",ok:true,body:(
       <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-        {[["host","🎤 Ведущий"],["dj","🎵 DJ"],["photo","📷 Фотограф"],["video","🎬 Видеограф"],["decor","💐 Декор"],["florist","🌷 Флорист"],["makeup","💄 Визажист"],["cake","🎂 Кондитер"],["cover","🎸 Кавер-группа"],["transport","🚗 Транспорт"]].map(([v,l])=><span key={v} style={S.chip((d.needs||[]).includes(v))} onClick={()=>toggleNeed(v)}>{l}</span>)}
+        {[["host","Ведущий"],["dj","DJ"],["photo","Фотограф"],["video","Видеограф"],["decor","Декор"],["florist","Флорист"],["makeup","Визажист"],["cake","Кондитер"],["cover","Кавер-группа"],["transport","Транспорт"]].map(([v,l])=>{const on=(d.needs||[]).includes(v);return(<span key={v} style={{...S.chip(on),gap:7}} onClick={()=>toggleNeed(v)}><Ico name={v} size={16} color={on?"#FBF9F5":"#9A7656"}/>{l}</span>);})}
       </div>
     )},
     {title:"Бюджет на свадьбу",sub:"Используем для расчёта",ok:d.budgetLabel,body:(
@@ -618,7 +657,7 @@ function ScenariosPage({survey,onChoose}){
         {scenarios.map(sc=>(
           <div key={sc.tier} onClick={()=>setChosen(sc.tier)} style={{...S.card,cursor:"pointer",border:`2px solid ${chosen===sc.tier?sc.color:C.line}`,background:chosen===sc.tier?`${sc.color}15`:GLASS,transition:"all 0.15s",position:"relative"}}>
             {chosen===sc.tier&&<div style={{position:"absolute",top:14,right:14,width:24,height:24,borderRadius:"50%",background:sc.color,color:C.white,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700}}>✓</div>}
-            <div style={{fontSize:32,marginBottom:8}}>{sc.icon}</div>
+            <div style={{marginBottom:10}}><Ico name={sc.tier} size={30} color={sc.color}/></div>
             <div style={{fontFamily:font,fontSize:18,fontWeight:600,color:sc.color,marginBottom:4}}>{sc.label}</div>
             <div style={{fontFamily:font,fontSize:26,fontWeight:700,color:C.dark,marginBottom:2}}>{fmt(sc.total)} ₽</div>
             <div style={{fontSize:12,color:C.gray,marginBottom:16}}>≈ {fmt(sc.perGuest)} ₽ / гость</div>
@@ -662,12 +701,12 @@ function Survey2Page({onComplete,initial}){
   const set=(k,v)=>setD(p=>({...p,[k]:v}));
   const toggle=(k,v,max)=>{const arr=d[k];if(arr.includes(v)){set(k,arr.filter(x=>x!==v));return;}if(max&&arr.length>=max)return;set(k,[...arr,v]);};
   const STEPS=[
-    {title:"Какие вы как пара?",sub:"До 3 вариантов",body:<Chips d={d} toggle={toggle} field="personality" max={3} opts={[["party","🎉 Шумные вечеринки"],["cozy","🏡 Уютные вечера"],["travel","✈️ Путешествия"],["gastro","🍽 Гастрономия"],["aesthetic","✨ Красивая эстетика"],["music","🎵 Музыка и танцы"],["unique","🌀 Необычные впечатления"],["nature","🌿 Природа"],["urban","🌆 Городская атмосфера"]]}/>},
+    {title:"Какие вы как пара?",sub:"До 3 вариантов",body:<Chips d={d} toggle={toggle} field="personality" max={3} opts={[["party","Шумные вечеринки"],["cozy","Уютные вечера"],["travel","Путешествия"],["gastro","Гастрономия"],["aesthetic","Красивая эстетика"],["music","Музыка и танцы"],["unique","Необычные впечатления"],["nature","Природа"],["urban","Городская атмосфера"]]}/>},
     {title:"Что хотите чувствовать?",sub:"До 3 вариантов",body:<Chips d={d} toggle={toggle} field="feelings" max={3} opts={[["fun","Веселье"],["romance","Романтику"],["cozy","Уют"],["wow","Вау-эффект"],["calm","Спокойствие"],["elegance","Элегантность"],["freedom","Свободу"],["warmth","Душевность"],["celebration","Праздник"]]}/>},
-    {title:"Что запомнят гости?",sub:"Один вариант",body:<Cards d={d} set={set} field="memory" opts={[["ceremony","💒 Церемония"],["atmosphere","✨ Атмосфера"],["dance","💃 Танцы"],["food","🍽 Еда"],["beauty","💐 Красота"],["emotions","❤️ Эмоции"],["talk","🥂 Общение"]]}/>},
-    {title:"Что важнее всего?",sub:"До 5 — сюда концентрируем бюджет",body:<Chips d={d} toggle={toggle} field="priorities" max={5} opts={[["food","🍽 Еда"],["photo","📷 Фото"],["video","🎬 Видео"],["music","🎵 Музыка"],["dance","💃 Танцы"],["decor","💐 Декор"],["ceremony","💒 Церемония"],["guests","👥 Комфорт гостей"],["budget","💰 Экономия"]]}/>},
+    {title:"Что запомнят гости?",sub:"Один вариант",body:<Cards d={d} set={set} field="memory" opts={[["ceremony","Церемония"],["atmosphere","Атмосфера"],["dance","Танцы"],["food","Еда"],["beauty","Красота"],["emotions","Эмоции"],["talk","Общение"]]}/>},
+    {title:"Что важнее всего?",sub:"До 5 — сюда концентрируем бюджет",body:<Chips d={d} toggle={toggle} field="priorities" max={5} opts={[["food","Еда"],["photo","Фото"],["video","Видео"],["music","Музыка"],["dance","Танцы"],["decor","Декор"],["ceremony","Церемония"],["guests","Комфорт гостей"],["budget","Экономия"]]}/>},
     {title:"Что точно НЕ хотите?",sub:"Передадим подрядчикам",body:<Chips d={d} toggle={toggle} field="dontWant" red opts={[["contests","Пошлые конкурсы"],["toasts","Длинные тосты"],["ransom","Выкуп"],["oldhost","Тамада старого формата"],["official","Много официоза"],["boring","Банкет как у всех"],["karaoke","Караоке"],["kids","Детские активности"],["envelopes","Сбор денег в конвертах"]]}/>},
-    {title:"Кто ваши гости?",sub:"Влияет на программу",body:<Cards d={d} set={set} field="guestType" opts={[["friends","👫 В основном друзья"],["friendsfamily","👨‍👩‍👧 Друзья и родители"],["family","👴 Большая семья"],["mixed","🏢 Семья и коллеги"],["diverse","🌍 Смешанная компания"]]}/>},
+    {title:"Кто ваши гости?",sub:"Влияет на программу",body:<Cards d={d} set={set} field="guestType" opts={[["friends","В основном друзья"],["friendsfamily","Друзья и родители"],["family","Большая семья"],["mixed","Семья и коллеги"],["diverse","Смешанная компания"]]}/>},
     {title:"Важность комфорта гостей",sub:"Трансфер, отель, детская зона...",body:(
       <div style={{marginTop:16}}>
         <div style={{display:"flex",justifyContent:"space-between",gap:8}}>
@@ -688,10 +727,10 @@ function Survey2Page({onComplete,initial}){
         );})}
       </div>
     )},
-    {title:"Уровень декора",sub:"Влияет на бюджет",body:<Cards d={d} set={set} field="decorLevel" opts={[["min","🌿 Минимум","Чисто, акцент на пространстве"],["nice","✨ Аккуратно","Продуманные детали, флористика"],["wow","💐 Впечатляюще","Объёмные композиции, свет"],["grand","🏛 Максимум","Полная трансформация пространства"]]}/>},
-    {title:"Какие зоны оформить?",sub:"Каждая зона войдёт в смету",body:<Chips d={d} toggle={toggle} field="decorZones" opts={[["ceremony","💒 Зона церемонии"],["welcome","🥂 Welcome-зона"],["sweet","🍰 Сладкий стол"],["headtable","💍 Стол молодожёнов"],["photo","📸 Фотозона"],["gifts","🎁 Зона подарков"],["guest","🍽 Гостевые столы"],["lounge","🛋 Лаунж-зона"]]}/>},
-    {title:"Что включить в программу?",sub:"Дополнительные впечатления для гостей",body:<Chips d={d} toggle={toggle} field="program" opts={[["photobooth","📸 Фотобудка"],["fireworks","🎆 Фейерверк"],["live","🎸 Живая музыка"],["kids","🧸 Аниматор"],["fountains","❄️ Холодные фонтаны"],["cover","🎤 Кавер-группа"],["show","🎭 Шоу-программа"]]}/>},
-    {title:"Природные элементы?",sub:"Для подбора площадки",body:<Chips d={d} toggle={toggle} field="nature" opts={[["water","🌊 Водоём"],["forest","🌲 Лес"],["park","🌳 Парк"],["terrace","☀️ Терраса"],["none","🏛 Не важно"]]}/>},
+    {title:"Уровень декора",sub:"Влияет на бюджет",body:<Cards d={d} set={set} field="decorLevel" opts={[["min","Минимум","Чисто, акцент на пространстве"],["nice","Аккуратно","Продуманные детали, флористика"],["wow","Впечатляюще","Объёмные композиции, свет"],["grand","Максимум","Полная трансформация пространства"]]}/>},
+    {title:"Какие зоны оформить?",sub:"Каждая зона войдёт в смету",body:<Chips d={d} toggle={toggle} field="decorZones" opts={[["ceremony","Зона церемонии"],["welcome","Welcome-зона"],["sweet","Сладкий стол"],["headtable","Стол молодожёнов"],["photo","Фотозона"],["gifts","Зона подарков"],["guest","Гостевые столы"],["lounge","Лаунж-зона"]]}/>},
+    {title:"Что включить в программу?",sub:"Дополнительные впечатления для гостей",body:<Chips d={d} toggle={toggle} field="program" opts={[["photobooth","Фотобудка"],["fireworks","Фейерверк"],["live","Живая музыка"],["kids","Аниматор"],["fountains","Холодные фонтаны"],["cover","Кавер-группа"],["show","Шоу-программа"]]}/>},
+    {title:"Природные элементы?",sub:"Для подбора площадки",body:<Chips d={d} toggle={toggle} field="nature" opts={[["water","Водоём"],["forest","Лес"],["park","Парк"],["terrace","Терраса"],["none","Не важно"]]}/>},
     {title:"Что обязательно должно быть?",sub:"Живая группа, закат, сигарная зона...",body:<textarea style={{...S.input,minHeight:110,resize:"vertical",fontSize:14,marginTop:8}} placeholder={"Например:\n— Живая группа\n— Бар с коктейлями\n— Церемония на закате"} value={d.mustHave} onChange={e=>set("mustHave",e.target.value)}/>},
   ];
   const cur=STEPS[step];
@@ -1113,7 +1152,7 @@ function VendorCardPage({vendor,onBack,survey}){
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(90px,1fr))",gap:10}}>
         {GALLERY_GRADS.slice(0,5).map((g,i)=><div key={i} style={{height:84,borderRadius:12,background:g}}/>)}
       </div>
-      <div style={{fontSize:11.5,color:"#948D83",marginTop:-8}}>📷 Галерея работ · {10+vendor.id} фото</div>
+      <div style={{fontSize:11.5,color:"#948D83",marginTop:-8,display:"flex",alignItems:"center",gap:6}}><Ico name="gallery" size={14} color="#948D83"/>Галерея работ · {10+vendor.id} фото</div>
       <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
         <div style={{display:"flex",flexDirection:"column",gap:16}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
@@ -1280,7 +1319,7 @@ function VenueCardPage({venue,favoriteVenues,setFavoriteVenues,onBack,survey}){
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(80px,1fr))",gap:10}}>
         {GALLERY_GRADS.map((g,i)=><div key={i} style={{height:72,borderRadius:10,background:g}}/>)}
       </div>
-      <div style={{fontSize:11.5,color:"#948D83",marginTop:-8}}>📷 Галерея площадки · {20+venueIdx} фото</div>
+      <div style={{fontSize:11.5,color:"#948D83",marginTop:-8,display:"flex",alignItems:"center",gap:6}}><Ico name="gallery" size={14} color="#948D83"/>Галерея площадки · {20+venueIdx} фото</div>
       <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
         <div style={{display:"flex",flexDirection:"column",gap:16}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
@@ -1302,7 +1341,7 @@ function VenueCardPage({venue,favoriteVenues,setFavoriteVenues,onBack,survey}){
             <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>На карте</div>
             <div style={{height:180,borderRadius:14,background:"linear-gradient(135deg,#EAF0EC,#DCE8E0)",position:"relative",overflow:"hidden",border:"1px solid #D7E3DC"}}>
               <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(#C8DBCF 1px,transparent 1px),linear-gradient(90deg,#C8DBCF 1px,transparent 1px)",backgroundSize:"32px 32px",opacity:.5}}/>
-              <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-100%)",fontSize:30}}>📍</div>
+              <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-115%)"}}><Ico name="pin" size={30} color="#5E8A7D"/></div>
             </div>
             <div style={{fontSize:12.5,color:"#6E665C",marginTop:10}}>{venue.city}, {venue.address}</div>
           </div>
@@ -1943,7 +1982,7 @@ function InvitePreview({t,c,survey,timing}){
         {/* Карта */}
         <div style={{height:96,borderRadius:10,marginTop:12,position:"relative",overflow:"hidden",background:`${t.accent}14`,border:`1px solid ${t.accent}30`}}>
           <div style={{position:"absolute",inset:0,backgroundImage:`linear-gradient(${t.accent}22 1px,transparent 1px),linear-gradient(90deg,${t.accent}22 1px,transparent 1px)`,backgroundSize:"26px 26px"}}/>
-          <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-100%)",fontSize:22}}>📍</div>
+          <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-115%)"}}><Ico name="pin" size={22} color={t.accent}/></div>
         </div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:22}}>
@@ -2048,7 +2087,7 @@ function WishlistPage({wishlist,setWishlist}){
       <section style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
         {wishlist.map((w,i)=>(
           <div key={w.id} style={{background:"#FFFFFF",border:`1px solid ${w.reserved?"#C8E0D8":"#EBE4D8"}`,borderRadius:18,padding:18,boxShadow:SHADOW,position:"relative",opacity:w.reserved?0.85:1}}>
-            <div style={{height:90,borderRadius:12,background:GALLERY_GRADS[i%GALLERY_GRADS.length],marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}}>🎁</div>
+            <div style={{height:90,borderRadius:12,background:GALLERY_GRADS[i%GALLERY_GRADS.length],marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center"}}><Ico name="gift" size={30} color="#FBF9F5"/></div>
             <div style={{fontSize:14.5,fontWeight:700,marginBottom:4}}>{w.title}</div>
             {w.price>0&&<div style={{fontSize:13,fontWeight:600,color:"#5E8A7D",marginBottom:6}}>{fmt(w.price)} ₽</div>}
             {w.link&&<a href={w.link} target="_blank" rel="noreferrer" style={{fontSize:12,color:"#A66B60",fontWeight:600,textDecoration:"underline",display:"inline-block",marginBottom:10}}>Открыть ссылку →</a>}
@@ -2260,7 +2299,7 @@ function Dashboard({user,survey,cats,guests,onNav}){
             <button style={{...S.btnO,padding:"12px 24px",fontSize:13.5}} onClick={()=>onNav("survey1")}>Весь план</button>
           </div>
         </div>
-        <div style={{background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",borderRadius:18,height:218,display:"flex",alignItems:"center",justifyContent:"center",fontSize:72}}>💑</div>
+        <div style={{background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",borderRadius:18,height:218,display:"flex",alignItems:"center",justifyContent:"center"}}><Ico name="rings" size={88} color="#FBF9F5" stroke={1.2}/></div>
       </section>
 
       {/* STATS */}
