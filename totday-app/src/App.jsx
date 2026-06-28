@@ -130,20 +130,56 @@ const DEFAULT_CATS = [
   {id:"other",    name:"Прочее / резерв",    icon:"✨",pct:0.03,market:"по факту",            rec:"Оставьте 5–10% бюджета",   items:["Непредвиденные расходы","Чаевые персоналу"]},
 ];
 
+// Категории подрядчиков (каталог) — строго по ТЗ
+const VENDOR_CATS = [
+  {id:"host",     name:"Ведущий",            market:"40 000 – 150 000 ₽",rec:"Звёздные — от 350 000 ₽",        items:["Услуги ведущего","Сценарий","Конкурсы","Координация программы"]},
+  {id:"photo",    name:"Фотограф",           market:"35 000 – 90 000 ₽", rec:"Не экономьте — снимки навсегда", items:["Фотосъёмка дня","Love story","Обработка и альбом","2-й фотограф"]},
+  {id:"video",    name:"Видеограф",          market:"35 000 – 90 000 ₽", rec:"Пакет с фото — дешевле",         items:["Видеосъёмка","Монтаж","Аэросъёмка","SDE-ролик"]},
+  {id:"decor",    name:"Декоратор",          market:"80 000 – 400 000 ₽",rec:"от 2 000 ₽/гость минимум",       items:["Арка / зона церемонии","Оформление зала","Аренда декора","Свет"]},
+  {id:"florist",  name:"Флорист",            market:"40 000 – 200 000 ₽",rec:"Сезонные цветы дешевле",          items:["Букет невесты","Бутоньерки","Композиции на столы","Цветочная арка"]},
+  {id:"dj",       name:"DJ",                 market:"25 000 – 100 000 ₽",rec:"Уточните оборудование",          items:["DJ-сет","Звуковое оборудование","Световое шоу","MC-сопровождение"]},
+  {id:"cover",    name:"Кавер-группа",       market:"80 000 – 300 000 ₽",rec:"Живой звук на банкет",            items:["Живое выступление","Несколько сетов","Своя аппаратура","Репертуар под пару"]},
+  {id:"stylist",  name:"Стилист",            market:"20 000 – 80 000 ₽", rec:"Репетиция образа обязательна",    items:["Стиль образа","Подбор аксессуаров","Сопровождение в день","Причёска"]},
+  {id:"makeup",   name:"Визажист",           market:"12 000 – 35 000 ₽", rec:"Репетиция образа обязательна",    items:["Макияж невесты","Причёска","Репетиция","Макияж подружек"]},
+  {id:"cake",     name:"Кондитер",           market:"150 – 400 ₽/порция",rec:"~200 ₽/порция — хороший торт",    items:["Свадебный торт","Кенди-бар","Капкейки","Дегустация"]},
+  {id:"transport",name:"Транспорт",          market:"10 000 – 50 000 ₽", rec:"Трансфер снижает no-show",        items:["Авто молодожёнов","Трансфер гостей","Украшение авто","Ретро-авто"]},
+  {id:"show",     name:"Шоу-программа",       market:"30 000 – 250 000 ₽",rec:"Артисты бронируются заранее",     items:["Артисты","Фаер-шоу","Холодные фонтаны","Танцевальный номер"]},
+  {id:"rental",   name:"Аренда оборудования",market:"15 000 – 120 000 ₽",rec:"Бронируйте на сезон заранее",     items:["Свет","Звук","Мебель","Шатёр и текстиль"]},
+];
+
 const VENDORS = [
-  {id:1, cat:"venue",    name:"Loft Riverside",   city:"Москва",priceFrom:150000,rating:4.9,reviews:87, tags:["Панорамный вид","до 200 гостей"],desc:"Стильный лофт на берегу Москвы-реки",busy:["2025-08-16"]},
-  {id:2, cat:"venue",    name:"Golden Hall",      city:"Москва",priceFrom:280000,rating:4.8,reviews:54, tags:["Роскошь","до 300 гостей"],       desc:"Парадный зал в центре города",       busy:["2025-07-19"]},
-  {id:3, cat:"venue",    name:"Усадьба Захарово", city:"Москва",priceFrom:200000,rating:4.7,reviews:41, tags:["Природа","Терраса"],             desc:"Загородная усадьба с садом",          busy:[]},
-  {id:4, cat:"photo",    name:"Иван Громов",      city:"Москва",priceFrom:80000, rating:5.0,reviews:143,tags:["Репортаж","Арт"],               desc:"Живые эмоциональные снимки",          busy:["2025-08-02"]},
-  {id:5, cat:"photo",    name:"Мария Белова",     city:"Москва",priceFrom:60000, rating:4.9,reviews:98, tags:["Светлый стиль","Плёнка"],        desc:"Нежная плёночная эстетика",           busy:[]},
-  {id:6, cat:"host",     name:"Алексей Волков",   city:"Москва",priceFrom:50000, rating:4.8,reviews:211,tags:["Юмор","Живая музыка"],           desc:"10 лет опыта, авторские программы",   busy:["2025-07-26"]},
-  {id:7, cat:"host",     name:"Елена Крылова",    city:"Москва",priceFrom:40000, rating:4.9,reviews:167,tags:["Элегантность","Игры"],           desc:"Тёплая атмосфера, свой сценарий",     busy:[]},
-  {id:8, cat:"decor",    name:"Студия Flora",     city:"Москва",priceFrom:120000,rating:4.9,reviews:67, tags:["Флористика","Аренда"],           desc:"Полный декор от арки до стола",       busy:[]},
+  {id:4, cat:"photo",    name:"Иван Громов",      city:"Москва",priceFrom:80000, rating:5.0,reviews:143,tags:["Репортаж","Арт"],               desc:"Живые эмоциональные снимки",          busy:["2026-08-02"]},
+  {id:5, cat:"photo",    name:"Мария Белова",     city:"Санкт-Петербург",priceFrom:60000, rating:4.9,reviews:98, tags:["Светлый стиль","Плёнка"],        desc:"Нежная плёночная эстетика",           busy:[]},
+  {id:6, cat:"host",     name:"Алексей Волков",   city:"Москва",priceFrom:50000, rating:4.8,reviews:211,tags:["Юмор","Живая музыка"],           desc:"10 лет опыта, авторские программы",   busy:["2026-07-26"]},
+  {id:7, cat:"host",     name:"Елена Крылова",    city:"Казань",priceFrom:40000, rating:4.9,reviews:167,tags:["Элегантность","Игры"],           desc:"Тёплая атмосфера, свой сценарий",     busy:[]},
+  {id:8, cat:"decor",    name:"Студия Flora",     city:"Москва",priceFrom:120000,rating:4.9,reviews:67, tags:["Декор","Аренда"],                desc:"Полный декор от арки до стола",       busy:[]},
   {id:9, cat:"video",    name:"Кинолюди",         city:"Москва",priceFrom:70000, rating:4.8,reviews:91, tags:["Кино","Аэросъёмка"],             desc:"Свадебное кино, которое смотришь снова",busy:[]},
-  {id:10,cat:"dj",       name:"DJ Fontaine",      city:"Москва",priceFrom:35000, rating:4.9,reviews:128,tags:["Танцпол","Живой звук"],          desc:"Разогреет любую аудиторию",           busy:[]},
+  {id:10,cat:"dj",       name:"DJ Fontaine",      city:"Санкт-Петербург",priceFrom:35000, rating:4.9,reviews:128,tags:["Танцпол","Живой звук"],          desc:"Разогреет любую аудиторию",           busy:[]},
   {id:11,cat:"cake",     name:"Confiserie Blanc", city:"Москва",priceFrom:25000, rating:5.0,reviews:189,tags:["Авторские","Без глютена"],        desc:"Торты под стиль вашей свадьбы",       busy:[]},
   {id:12,cat:"makeup",   name:"Анастасия Ли",     city:"Москва",priceFrom:15000, rating:4.9,reviews:203,tags:["Макияж","Причёска"],             desc:"Нежный образ или вечерний гламур",    busy:[]},
   {id:13,cat:"transport",name:"Royal Cars",       city:"Москва",priceFrom:12000, rating:4.8,reviews:55, tags:["Rolls-Royce","Mercedes"],        desc:"Премиальные авто для молодожёнов",    busy:[]},
+  {id:14,cat:"florist",  name:"Botanica",         city:"Москва",priceFrom:45000, rating:4.9,reviews:74, tags:["Сезонные цветы","Пионы"],        desc:"Флористика с характером и нежностью", busy:[]},
+  {id:15,cat:"cover",    name:"The Velvet Band",  city:"Москва",priceFrom:130000,rating:4.9,reviews:62, tags:["Soul","Pop","Live"],             desc:"Живая музыка, которая зажигает зал",  busy:["2026-08-16"]},
+  {id:16,cat:"stylist",  name:"Дарья Стиль",      city:"Санкт-Петербург",priceFrom:30000, rating:4.8,reviews:48, tags:["Образ","Аксессуары"],            desc:"Цельный образ от платья до деталей",  busy:[]},
+  {id:17,cat:"show",     name:"Fire & Light",     city:"Сочи",  priceFrom:60000, rating:4.9,reviews:39, tags:["Фаер-шоу","Фонтаны"],            desc:"Эффектные номера для вашего вечера",  busy:[]},
+  {id:18,cat:"rental",   name:"EventTech Прокат", city:"Москва",priceFrom:25000, rating:4.7,reviews:33, tags:["Свет","Звук","Мебель"],          desc:"Оборудование под ключ для площадки",  busy:[]},
+  {id:19,cat:"photo",    name:"Studio Lumiere",   city:"Сочи",  priceFrom:55000, rating:4.7,reviews:51, tags:["Travel","Кинематограф"],         desc:"Свадьбы у моря и в горах",            busy:[]},
+];
+
+// Демо-отзывы для карточек (детерминированно по id)
+const DEMO_REVIEWS = [
+  {name:"Анна и Дмитрий",date:"июнь 2025",rating:5,text:"Всё прошло идеально! Работали слаженно, результат превзошёл ожидания. Однозначно рекомендуем."},
+  {name:"Екатерина и Павел",date:"май 2025",rating:5,text:"Профессионалы своего дела. Учли все пожелания, были на связи на каждом этапе подготовки."},
+  {name:"Ольга и Сергей",date:"сентябрь 2024",rating:4,text:"Хорошая работа, остались довольны. Небольшие правки по таймингу, но всё решили оперативно."},
+  {name:"Мария и Антон",date:"август 2024",rating:5,text:"Лучшее решение для нашей свадьбы. Спасибо за внимание к деталям и тёплое отношение!"},
+];
+const GALLERY_GRADS = [
+  "repeating-linear-gradient(135deg,#E9DDCB 0 10px,#E2D3BC 10px 20px)",
+  "repeating-linear-gradient(135deg,#EBDDD7 0 10px,#E4D0C8 10px 20px)",
+  "repeating-linear-gradient(135deg,#DEE5DD 0 10px,#D5DFD2 10px 20px)",
+  "repeating-linear-gradient(135deg,#E7DEC9 0 10px,#E0D4BA 10px 20px)",
+  "linear-gradient(140deg,#EBD9C8,#DFC6B8)",
+  "linear-gradient(140deg,#DEE5DD,#C8DBCF)",
 ];
 
 const INVITE_TEMPLATES = [
@@ -164,17 +200,18 @@ const WEDDING_PHOTOS = [
 ];
 
 const VENUES=[
-  {id:"v1",type:"loft",   name:"Loft Riverside",     city:"Москва",  address:"Овчинниковская наб., 20",    guests:{min:20,max:200}, priceRent:150000,priceBanquet:4500,corkage:1500,rating:4.9,reviews:87, tags:["Панорамный вид","Своя кухня","Паркинг"],       desc:"Стильный лофт с панорамным видом на Москву-реку. Два зала, собственная кухня, профессиональный свет и звук.", includes:["Мебель","Текстиль","Профзвук","Свет","Паркинг"], busy:["2025-08-16"]},
-  {id:"v2",type:"hall",   name:"Golden Hall",         city:"Москва",  address:"Тверская ул., 3",            guests:{min:50,max:300}, priceRent:280000,priceBanquet:6000,corkage:2000,rating:4.8,reviews:54, tags:["Роскошь","Центр","VIP-сервис"],                 desc:"Парадный зал в историческом особняке. Высокие потолки, собственный ресторан.",                            includes:["Мебель","Декор","Звук","Свет","Паркинг"],   busy:[]},
-  {id:"v3",type:"estate", name:"Усадьба Захарово",   city:"Москва",  address:"Московская обл., Захарово",  guests:{min:30,max:150}, priceRent:200000,priceBanquet:5000,corkage:1200,rating:4.7,reviews:41, tags:["Природа","Сад","Шатёр"],                        desc:"Загородная усадьба в 40 км от Москвы. Английский сад, пруд, шатёр на 150 человек.",                       includes:["Мебель","Шатёр","Газон","Паркинг"],         busy:[]},
-  {id:"v4",type:"hotel",  name:"Radisson Collection", city:"Москва",  address:"Кутузовский просп., 2/1",    guests:{min:100,max:500},priceRent:400000,priceBanquet:8000,corkage:2500,rating:4.9,reviews:112,tags:["5 звёзд","Панорама","Проживание"],              desc:"Пятизвёздочный отель с видом на Москва-Сити. Несколько залов, блок номеров для гостей.",                  includes:["Мебель","Звук","Свет","Блок номеров"],      busy:["2025-09-20"]},
+  {id:"v1",type:"loft",   name:"Loft Riverside",     city:"Москва",  address:"Овчинниковская наб., 20",    guests:{min:20,max:200}, priceRent:150000,priceBanquet:4500,corkage:1500,rating:4.9,reviews:87, tags:["Панорамный вид","Своя кухня","Паркинг"],       desc:"Стильный лофт с панорамным видом на Москву-реку. Два зала, собственная кухня, профессиональный свет и звук.", includes:["Мебель","Текстиль","Профзвук","Свет","Паркинг"], busy:["2026-08-16"]},
+  {id:"v2",type:"restaurant",name:"Golden Hall",      city:"Москва",  address:"Тверская ул., 3",            guests:{min:50,max:300}, priceRent:280000,priceBanquet:6000,corkage:2000,rating:4.8,reviews:54, tags:["Роскошь","Центр","VIP-сервис"],                 desc:"Парадный ресторан в историческом особняке. Высокие потолки, собственная кухня.",                          includes:["Мебель","Декор","Звук","Свет","Паркинг"],   busy:[]},
+  {id:"v3",type:"country",name:"Усадьба Захарово",   city:"Москва",  address:"Московская обл., Захарово",  guests:{min:30,max:150}, priceRent:200000,priceBanquet:5000,corkage:1200,rating:4.7,reviews:41, tags:["Природа","Сад","Шатёр"],                        desc:"Загородный клуб в 40 км от Москвы. Английский сад, пруд, шатёр на 150 человек.",                          includes:["Мебель","Шатёр","Газон","Паркинг"],         busy:[]},
+  {id:"v4",type:"hotel",  name:"Radisson Collection", city:"Москва",  address:"Кутузовский просп., 2/1",    guests:{min:100,max:500},priceRent:400000,priceBanquet:8000,corkage:2500,rating:4.9,reviews:112,tags:["5 звёзд","Панорама","Проживание"],              desc:"Пятизвёздочный отель с видом на Москва-Сити. Несколько залов, блок номеров для гостей.",                  includes:["Мебель","Звук","Свет","Блок номеров"],      busy:["2026-09-20"]},
   {id:"v5",type:"loft",   name:"Space Moscow",        city:"Москва",  address:"Ленинградский просп., 80",   guests:{min:50,max:400}, priceRent:350000,priceBanquet:5500,corkage:1800,rating:4.8,reviews:73, tags:["Трансформируемый","LED","Диджитал"],            desc:"Мультиформатное пространство с LED-экранами и профессиональной техникой.",                                includes:["Мебель","Звук","LED","Свет"],               busy:[]},
   {id:"v6",type:"yacht",  name:"Яхт-клуб Буревестник",city:"Москва", address:"Ленинские горы, 1с66",       guests:{min:20,max:80},  priceRent:120000,priceBanquet:5500,corkage:1500,rating:4.8,reviews:38, tags:["На воде","Камерная","Закат"],                   desc:"Яхт-клуб и ресторан на берегу Москвы-реки. Идеально для камерных свадеб и закатных церемоний.",          includes:["Мебель","Звук","Терраса"],                  busy:[]},
+  {id:"v7",type:"tent",   name:"Шатёр «Поляна»",      city:"Москва", address:"Новорижское ш., 24 км",      guests:{min:40,max:250}, priceRent:180000,priceBanquet:4800,corkage:1000,rating:4.7,reviews:29, tags:["Шатёр","Природа","Open-air"],                  desc:"Прозрачный шатёр на живописной поляне. Полная свобода для оформления и выездной церемонии.",             includes:["Шатёр","Мебель","Газон","Генератор","Паркинг"],busy:[]},
 ];
 
 const VENUE_TYPES=[
-  {id:"all",name:"Все"},{id:"loft",name:"Лофт"},{id:"hall",name:"Банкетный зал"},
-  {id:"estate",name:"Усадьба"},{id:"hotel",name:"Отель"},{id:"yacht",name:"Яхта"},
+  {id:"all",name:"Все"},{id:"restaurant",name:"Ресторан"},{id:"country",name:"Загородный клуб"},
+  {id:"hotel",name:"Отель"},{id:"loft",name:"Лофт"},{id:"tent",name:"Шатёр"},{id:"yacht",name:"Яхта"},
 ];
 
 const AGENCIES=[
@@ -197,6 +234,33 @@ const CHECKLIST_TEMPLATE=[
   {month:2, tasks:["Репетиция церемонии","Оплатить оставшиеся счета","Список контактов на день свадьбы"]},
   {month:1, tasks:["Финальный созвон со всеми подрядчиками","Подготовить чаевые для команды","Собрать свадебный чемодан"]},
 ];
+
+// ─── CROSS-ROLE BRIDGES (общий localStorage) ─────────────────────────────────
+function coupleLabel(){
+  const u=LS.get("td_user",{})||{};
+  return(u.name1&&u.name2)?`${u.name1} & ${u.name2}`:"Пара с TotDay";
+}
+// Пара → инбокс кабинета подрядчика
+function pushVendorRequest(vendor){
+  const s=LS.get("td_survey",{})||{};
+  const catName=VENDOR_CATS.find(c=>c.id===vendor.cat)?.name||"услуга";
+  const req={id:Date.now(),couple:coupleLabel(),date:s.date||"",city:s.city||"Москва",guests:s.guests||"",msg:`Интересует «${catName}» — ${vendor.name}. Подскажите свободные даты и пакеты.`,status:"new"};
+  const cur=LS.get("td_vendor_requests",null);
+  LS.set("td_vendor_requests",[req,...(cur||VENDOR_DEMO_REQ)]);
+}
+// Пара → лиды кабинета агентства
+function pushAgencyLead(agency){
+  const s=LS.get("td_survey",{})||{};
+  const lead={id:Date.now(),couple:coupleLabel(),date:s.date||"",city:s.city||"Москва",guests:s.guests||"",budget:Number(s.budget)||0,agency:agency.name,status:"new"};
+  const cur=LS.get("td_agency_leads",[]);
+  LS.set("td_agency_leads",[lead,...cur]);
+}
+// Опубликованный профиль подрядчика → карточка в каталоге пары
+function publishedVendor(){
+  const p=LS.get("td_vendor_profile",null);
+  if(!p||!p.name)return null;
+  return{id:"me",cat:p.category||"photo",name:p.name,city:p.city||"Москва",priceFrom:Number(p.priceFrom)||0,rating:5.0,reviews:0,tags:(p.tags||"").split(",").map(t=>t.trim()).filter(Boolean),desc:p.desc||"Новый подрядчик на TotDay",busy:[],published:true};
+}
 
 // ─── CALCULATIONS ─────────────────────────────────────────────────────────────
 function calcScenarios(survey){
@@ -286,7 +350,7 @@ function LandingPage({onStart,onLogin,onAgency,onVendor}){
       <nav style={{position:"sticky",top:0,zIndex:50,background:"rgba(251,249,245,.86)",backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)",borderBottom:`1px solid ${C.line}`}}>
         <div style={{maxWidth:1200,margin:"0 auto",padding:"0 40px",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <div style={{display:"flex",alignItems:"baseline",gap:1}}><span style={{fontSize:22,fontWeight:700,letterSpacing:"-.04em"}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
-          <div style={{display:"flex",gap:28,alignItems:"center"}}>
+          <div className="td-lnav" style={{display:"flex",gap:28,alignItems:"center"}}>
             {["Возможности","Площадки","Подрядчики","О проекте"].map(l=><span key={l} style={{fontSize:13.5,fontWeight:500,color:C.gray,cursor:"pointer"}}>{l}</span>)}
             <span style={{width:1,height:18,background:"#E2DACB",display:"inline-block"}}/>
             <span style={{fontSize:13.5,fontWeight:600,color:"#A66B60",cursor:"pointer"}} onClick={onAgency}>Для агентств</span>
@@ -342,6 +406,36 @@ function LandingPage({onStart,onLogin,onAgency,onVendor}){
         </div>
       </section>
 
+      {/* POPULAR VENUES */}
+      <section style={{background:"#FFFFFF",borderTop:`1px solid ${C.line}`,borderBottom:`1px solid ${C.line}`}}>
+        <div style={{maxWidth:1200,margin:"0 auto",padding:"52px 40px"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:24}}>
+            <h2 style={{fontSize:30,fontWeight:700,letterSpacing:"-.025em",margin:0}}>Популярные площадки</h2>
+            <span style={{fontSize:13,color:"#A66B60",fontWeight:600,cursor:"pointer"}} onClick={onLogin}>Все площадки →</span>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:18}}>
+            {VENUES.slice(0,4).map((v,i)=>{
+              const typeName=VENUE_TYPES.find(t=>t.id===v.type)?.name||v.type;
+              return(
+                <div key={v.id} className="lcard" onClick={onLogin} style={{border:`1px solid #EBE4D8`,borderRadius:18,overflow:"hidden",background:C.white,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)",cursor:"pointer"}}>
+                  <div style={{height:140,background:GALLERY_GRADS[i%GALLERY_GRADS.length],position:"relative"}}>
+                    <span style={{position:"absolute",bottom:10,left:12,padding:"4px 11px",borderRadius:8,background:"rgba(251,249,245,.9)",fontSize:11,fontWeight:700}}>{typeName}</span>
+                  </div>
+                  <div style={{padding:"14px 16px"}}>
+                    <div style={{fontSize:14.5,fontWeight:700,marginBottom:3}}>{v.name}</div>
+                    <div style={{fontSize:11.5,color:"#948D83",marginBottom:8}}>{v.city} · до {v.guests.max} гостей</div>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                      <span style={{fontSize:13.5,fontWeight:700,color:"#5E8A7D"}}>от {fmt(v.priceRent)} ₽</span>
+                      <span style={{fontSize:12,fontWeight:600,color:"#7A7266"}}>★ {v.rating}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* MISSION + STATS */}
       <section style={{background:"linear-gradient(135deg,#F2ECE2 0%,#FFFFFF 42%,#F5E9E2 100%)",borderTop:`1px solid ${C.line}`,borderBottom:`1px solid ${C.line}`}}>
         <div style={{maxWidth:1200,margin:"0 auto",padding:"72px 40px",display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center"}}>
@@ -362,6 +456,28 @@ function LandingPage({onStart,onLogin,onAgency,onVendor}){
               <div><div style={{fontSize:13.5,fontWeight:600}}>Иван и Мария</div><div style={{fontSize:12,color:"#948D83"}}>Поженились 21 июня 2025</div></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section style={{maxWidth:1200,margin:"0 auto",padding:"72px 40px"}}>
+        <h2 style={{fontSize:30,fontWeight:700,letterSpacing:"-.025em",textAlign:"center",margin:"0 0 8px"}}>Что говорят пары</h2>
+        <p style={{fontSize:15,color:C.gray,textAlign:"center",margin:"0 0 40px"}}>Более 10 000 пар спланировали свой день с TotDay</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20}}>
+          {[
+            {n:"Анна и Дмитрий",d:"Поженились 14 июня 2025",i:"А",t:"Бюджет наконец стал понятным. Видели каждую статью и не вышли за рамки — это бесценно при подготовке."},
+            {n:"Екатерина и Павел",d:"Поженились 30 августа 2025",i:"Е",t:"Нашли фотографа и площадку за один вечер. Каталог с реальными ценами сэкономил нам недели поисков."},
+            {n:"Мария и Антон",d:"Поженились 12 сентября 2025",i:"М",t:"Сайт для гостей — огонь. Все подтвердили участие онлайн, мы заранее знали рассадку и трансфер."},
+          ].map(r=>(
+            <div key={r.n} style={{background:C.white,border:`1px solid #EBE4D8`,borderRadius:20,padding:"26px 28px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)"}}>
+              <div style={{display:"flex",gap:3,marginBottom:14}}>{[...Array(5)].map((_,i)=><span key={i} style={{color:C.blushDark}}>★</span>)}</div>
+              <p style={{fontSize:15,lineHeight:1.65,color:C.dark,margin:"0 0 18px"}}>«{r.t}»</p>
+              <div style={{display:"flex",alignItems:"center",gap:12}}>
+                <div style={{width:40,height:40,borderRadius:"50%",background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#6E5A4E"}}>{r.i}</div>
+                <div><div style={{fontSize:13.5,fontWeight:600}}>{r.n}</div><div style={{fontSize:12,color:"#948D83"}}>{r.d}</div></div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -420,8 +536,9 @@ function MiniSurvey({onDone,onBack}){
 // ─── SURVEY 1 ─────────────────────────────────────────────────────────────────
 function Survey1Page({onComplete,initial}){
   const[step,setStep]=useState(0);
-  const[d,setD]=useState(()=>({season:"",date:"",altDates:"",zags:"",city:"Москва",guests:"",outOfTown:"",format:"",budgetLabel:"",budget:0,...(initial||{})}));
+  const[d,setD]=useState(()=>({season:"",date:"",altDates:"",zags:"",city:"Москва",guests:"",outOfTown:"",format:"",needs:[],budgetLabel:"",budget:0,...(initial||{})}));
   const set=(k,v)=>setD(p=>({...p,[k]:v}));
+  const toggleNeed=(v)=>setD(p=>({...p,needs:(p.needs||[]).includes(v)?p.needs.filter(x=>x!==v):[...(p.needs||[]),v]}));
   const STEPS=[
     {title:"Когда планируете свадьбу?",sub:"Дата влияет на доступность подрядчиков",ok:d.season||d.date,body:(
       <div style={{display:"flex",flexDirection:"column",gap:18}}>
@@ -448,6 +565,11 @@ function Survey1Page({onComplete,initial}){
             {d.format===f.id&&<span style={{color:C.blushDark}}>✓</span>}
           </div>
         ))}
+      </div>
+    )},
+    {title:"Какие подрядчики нужны?",sub:"Подберём под ваш формат — можно выбрать несколько",ok:true,body:(
+      <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+        {[["host","🎤 Ведущий"],["dj","🎵 DJ"],["photo","📷 Фотограф"],["video","🎬 Видеограф"],["decor","💐 Декор"],["florist","🌷 Флорист"],["makeup","💄 Визажист"],["cake","🎂 Кондитер"],["cover","🎸 Кавер-группа"],["transport","🚗 Транспорт"]].map(([v,l])=><span key={v} style={S.chip((d.needs||[]).includes(v))} onClick={()=>toggleNeed(v)}>{l}</span>)}
       </div>
     )},
     {title:"Бюджет на свадьбу",sub:"Используем для расчёта",ok:d.budgetLabel,body:(
@@ -872,17 +994,28 @@ function VendorsPage({survey,initCat,onSelectVendor}){
   const[favs,setFavs]=useState(()=>LS.get("td_favs",[]));
   const[modal,setModal]=useState(null);
   const[contacted,setContacted]=useState(()=>LS.get("td_contacted",[]));
+  const[fCity,setFCity]=useState("all");
+  const[fPrice,setFPrice]=useState("all");
+  const[fRating,setFRating]=useState("all");
   const date=survey?.date;
-  const catMap=Object.fromEntries(DEFAULT_CATS.map(c=>[c.id,c]));
-  const avail=DEFAULT_CATS.filter(c=>VENDORS.some(v=>v.cat===c.id));
+  const pub=publishedVendor();
+  const ALLV=pub?[pub,...VENDORS]:VENDORS;
+  const catMap=Object.fromEntries(VENDOR_CATS.map(c=>[c.id,c]));
+  const avail=VENDOR_CATS.filter(c=>ALLV.some(v=>v.cat===c.id));
+  const cityList=[...new Set(ALLV.map(v=>v.city))];
+  const PRICE_RANGES={all:[0,Infinity],"lo":[0,40000],"mid":[40000,100000],"hi":[100000,Infinity]};
   useEffect(()=>LS.set("td_favs",favs),[favs]);
   useEffect(()=>LS.set("td_contacted",contacted),[contacted]);
-  const filtered=VENDORS.filter(v=>{
+  const filtered=ALLV.filter(v=>{
     const catOk=activeCat==="all"||v.cat===activeCat;
     const searchOk=!search||v.name.toLowerCase().includes(search.toLowerCase());
     const freeOk=!date||!v.busy.includes(date);
-    return catOk&&searchOk&&freeOk;
+    const cityOk=fCity==="all"||v.city===fCity;
+    const[lo,hi]=PRICE_RANGES[fPrice];const priceOk=v.priceFrom>=lo&&v.priceFrom<hi;
+    const ratingOk=fRating==="all"||v.rating>=Number(fRating);
+    return catOk&&searchOk&&freeOk&&cityOk&&priceOk&&ratingOk;
   });
+  const selStyle={border:"1px solid #E2DACB",borderRadius:10,padding:"9px 12px",fontSize:12.5,fontFamily:fb,background:"#FFFFFF",color:"#221D18",outline:"none",cursor:"pointer"};
   const GR=[["repeating-linear-gradient(135deg,#E9DDCB 0 8px,#E2D3BC 8px 16px)"],["repeating-linear-gradient(135deg,#EBDDD7 0 8px,#E4D0C8 8px 16px)"],["repeating-linear-gradient(135deg,#E7DEC9 0 8px,#E0D4BA 8px 16px)"],["repeating-linear-gradient(135deg,#DEE5DD 0 8px,#D5DFD2 8px 16px)"]];
   return(
     <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
@@ -894,9 +1027,15 @@ function VendorsPage({survey,initCat,onSelectVendor}){
         <span onClick={()=>setActiveCat("all")} style={{padding:"9px 16px",borderRadius:999,background:activeCat==="all"?"#221D18":"#FBF9F5",color:activeCat==="all"?"#FBF9F5":"#6E665C",border:activeCat==="all"?"none":"1px solid #E2DACB",fontSize:12.5,fontWeight:activeCat==="all"?600:500,cursor:"pointer"}}>Все</span>
         {avail.map(c=><span key={c.id} onClick={()=>setActiveCat(c.id)} style={{padding:"9px 16px",borderRadius:999,background:activeCat===c.id?"#221D18":"#FBF9F5",color:activeCat===c.id?"#FBF9F5":"#6E665C",border:activeCat===c.id?"none":"1px solid #E2DACB",fontSize:12.5,fontWeight:activeCat===c.id?600:500,cursor:"pointer"}}>{c.name}</span>)}
       </div>
-      <div style={{display:"flex",alignItems:"center",gap:10,background:"#FFFFFF",border:"1px solid #E2DACB",borderRadius:12,padding:"11px 16px",maxWidth:340}}>
-        <span style={{fontSize:14,color:"#B0A99E"}}>⌕</span>
-        <input style={{border:"none",outline:"none",fontSize:13,fontFamily:fb,background:"transparent",color:"#221D18",width:"100%"}} placeholder="Поиск по имени…" value={search} onChange={e=>setSearch(e.target.value)}/>
+      <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,background:"#FFFFFF",border:"1px solid #E2DACB",borderRadius:12,padding:"11px 16px",flex:"1 1 240px",maxWidth:340}}>
+          <span style={{fontSize:14,color:"#B0A99E"}}>⌕</span>
+          <input style={{border:"none",outline:"none",fontSize:13,fontFamily:fb,background:"transparent",color:"#221D18",width:"100%"}} placeholder="Поиск по имени…" value={search} onChange={e=>setSearch(e.target.value)}/>
+        </div>
+        <select style={selStyle} value={fCity} onChange={e=>setFCity(e.target.value)}><option value="all">Все города</option>{cityList.map(c=><option key={c} value={c}>{c}</option>)}</select>
+        <select style={selStyle} value={fPrice} onChange={e=>setFPrice(e.target.value)}><option value="all">Любая цена</option><option value="lo">до 40 000 ₽</option><option value="mid">40–100 тыс ₽</option><option value="hi">от 100 000 ₽</option></select>
+        <select style={selStyle} value={fRating} onChange={e=>setFRating(e.target.value)}><option value="all">Любой рейтинг</option><option value="4.9">★ 4.9+</option><option value="4.8">★ 4.8+</option><option value="4.5">★ 4.5+</option></select>
+        {(fCity!=="all"||fPrice!=="all"||fRating!=="all")&&<button onClick={()=>{setFCity("all");setFPrice("all");setFRating("all");}} style={{...selStyle,color:"#A66B60",border:"1px solid #E8C4BC"}}>Сбросить ✕</button>}
       </div>
       <section style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
         {filtered.map((v,vi)=>{
@@ -908,7 +1047,7 @@ function VendorsPage({survey,initCat,onSelectVendor}){
               <span onClick={()=>setFavs(f=>f.includes(v.id)?f.filter(x=>x!==v.id):[...f,v.id])} style={{position:"absolute",top:18,right:18,fontSize:16,color:isFav?"#BD877C":"#D8CFC0",cursor:"pointer"}}>{isFav?"♥":"♡"}</span>
               <div style={{display:"flex",gap:12,marginBottom:13}}>
                 <div style={{width:46,height:46,borderRadius:12,background:GR[vi%4][0],flexShrink:0}}/>
-                <div><div style={{fontSize:14.5,fontWeight:700}}>{v.name}</div><div style={{fontSize:11.5,color:"#A39C92"}}>{cat?.name} · {v.city}</div></div>
+                <div><div style={{fontSize:14.5,fontWeight:700}}>{v.name}{v.published&&<span style={{marginLeft:6,fontSize:9.5,letterSpacing:".06em",textTransform:"uppercase",color:"#5E8A7D",background:"#EAF0EC",padding:"2px 7px",borderRadius:6,fontWeight:700,verticalAlign:"middle"}}>новый</span>}</div><div style={{fontSize:11.5,color:"#A39C92"}}>{cat?.name} · {v.city}</div></div>
               </div>
               <p style={{fontSize:12.5,color:"#6E665C",lineHeight:1.6,flex:1,margin:"0 0 12px"}}>{v.desc}</p>
               <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:14}}>
@@ -941,7 +1080,7 @@ function VendorsPage({survey,initCat,onSelectVendor}){
               {survey?.concept?.mustHave&&<><b>Пожелания:</b> {survey.concept.mustHave}<br/></>}
             </div>
             <div style={{display:"flex",gap:10}}>
-              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={()=>{setContacted(p=>[...p,modal.id]);setModal(null);}}>✓ Отправить запрос</button>
+              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={()=>{setContacted(p=>[...p,modal.id]);pushVendorRequest(modal);setModal(null);}}>✓ Отправить запрос</button>
               <button style={{padding:"11px 18px",borderRadius:999,background:"transparent",color:"#857E74",fontSize:13,fontWeight:500,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}} onClick={()=>setModal(null)}>Отмена</button>
             </div>
           </div>
@@ -954,21 +1093,33 @@ function VendorsPage({survey,initCat,onSelectVendor}){
 // ─── VENDOR CARD PAGE ─────────────────────────────────────────────────────────
 function VendorCardPage({vendor,onBack,survey}){
   const[contactedLocal,setContactedLocal]=useState(()=>LS.get("td_contacted",[]));
+  const[favs,setFavsState]=useState(()=>LS.get("td_favs",[]));
+  const setFavs=(fn)=>setFavsState(prev=>{const next=fn(prev);LS.set("td_favs",next);return next;});
   const isDone=contactedLocal.includes(vendor.id);
-  const catMap=Object.fromEntries(DEFAULT_CATS.map(c=>[c.id,c]));
+  const catMap=Object.fromEntries(VENDOR_CATS.map(c=>[c.id,c]));
   const cat=catMap[vendor.cat];
-  const GR=["repeating-linear-gradient(135deg,#E9DDCB 0 12px,#E2D3BC 12px 24px)","repeating-linear-gradient(135deg,#EBDDD7 0 12px,#E4D0C8 12px 24px)","repeating-linear-gradient(135deg,#DEE5DD 0 12px,#D5DFD2 12px 24px)"];
-  const gi=vendor.id%3;
+  const isFav=favs.includes(vendor.id);
+  const gi=(Number(vendor.id)||0)%3;
+  const reviews=vendor.published?[]:DEMO_REVIEWS.slice(0,3+((Number(vendor.id)||0)%2));
+  const busyMarks=Object.fromEntries((vendor.busy||[]).map(d=>[d,"busy"]));
+  const toggleFav=()=>setFavs&&setFavs(f=>f.includes(vendor.id)?f.filter(x=>x!==vendor.id):[...f,vendor.id]);
   return(
-    <div style={{maxWidth:860,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+    <div style={{maxWidth:900,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
       <button onClick={onBack} style={{background:"none",border:"none",color:"#857E74",fontSize:13,cursor:"pointer",fontFamily:fb,padding:0,textAlign:"left"}}>← Назад к подрядчикам</button>
-      <div style={{borderRadius:20,overflow:"hidden",height:220,background:GR[gi]}}/>
+      {/* Галерея */}
+      <div style={{borderRadius:20,overflow:"hidden",height:280,background:GALLERY_GRADS[gi],position:"relative"}}>
+        <span onClick={toggleFav} style={{position:"absolute",top:16,right:18,fontSize:20,color:isFav?"#BD877C":"#E0D5C7",cursor:"pointer",background:"rgba(251,249,245,.92)",borderRadius:"50%",width:40,height:40,display:"flex",alignItems:"center",justifyContent:"center"}}>{isFav?"♥":"♡"}</span>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(90px,1fr))",gap:10}}>
+        {GALLERY_GRADS.slice(0,5).map((g,i)=><div key={i} style={{height:84,borderRadius:12,background:g}}/>)}
+      </div>
+      <div style={{fontSize:11.5,color:"#948D83",marginTop:-8}}>📷 Галерея работ · {10+vendor.id} фото</div>
       <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
         <div style={{display:"flex",flexDirection:"column",gap:16}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
             <div style={{display:"flex",gap:14,alignItems:"flex-start",marginBottom:16}}>
-              <div style={{width:64,height:64,borderRadius:16,background:GR[gi],flexShrink:0}}/>
-              <div>
+              <div style={{width:64,height:64,borderRadius:16,background:GALLERY_GRADS[gi],flexShrink:0}}/>
+              <div style={{flex:1}}>
                 <div style={{fontSize:22,fontWeight:700,letterSpacing:"-.01em"}}>{vendor.name}</div>
                 <div style={{fontSize:13,color:"#948D83",marginTop:2}}>{cat?.name} · {vendor.city}</div>
                 <div style={{fontSize:13,color:"#5E8A7D",fontWeight:600,marginTop:4}}>★ {vendor.rating} · {vendor.reviews} отзывов</div>
@@ -990,6 +1141,35 @@ function VendorCardPage({vendor,onBack,survey}){
               ))}
             </div>
           )}
+          {/* Видео работ */}
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>Видео работ</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              {[0,1].map(i=>(
+                <div key={i} style={{height:120,borderRadius:12,background:GALLERY_GRADS[(gi+i)%GALLERY_GRADS.length],display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer"}}>
+                  <span style={{width:44,height:44,borderRadius:"50%",background:"rgba(251,249,245,.9)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,color:"#221D18"}}>▶</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Отзывы */}
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
+              <div style={{fontSize:14,fontWeight:600}}>Отзывы</div>
+              <div style={{fontSize:13,color:"#5E8A7D",fontWeight:600}}>★ {vendor.rating} · {vendor.reviews}</div>
+            </div>
+            {reviews.length===0&&<div style={{fontSize:13,color:"#948D83",padding:"6px 0"}}>Пока нет отзывов — вы можете стать первым клиентом.</div>}
+            {reviews.map((r,i)=>(
+              <div key={i} style={{padding:"14px 0",borderBottom:i<reviews.length-1?"1px solid #F1EBE1":"none"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:5}}>
+                  <div style={{fontSize:13.5,fontWeight:600}}>{r.name}</div>
+                  <div style={{fontSize:12,color:"#948D83"}}>{r.date}</div>
+                </div>
+                <div style={{color:"#D9B679",fontSize:12,marginBottom:5,letterSpacing:2}}>{"★".repeat(r.rating)}<span style={{color:"#E2DACB"}}>{"★".repeat(5-r.rating)}</span></div>
+                <p style={{fontSize:13,color:"#6E665C",lineHeight:1.6,margin:0}}>{r.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:14}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:22,boxShadow:SHADOW}}>
@@ -998,8 +1178,14 @@ function VendorCardPage({vendor,onBack,survey}){
             <div style={{fontSize:12,color:"#948D83",marginBottom:18}}>Точная цена — при запросе</div>
             {isDone
               ?<div style={{padding:"12px",borderRadius:12,background:"#EAF0EC",color:"#5E8A7D",fontSize:13,fontWeight:600,textAlign:"center"}}>✓ Запрос отправлен</div>
-              :<button onClick={()=>{const next=[...contactedLocal,vendor.id];setContactedLocal(next);LS.set("td_contacted",next);}} style={{width:"100%",padding:"12px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>Связаться</button>
+              :<button onClick={()=>{const next=[...contactedLocal,vendor.id];setContactedLocal(next);LS.set("td_contacted",next);pushVendorRequest(vendor);}} style={{width:"100%",padding:"12px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>Связаться</button>
             }
+            {setFavs&&<button onClick={toggleFav} style={{marginTop:10,width:"100%",padding:"11px",borderRadius:999,border:"1px solid #E2DACB",background:"transparent",color:isFav?"#BD877C":"#857E74",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}}>{isFav?"♥ В избранном":"♡ В избранное"}</button>}
+          </div>
+          {/* Календарь занятости */}
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:20,boxShadow:SHADOW}}>
+            <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:14}}>Календарь занятости</div>
+            <MiniCalendar marks={busyMarks} legend={[["Занято","busy"]]}/>
           </div>
           {survey?.date&&(
             <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:14,padding:16,boxShadow:SHADOW}}>
@@ -1080,15 +1266,21 @@ function VenueCatalog({survey,favoriteVenues,setFavoriteVenues,onSelect}){
 function VenueCardPage({venue,favoriteVenues,setFavoriteVenues,onBack,survey}){
   const[reqSent,setReqSent]=useState(false);
   const isFav=favoriteVenues.includes(venue.id);
-  const GR=["repeating-linear-gradient(135deg,#E9DDCB 0 12px,#E2D3BC 12px 24px)","repeating-linear-gradient(135deg,#EBDDD7 0 12px,#E4D0C8 12px 24px)","repeating-linear-gradient(135deg,#DEE5DD 0 12px,#D5DFD2 12px 24px)"];
   const typeName=VENUE_TYPES.find(t=>t.id===venue.type)?.name||venue.type;
+  const reviews=DEMO_REVIEWS.slice(0,3);
+  const venueIdx=VENUES.findIndex(x=>x.id===venue.id);
+  const busyMarks=Object.fromEntries((venue.busy||[]).map(d=>[d,"busy"]));
   return(
     <div style={{maxWidth:900,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
       <button onClick={onBack} style={{background:"none",border:"none",color:"#857E74",fontSize:13,cursor:"pointer",fontFamily:fb,padding:0,textAlign:"left"}}>← Назад к площадкам</button>
-      <div style={{borderRadius:20,overflow:"hidden",height:260,background:GR[0],position:"relative"}}>
+      <div style={{borderRadius:20,overflow:"hidden",height:300,background:GALLERY_GRADS[venueIdx%GALLERY_GRADS.length],position:"relative"}}>
         <span onClick={()=>setFavoriteVenues(f=>f.includes(venue.id)?f.filter(x=>x!==venue.id):[...f,venue.id])} style={{position:"absolute",top:16,right:18,fontSize:20,color:isFav?"#BD877C":"#E0D5C7",cursor:"pointer",background:"rgba(251,249,245,.9)",borderRadius:"50%",width:38,height:38,display:"flex",alignItems:"center",justifyContent:"center"}}>{isFav?"♥":"♡"}</span>
         <span style={{position:"absolute",bottom:14,left:18,padding:"5px 12px",borderRadius:8,background:"rgba(251,249,245,.88)",fontSize:11,fontWeight:700,color:"#221D18"}}>{typeName}</span>
       </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(80px,1fr))",gap:10}}>
+        {GALLERY_GRADS.map((g,i)=><div key={i} style={{height:72,borderRadius:10,background:g}}/>)}
+      </div>
+      <div style={{fontSize:11.5,color:"#948D83",marginTop:-8}}>📷 Галерея площадки · {20+venueIdx} фото</div>
       <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
         <div style={{display:"flex",flexDirection:"column",gap:16}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
@@ -1105,6 +1297,32 @@ function VenueCardPage({venue,favoriteVenues,setFavoriteVenues,onBack,survey}){
               {venue.includes.map(inc=><div key={inc} style={{display:"flex",alignItems:"center",gap:6,padding:"7px 14px",borderRadius:10,background:"#F4F9F7",border:"1px solid #C8E0D8",fontSize:13}}><span style={{color:"#5E8A7D",fontWeight:700}}>✓</span> {inc}</div>)}
             </div>
           </div>
+          {/* Карта */}
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>На карте</div>
+            <div style={{height:180,borderRadius:14,background:"linear-gradient(135deg,#EAF0EC,#DCE8E0)",position:"relative",overflow:"hidden",border:"1px solid #D7E3DC"}}>
+              <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(#C8DBCF 1px,transparent 1px),linear-gradient(90deg,#C8DBCF 1px,transparent 1px)",backgroundSize:"32px 32px",opacity:.5}}/>
+              <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-100%)",fontSize:30}}>📍</div>
+            </div>
+            <div style={{fontSize:12.5,color:"#6E665C",marginTop:10}}>{venue.city}, {venue.address}</div>
+          </div>
+          {/* Отзывы */}
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
+              <div style={{fontSize:14,fontWeight:600}}>Отзывы</div>
+              <div style={{fontSize:13,color:"#5E8A7D",fontWeight:600}}>★ {venue.rating} · {venue.reviews}</div>
+            </div>
+            {reviews.map((r,i)=>(
+              <div key={i} style={{padding:"14px 0",borderBottom:i<reviews.length-1?"1px solid #F1EBE1":"none"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:5}}>
+                  <div style={{fontSize:13.5,fontWeight:600}}>{r.name}</div>
+                  <div style={{fontSize:12,color:"#948D83"}}>{r.date}</div>
+                </div>
+                <div style={{color:"#D9B679",fontSize:12,marginBottom:5,letterSpacing:2}}>{"★".repeat(r.rating)}<span style={{color:"#E2DACB"}}>{"★".repeat(5-r.rating)}</span></div>
+                <p style={{fontSize:13,color:"#6E665C",lineHeight:1.6,margin:0}}>{r.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:14}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:22,boxShadow:SHADOW}}>
@@ -1119,6 +1337,11 @@ function VenueCardPage({venue,favoriteVenues,setFavoriteVenues,onBack,survey}){
               }
               <button onClick={()=>setFavoriteVenues(f=>f.includes(venue.id)?f.filter(x=>x!==venue.id):[...f,venue.id])} style={{marginTop:10,width:"100%",padding:"11px",borderRadius:999,border:"1px solid #E2DACB",background:"transparent",color:isFav?"#BD877C":"#857E74",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}}>{isFav?"♥ В избранном":"♡ В избранное"}</button>
             </div>
+          </div>
+          {/* Календарь свободных дат */}
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:20,boxShadow:SHADOW}}>
+            <div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:14}}>Свободные даты</div>
+            <MiniCalendar marks={busyMarks} legend={[["Занято","busy"]]}/>
           </div>
           {survey?.date&&(
             <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:14,padding:16,boxShadow:SHADOW}}>
@@ -1176,7 +1399,7 @@ function AgencyCatalog({favoriteAgencies,setFavoriteAgencies}){
             <div style={{fontSize:18,fontWeight:700,marginBottom:14}}>Запрос — {modal.name}</div>
             <p style={{fontSize:13,color:"#6E665C",lineHeight:1.6,marginBottom:20}}>Агентство получит ваши контакты и свяжется для обсуждения проекта.</p>
             <div style={{display:"flex",gap:10}}>
-              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={()=>{setSent(p=>[...p,modal.id]);setModal(null);}}>✓ Отправить запрос</button>
+              <button style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}} onClick={()=>{setSent(p=>[...p,modal.id]);pushAgencyLead(modal);setModal(null);}}>✓ Отправить запрос</button>
               <button style={{padding:"11px 18px",borderRadius:999,background:"transparent",color:"#857E74",fontSize:13,fontWeight:500,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}} onClick={()=>setModal(null)}>Отмена</button>
             </div>
           </div>
@@ -1200,7 +1423,7 @@ function ChecklistPage({survey,checklist,setChecklist}){
     return base.map((m,i)=>{
       if(i!==mIdx)return m;
       const st=[...(m.statuses||m.tasks.map(()=>"todo"))];
-      st[tIdx]=st[tIdx]==="done"?"todo":"done";
+      st[tIdx]=st[tIdx]==="todo"?"inprogress":st[tIdx]==="inprogress"?"done":"todo";
       return{...m,statuses:st};
     });
   });
@@ -1245,11 +1468,14 @@ function ChecklistPage({survey,checklist,setChecklist}){
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
               {month.tasks.map((task,tIdx)=>{
-                const isDone=month.statuses[tIdx]==="done";
+                const st=month.statuses[tIdx];
+                const isDone=st==="done";
+                const inProg=st==="inprogress";
                 return(
-                  <div key={tIdx} onClick={()=>toggle(mIdx,tIdx)} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",borderRadius:10,background:isDone?"#F4F9F7":"#FBF9F5",cursor:"pointer",border:`1px solid ${isDone?"#C8E0D8":"transparent"}`}}>
-                    <span style={{width:20,height:20,borderRadius:"50%",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",background:isDone?"#5E8A7D":"transparent",border:isDone?"none":"2px solid #D8CFC0",color:"#FBF9F5",fontSize:11,fontWeight:700}}>{isDone?"✓":""}</span>
-                    <span style={{fontSize:13.5,color:isDone?"#A39C92":"#221D18",textDecoration:isDone?"line-through":"none"}}>{task}</span>
+                  <div key={tIdx} onClick={()=>toggle(mIdx,tIdx)} title="Нажмите для смены статуса" style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",borderRadius:10,background:isDone?"#F4F9F7":inProg?"#FBF4E6":"#FBF9F5",cursor:"pointer",border:`1px solid ${isDone?"#C8E0D8":inProg?"#F0E3BC":"transparent"}`}}>
+                    <span style={{width:20,height:20,borderRadius:"50%",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",background:isDone?"#5E8A7D":inProg?"#D9B679":"transparent",border:(isDone||inProg)?"none":"2px solid #D8CFC0",color:"#FBF9F5",fontSize:11,fontWeight:700}}>{isDone?"✓":inProg?"●":""}</span>
+                    <span style={{flex:1,fontSize:13.5,color:isDone?"#A39C92":"#221D18",textDecoration:isDone?"line-through":"none"}}>{task}</span>
+                    {inProg&&<span style={{padding:"3px 9px",borderRadius:7,background:"#F6EFDE",color:"#B8902F",fontSize:10.5,fontWeight:600,flexShrink:0}}>в работе</span>}
                   </div>
                 );
               })}
@@ -1269,7 +1495,7 @@ function FavoritesPage({favoriteVenues,favoriteAgencies,onNav,setFavoriteVenues,
   const favVendors=VENDORS.filter(v=>favs.includes(v.id));
   const favVenuesList=VENUES.filter(v=>favoriteVenues.includes(v.id));
   const favAgenciesList=AGENCIES.filter(a=>favoriteAgencies.includes(a.id));
-  const catMap=Object.fromEntries(DEFAULT_CATS.map(c=>[c.id,c]));
+  const catMap=Object.fromEntries(VENDOR_CATS.map(c=>[c.id,c]));
   const GR=["repeating-linear-gradient(135deg,#E9DDCB 0 8px,#E2D3BC 8px 16px)","repeating-linear-gradient(135deg,#EBDDD7 0 8px,#E4D0C8 8px 16px)","repeating-linear-gradient(135deg,#DEE5DD 0 8px,#D5DFD2 8px 16px)"];
   const tabs=[["vendors","Подрядчики",favVendors.length],["venues","Площадки",favVenuesList.length],["agencies","Агентства",favAgenciesList.length]];
   const EmptyState=({btnLabel,onBtnClick})=>(
@@ -1320,94 +1546,259 @@ function FavoritesPage({favoriteVenues,favoriteAgencies,onNav,setFavoriteVenues,
   );
 }
 
+// ─── MINI CALENDAR ────────────────────────────────────────────────────────────
+function MiniCalendar({marks={},onToggle,legend}){
+  const[view,setView]=useState(()=>{const n=new Date();return{y:n.getFullYear(),m:n.getMonth()};});
+  const goP=()=>setView(v=>v.m===0?{y:v.y-1,m:11}:{y:v.y,m:v.m-1});
+  const goN=()=>setView(v=>v.m===11?{y:v.y+1,m:0}:{y:v.y,m:v.m+1});
+  const days=new Date(view.y,view.m+1,0).getDate();
+  const first=(new Date(view.y,view.m,1).getDay()+6)%7;
+  const today=new Date().toISOString().slice(0,10);
+  const toStr=d=>`${view.y}-${String(view.m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+  const mLabel=new Date(view.y,view.m,1).toLocaleDateString("ru",{month:"long",year:"numeric"});
+  const cells=[...Array(first).fill(null),...Array.from({length:days},(_,i)=>i+1)];
+  const MS={busy:{bg:"#F5E4E0",col:"#A66B60",br:"#E8C4BC"},wedding:{bg:"#EAF0EC",col:"#5E8A7D",br:"#C8E0D8"},booked:{bg:"#F6EFDE",col:"#B8902F",br:"#F0E3BC"}};
+  return(
+    <div style={{fontFamily:fb}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
+        <button onClick={goP} style={{background:"none",border:"1px solid #E2DACB",borderRadius:8,padding:"5px 13px",cursor:"pointer",color:"#857E74",fontFamily:fb,fontSize:14}}>←</button>
+        <div style={{fontSize:14,fontWeight:600,textTransform:"capitalize"}}>{mLabel}</div>
+        <button onClick={goN} style={{background:"none",border:"1px solid #E2DACB",borderRadius:8,padding:"5px 13px",cursor:"pointer",color:"#857E74",fontFamily:fb,fontSize:14}}>→</button>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:3,marginBottom:6}}>
+        {["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(d=><div key={d} style={{textAlign:"center",fontSize:10.5,color:"#A39C92",fontWeight:600,padding:"4px 0"}}>{d}</div>)}
+        {cells.map((d,i)=>{
+          if(!d)return<div key={`e${i}`}/>;
+          const s=toStr(d);const mk=marks[s];const ms=MS[mk]||null;const isT=s===today;
+          return(<div key={s} onClick={onToggle?()=>onToggle(s):undefined} style={{textAlign:"center",padding:"8px 2px",borderRadius:8,fontSize:13,fontWeight:isT?700:400,background:ms?ms.bg:isT?"rgba(189,135,124,.1)":"transparent",color:ms?ms.col:isT?C.blushDark:C.dark,border:ms?`1px solid ${ms.br}`:isT?`1px solid ${C.blush}`:"1px solid transparent",cursor:onToggle?"pointer":"default"}}>{d}</div>);
+        })}
+      </div>
+      {legend&&<div style={{display:"flex",gap:14,flexWrap:"wrap",marginTop:12,fontSize:11.5,color:"#857E74"}}>
+        {legend.map(([label,mk])=>{const ms=MS[mk];return(<span key={label} style={{display:"flex",alignItems:"center",gap:5}}><span style={{width:10,height:10,borderRadius:3,background:ms?.bg,border:`1px solid ${ms?.br}`,display:"inline-block"}}/>{label}</span>);})}
+      </div>}
+    </div>
+  );
+}
+
 // ─── VENDOR CABINET ───────────────────────────────────────────────────────────
+const VENDOR_DEMO_REQ=[
+  {id:1,couple:"Соня & Никита",date:"2026-08-15",city:"Москва",guests:80,msg:"Ищем фотографа на весь день свадьбы",status:"new"},
+  {id:2,couple:"Мария & Артём",date:"2026-09-12",city:"Москва",guests:120,msg:"Нужен фотограф + видеограф, пакет",status:"new"},
+  {id:3,couple:"Алина & Денис",date:"2026-07-05",city:"Москва",guests:60,msg:"Репортажная съёмка на церемонию и банкет",status:"accepted"},
+];
+const VENDOR_DEMO_CLI=[
+  {id:1,couple:"Алина & Денис",date:"2026-07-05",city:"Москва",amount:85000,paid:42500,status:"В процессе",note:""},
+  {id:2,couple:"Катя & Влад",date:"2025-11-20",city:"Москва",amount:75000,paid:75000,status:"Завершено",note:""},
+  {id:3,couple:"Юля & Сергей",date:"2025-09-14",city:"Сочи",amount:90000,paid:90000,status:"Оплачено",note:""},
+];
+
 function VendorCabinet({user}){
+  const[vtab,setVtab]=useState("profile");
   const[profile,setProfile]=useState(()=>LS.get("td_vendor_profile",{name:"",category:"photo",city:"Москва",desc:"",priceFrom:"",experience:"",tags:""}));
+  const[busyDates,setBusyDates]=useState(()=>LS.get("td_vendor_busy",[]));
+  const[requests,setRequests]=useState(()=>LS.get("td_vendor_requests",VENDOR_DEMO_REQ));
+  const[clients,setClients]=useState(()=>LS.get("td_vendor_clients",VENDOR_DEMO_CLI));
   const[saved,setSaved]=useState(false);
-  const DEMO_REQUESTS=[
-    {id:1,couple:"Соня и Никита",date:"15 авг 2026",city:"Москва",guests:80,msg:"Ищем фотографа на весь день свадьбы"},
-    {id:2,couple:"Мария и Артём",date:"12 сент 2026",city:"Москва",guests:120,msg:"Нужен фотограф + видеограф, пакет"},
-  ];
-  const catName=DEFAULT_CATS.find(c=>c.id===profile.category)?.name||"Подрядчик";
-  useEffect(()=>{LS.set("td_vendor_profile",profile);},[profile]);
+  useEffect(()=>LS.set("td_vendor_profile",profile),[profile]);
+  useEffect(()=>LS.set("td_vendor_busy",busyDates),[busyDates]);
+  useEffect(()=>LS.set("td_vendor_requests",requests),[requests]);
+  useEffect(()=>LS.set("td_vendor_clients",clients),[clients]);
+  const catName=VENDOR_CATS.find(c=>c.id===profile.category)?.name||"Подрядчик";
   const upd=k=>e=>setProfile(p=>({...p,[k]:e.target.value}));
   const inp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"};
+  const newCount=requests.filter(r=>r.status==="new").length;
+  const VTABS=[{id:"profile",label:"Профиль"},{id:"calendar",label:"Календарь"},{id:"requests",label:"Запросы",badge:newCount},{id:"clients",label:"Клиенты"},{id:"finances",label:"Финансы"}];
+  const busyMarks=Object.fromEntries(busyDates.map(d=>[d,"busy"]));
+  const toggleBusy=s=>setBusyDates(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);
+  const totalEarned=clients.reduce((s,c)=>s+c.paid,0);
+  const totalPending=clients.reduce((s,c)=>s+(c.amount-c.paid),0);
+  const SRQ={new:{bg:"#F6EFDE",col:"#B8902F",label:"Новый"},accepted:{bg:"#EAF0EC",col:"#5E8A7D",label:"Принят"},declined:{bg:"#F5E4E0",col:"#A66B60",label:"Отклонён"}};
+  const SCL={"В процессе":{bg:"#F6EFDE",col:"#B8902F"},"Завершено":{bg:"#EAF0EC",col:"#5E8A7D"},"Оплачено":{bg:"#EAF0EC",col:"#5E8A7D"}};
+  const dFmt=d=>d?new Date(d+"T12:00").toLocaleDateString("ru",{day:"numeric",month:"short",year:"numeric"}):"";
   return(
     <div style={{maxWidth:1000,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
       <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between"}}>
         <div><div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Кабинет подрядчика</div><div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>{catName} · {profile.city||"Москва"}</div></div>
         <span style={{padding:"6px 14px",borderRadius:8,background:"#EAF0EC",color:"#5E8A7D",fontSize:11,fontWeight:700}}>АКТИВЕН</span>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
-        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
-          <div style={{fontSize:14,fontWeight:600,marginBottom:16}}>Мой профиль</div>
-          <div style={{display:"flex",flexDirection:"column",gap:14}}>
-            {[["Имя / Студия","name","Иван Громов"],["Город","city","Москва"],["Цена от ₽","priceFrom","60000"],["Опыт (лет)","experience","5"]].map(([l,k,ph])=>(
-              <div key={k}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>{l}</div><input style={inp} value={profile[k]||""} onChange={upd(k)} placeholder={ph}/></div>
-            ))}
-            <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>Категория</div>
-              <select style={{...inp,cursor:"pointer"}} value={profile.category} onChange={upd("category")}>
-                {DEFAULT_CATS.filter(c=>!["venue","catering","rings","honeymoon"].includes(c.id)).map(c=><option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
-            </div>
-            <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>О себе</div><textarea style={{...inp,minHeight:80,resize:"vertical",lineHeight:1.5}} value={profile.desc||""} onChange={upd("desc")} placeholder="Краткое описание услуг и стиля…"/></div>
-            <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>Теги (через запятую)</div><input style={inp} value={profile.tags||""} onChange={upd("tags")} placeholder="Репортаж, Арт, Плёнка"/></div>
-            <button onClick={()=>{LS.set("td_vendor_profile",profile);setSaved(true);setTimeout(()=>setSaved(false),2000);}} style={{padding:"11px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>{saved?"✓ Сохранено":"Сохранить профиль"}</button>
-          </div>
-        </div>
-        <div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div style={{display:"flex",gap:4,background:"#EFE9DE",borderRadius:12,padding:4,width:"fit-content"}}>
+        {VTABS.map(t=>(
+          <span key={t.id} onClick={()=>setVtab(t.id)} style={{padding:"8px 18px",borderRadius:9,background:vtab===t.id?"#FFFFFF":"transparent",fontSize:13,fontWeight:vtab===t.id?600:500,color:vtab===t.id?"#221D18":"#857E74",cursor:"pointer",boxShadow:vtab===t.id?"0 1px 2px rgba(33,28,23,.05)":"none",display:"flex",alignItems:"center",gap:6}}>
+            {t.label}{t.badge>0&&<span style={{minWidth:17,height:17,borderRadius:999,background:"#A66B60",color:"#FFF",fontSize:10,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",padding:"0 4px"}}>{t.badge}</span>}
+          </span>
+        ))}
+      </div>
+
+      {vtab==="profile"&&(
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
-            <div style={{fontSize:14,fontWeight:600,marginBottom:4}}>Входящие запросы</div>
-            <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>Пары, которые хотят с вами работать</div>
-            {DEMO_REQUESTS.map((r,i)=>(
-              <div key={r.id} style={{padding:"14px 0",borderBottom:i<DEMO_REQUESTS.length-1?"1px solid #F1EBE1":"none"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
-                  <div style={{fontSize:13.5,fontWeight:700}}>{r.couple}</div>
-                  <span style={{padding:"3px 8px",borderRadius:7,background:"#F6EFDE",color:"#B8902F",fontSize:11,fontWeight:600}}>Новый</span>
-                </div>
-                <div style={{fontSize:12,color:"#857E74",marginBottom:4}}>{r.date} · {r.city} · {r.guests} гостей</div>
-                <div style={{fontSize:12.5,color:"#6E665C",lineHeight:1.5}}>{r.msg}</div>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:16}}>Мой профиль</div>
+            <div style={{display:"flex",flexDirection:"column",gap:14}}>
+              {[["Имя / Студия","name","Иван Громов"],["Город","city","Москва"],["Цена от ₽","priceFrom","60000"],["Опыт (лет)","experience","5"]].map(([l,k,ph])=>(
+                <div key={k}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>{l}</div><input style={inp} value={profile[k]||""} onChange={upd(k)} placeholder={ph}/></div>
+              ))}
+              <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>Категория</div>
+                <select style={{...inp,cursor:"pointer"}} value={profile.category} onChange={upd("category")}>
+                  {VENDOR_CATS.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
               </div>
-            ))}
+              <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>О себе</div><textarea style={{...inp,minHeight:80,resize:"vertical",lineHeight:1.5}} value={profile.desc||""} onChange={upd("desc")} placeholder="Краткое описание услуг и стиля…"/></div>
+              <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:5}}>Теги (через запятую)</div><input style={inp} value={profile.tags||""} onChange={upd("tags")} placeholder="Репортаж, Арт, Плёнка"/></div>
+              <button onClick={()=>{LS.set("td_vendor_profile",profile);setSaved(true);setTimeout(()=>setSaved(false),2000);}} style={{padding:"11px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>{saved?"✓ Сохранено":"Сохранить профиль"}</button>
+            </div>
           </div>
-          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:16,padding:20,boxShadow:SHADOW}}>
-            <div style={{fontSize:13,fontWeight:600,marginBottom:12}}>Предпросмотр карточки</div>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:16,padding:22,boxShadow:SHADOW}}>
+            <div style={{fontSize:13,fontWeight:600,marginBottom:14}}>Предпросмотр карточки</div>
             <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:10}}>
               <div style={{width:46,height:46,borderRadius:12,background:"repeating-linear-gradient(135deg,#E9DDCB 0 8px,#E2D3BC 8px 16px)",flexShrink:0}}/>
               <div><div style={{fontSize:14,fontWeight:700}}>{profile.name||"Ваше имя"}</div><div style={{fontSize:11.5,color:"#A39C92"}}>{catName} · {profile.city||"Москва"}</div></div>
             </div>
             {profile.priceFrom&&<div style={{fontSize:14,fontWeight:700,color:"#5E8A7D"}}>от {fmt(profile.priceFrom)} ₽</div>}
-            {profile.tags&&<div style={{display:"flex",gap:5,flexWrap:"wrap",marginTop:10}}>{profile.tags.split(",").map(t=>t.trim()).filter(Boolean).map(t=><span key={t} style={{fontSize:10.5,color:"#7A7266",background:"#F1EBE1",padding:"3px 9px",borderRadius:7}}>{t}</span>)}</div>}
+            {profile.desc&&<p style={{fontSize:12.5,color:"#6E665C",lineHeight:1.6,margin:"10px 0"}}>{profile.desc}</p>}
+            {profile.tags&&<div style={{display:"flex",gap:5,flexWrap:"wrap",marginTop:8}}>{profile.tags.split(",").map(t=>t.trim()).filter(Boolean).map(t=><span key={t} style={{fontSize:10.5,color:"#7A7266",background:"#F1EBE1",padding:"3px 9px",borderRadius:7}}>{t}</span>)}</div>}
           </div>
         </div>
-      </div>
+      )}
+
+      {vtab==="calendar"&&(
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:16}}>Занятость</div>
+            <p style={{fontSize:12.5,color:"#948D83",margin:"0 0 16px"}}>Нажмите на дату чтобы пометить занятой или свободной</p>
+            <MiniCalendar marks={busyMarks} onToggle={toggleBusy} legend={[["Занято","busy"]]}/>
+          </div>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:4}}>Занятые даты</div>
+            <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>{busyDates.length} {busyDates.length===1?"дата":busyDates.length<5?"даты":"дат"}</div>
+            {[...busyDates].sort().map(d=>(
+              <div key={d} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid #F1EBE1"}}>
+                <span style={{fontSize:13,fontWeight:500}}>{dFmt(d)}</span>
+                <button onClick={()=>toggleBusy(d)} style={{background:"none",border:"none",color:"#D8CFC0",fontSize:15,cursor:"pointer",padding:4}}>✕</button>
+              </div>
+            ))}
+            {busyDates.length===0&&<div style={{color:"#948D83",fontSize:13,textAlign:"center",padding:"30px 0"}}>Нет занятых дат</div>}
+          </div>
+        </div>
+      )}
+
+      {vtab==="requests"&&(
+        <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          {requests.map(r=>{
+            const rs=SRQ[r.status]||SRQ.new;
+            return(
+              <div key={r.id} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:16,padding:20,boxShadow:SHADOW}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
+                  <div>
+                    <div style={{fontSize:16,fontWeight:700}}>{r.couple}</div>
+                    <div style={{fontSize:12.5,color:"#857E74",marginTop:2}}>{dFmt(r.date)} · {r.city} · {r.guests} гостей</div>
+                  </div>
+                  <span style={{padding:"4px 11px",borderRadius:8,background:rs.bg,color:rs.col,fontSize:11,fontWeight:600}}>{rs.label}</span>
+                </div>
+                <p style={{fontSize:13,color:"#6E665C",lineHeight:1.5,margin:"0 0 14px"}}>{r.msg}</p>
+                {r.status==="new"&&(
+                  <div style={{display:"flex",gap:8}}>
+                    <button onClick={()=>setRequests(p=>p.map(x=>x.id===r.id?{...x,status:"accepted"}:x))} style={{padding:"8px 20px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:12,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>✓ Принять</button>
+                    <button onClick={()=>setRequests(p=>p.map(x=>x.id===r.id?{...x,status:"declined"}:x))} style={{padding:"8px 18px",borderRadius:999,background:"transparent",color:"#A66B60",fontSize:12,fontWeight:600,border:"1px solid #E8C4BC",cursor:"pointer",fontFamily:fb}}>Отклонить</button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {requests.length===0&&<div style={{textAlign:"center",padding:60,color:"#948D83",fontSize:14}}>Нет входящих запросов</div>}
+        </div>
+      )}
+
+      {vtab==="clients"&&(
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+          <div style={{fontSize:14,fontWeight:600,marginBottom:4}}>Мои клиенты</div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>{clients.length} проектов</div>
+          <div style={{display:"grid",gridTemplateColumns:"1.6fr 1fr 1fr 1fr 1fr 1fr",gap:12,padding:"0 6px 12px",borderBottom:"1px solid #ECE5DA",fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600}}>
+            {["Пара","Дата","Город","Сумма","Оплачено","Статус"].map(h=><div key={h}>{h}</div>)}
+          </div>
+          {clients.map((c,i)=>{
+            const cs=SCL[c.status]||{bg:"#F1EBE1",col:"#857E74"};
+            const pct=c.amount>0?Math.round(c.paid/c.amount*100):0;
+            return(
+              <div key={c.id} style={{display:"grid",gridTemplateColumns:"1.6fr 1fr 1fr 1fr 1fr 1fr",gap:12,padding:"13px 6px",borderBottom:i<clients.length-1?"1px solid #F1EBE1":"none",alignItems:"center",fontSize:13}}>
+                <div style={{fontWeight:600}}>{c.couple}</div>
+                <div style={{color:"#857E74",fontSize:12}}>{dFmt(c.date)}</div>
+                <div style={{color:"#857E74"}}>{c.city}</div>
+                <div style={{fontWeight:600}}>{fmt(c.amount)} ₽</div>
+                <div>
+                  <div style={{fontSize:12,fontWeight:600,color:"#5E8A7D",marginBottom:3}}>{fmt(c.paid)} ₽ <span style={{color:"#948D83",fontWeight:400}}>({pct}%)</span></div>
+                  <div style={{height:4,borderRadius:4,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${pct}%`,background:"#5E8A7D",borderRadius:4}}/></div>
+                </div>
+                <span style={{padding:"3px 10px",borderRadius:8,background:cs.bg,color:cs.col,fontSize:11,fontWeight:600,whiteSpace:"nowrap"}}>{c.status}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {vtab==="finances"&&(
+        <div style={{display:"flex",flexDirection:"column",gap:16}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
+            {[["Заработано",fmt(totalEarned)+" ₽","#5E8A7D"],["Ожидается",fmt(totalPending)+" ₽","#B8902F"],["Проектов",clients.length,"#221D18"]].map(([l,v,col])=>(
+              <div key={l} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:22,boxShadow:SHADOW,textAlign:"center"}}>
+                <div style={{fontSize:10.5,letterSpacing:".12em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:8}}>{l}</div>
+                <div style={{fontSize:24,fontWeight:700,color:col}}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+            <div style={{fontSize:14,fontWeight:600,marginBottom:4}}>Поступления по проектам</div>
+            <div style={{fontSize:12,color:"#948D83",marginBottom:20}}>Оплачено и задолженность</div>
+            {clients.map((c,i)=>{
+              const pct=c.amount>0?Math.round(c.paid/c.amount*100):0;
+              return(
+                <div key={c.id} style={{display:"flex",alignItems:"center",gap:14,padding:"12px 0",borderBottom:i<clients.length-1?"1px solid #F1EBE1":"none"}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:13.5,fontWeight:600}}>{c.couple}</div>
+                    <div style={{fontSize:11.5,color:"#948D83"}}>{dFmt(c.date)} · {c.city}</div>
+                  </div>
+                  <div style={{width:130,flexShrink:0}}>
+                    <div style={{display:"flex",justifyContent:"space-between",fontSize:11.5,marginBottom:4}}>
+                      <span style={{color:"#948D83"}}>{fmt(c.paid)} ₽</span>
+                      <span style={{color:"#5E8A7D",fontWeight:600}}>{pct}%</span>
+                    </div>
+                    <div style={{height:5,borderRadius:5,background:"#EFE8DD",overflow:"hidden"}}><div style={{height:"100%",width:`${pct}%`,background:"#5E8A7D",borderRadius:5}}/></div>
+                  </div>
+                  <div style={{width:90,textAlign:"right",fontSize:13,fontWeight:700,flexShrink:0}}>{fmt(c.amount)} ₽</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 // ─── GUESTS ───────────────────────────────────────────────────────────────────
-function GuestsPage({slug,guests,setGuests}){
-  const[form,setForm]=useState({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});
+function GuestsPage({slug,guests,setGuests,embedded}){
+  const[form,setForm]=useState({name:"",phone:"",count:1,side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});
   const[search,setSearch]=useState("");
   const[filter,setFilter]=useState("Все");
   const[expanded,setExpanded]=useState(null);
   const RSVP=["Придёт","Ожидает","Не придёт"];
   const RC={"Придёт":"g","Ожидает":"","Не придёт":"r"};
-  const stats={total:guests.length,yes:guests.filter(g=>g.rsvp==="Придёт").length,wait:guests.filter(g=>g.rsvp==="Ожидает").length,transfer:guests.filter(g=>g.transfer).length,lodging:guests.filter(g=>g.lodging).length};
+  const ppl=(g)=>Number(g.count)||1;
+  const stats={total:guests.length,people:guests.reduce((s,g)=>s+ppl(g),0),yes:guests.filter(g=>g.rsvp==="Придёт").reduce((s,g)=>s+ppl(g),0),wait:guests.filter(g=>g.rsvp==="Ожидает").length,transfer:guests.filter(g=>g.transfer).length};
   const filtered=guests.filter(g=>(filter==="Все"||g.rsvp===filter)&&g.name.toLowerCase().includes(search.toLowerCase()));
-  const add=()=>{if(!form.name)return;setGuests(p=>[...p,{...form,id:Date.now()}]);setForm({name:"",side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});};
+  const add=()=>{if(!form.name)return;setGuests(p=>[...p,{...form,id:Date.now()}]);setForm({name:"",phone:"",count:1,side:"Жениха",rsvp:"Ожидает",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"",inviteName:"",seatName:"",hostNote:""});};
   const upd=(id,patch)=>setGuests(p=>p.map(g=>g.id===id?{...g,...patch}:g));
   const del=(id)=>setGuests(p=>p.filter(g=>g.id!==id));
   const RSVP_STYLE={"Придёт":{color:"#5E8A7D",bg:"#EAF0EC"},"Ожидает":{color:"#C49A52",bg:"#F6EFDE"},"Не придёт":{color:"#A66B60",bg:"#F5E4E0"}};
   const inp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"};
+  const wrap=embedded?{display:"flex",flexDirection:"column",gap:20,fontFamily:fb}:{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb};
   return(
-    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+    <div style={wrap}>
       <div>
         <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Список гостей</div>
-        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Ссылка для подтверждений · <span style={{color:"#A66B60",fontWeight:600}}>totday.app/{slug}</span></div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Ссылка для подтверждений · <span style={{color:"#A66B60",fontWeight:600}}>totday.ru/wedding/{slug}</span></div>
       </div>
       <section style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:16}}>
-        {[["Всего",stats.total,"#221D18"],["Подтвердили",stats.yes,"#5E8A7D"],["Ожидаем",stats.wait,"#C49A52"],["Трансфер",stats.transfer,"#221D18"],["Проживание",stats.lodging,"#221D18"]].map(([l,v,c])=>(
+        {[["Записей",stats.total,"#221D18"],["Человек",stats.people,"#221D18"],["Подтвердили",stats.yes,"#5E8A7D"],["Ожидаем",stats.wait,"#C49A52"],["Трансфер",stats.transfer,"#221D18"]].map(([l,v,c])=>(
           <div key={l} style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:18,padding:20,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)",textAlign:"center"}}>
             <div style={{fontSize:10.5,letterSpacing:".12em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:8}}>{l}</div>
             <div style={{fontSize:30,fontWeight:700,letterSpacing:"-.02em",color:c}}>{v}</div>
@@ -1417,8 +1808,9 @@ function GuestsPage({slug,guests,setGuests}){
       <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
         <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>Добавить гостя</div>
         <div style={{display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
-          <div style={{flex:"2 1 180px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Имя и фамилия</div><input style={inp} value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Имя Фамилия" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
-          <div style={{flex:"1 1 130px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Кем приходится</div><input style={inp} value={form.relation} onChange={e=>setForm(p=>({...p,relation:e.target.value}))} placeholder="друг, тётя…"/></div>
+          <div style={{flex:"2 1 160px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Имя и фамилия</div><input style={inp} value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Имя Фамилия" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
+          <div style={{flex:"1 1 130px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Телефон</div><input style={inp} value={form.phone} onChange={e=>setForm(p=>({...p,phone:e.target.value}))} placeholder="+7 …" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
+          <div style={{flex:"0 1 90px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Человек</div><input type="number" min="1" style={inp} value={form.count} onChange={e=>setForm(p=>({...p,count:e.target.value}))}/></div>
           <div style={{flex:"1 1 110px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Сторона</div><select style={{...inp,cursor:"pointer"}} value={form.side} onChange={e=>setForm(p=>({...p,side:e.target.value}))}>{["Невесты","Жениха","Общий"].map(s=><option key={s}>{s}</option>)}</select></div>
           <button onClick={add} style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>+ Добавить</button>
         </div>
@@ -1448,6 +1840,8 @@ function GuestsPage({slug,guests,setGuests}){
             {expanded===g.id&&(
               <div style={{background:"#FBF9F5",borderRadius:12,padding:"14px 16px",marginBottom:8,border:"1px solid #EBE4D8"}}>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12,marginBottom:12}}>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Телефон</div><input style={inp} value={g.phone||""} onChange={e=>upd(g.id,{phone:e.target.value})} placeholder="+7 …"/></div>
+                  <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Человек (с гостем)</div><input type="number" min="1" style={inp} value={g.count||1} onChange={e=>upd(g.id,{count:e.target.value})}/></div>
                   <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Обращение в приглашении</div><input style={inp} value={g.inviteName||""} onChange={e=>upd(g.id,{inviteName:e.target.value})} placeholder="Дорогая Анна…"/></div>
                   <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>Имя на карточке</div><input style={inp} value={g.seatName||""} onChange={e=>upd(g.id,{seatName:e.target.value})} placeholder="Анна"/></div>
                   <div><div style={{fontSize:10,letterSpacing:".08em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:4}}>№ стола</div><input style={inp} value={g.table||""} onChange={e=>upd(g.id,{table:e.target.value})} placeholder="3"/></div>
@@ -1523,8 +1917,11 @@ function TimingPage({survey,timing,setTiming}){
 }
 
 // ─── INVITE PREVIEW (top-level to avoid remount bug) ─────────────────────────
-function InvitePreview({t,c,survey}){
+function InvitePreview({t,c,survey,timing}){
   const dateStr=survey?.date?new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}):"";
+  const dayTiming=(timing||[]).filter(x=>x.block==="day").sort((a,z)=>(a.time||"").localeCompare(z.time||""));
+  const startTime=dayTiming[0]?.time||"17:00";
+  const sep=`1px solid ${t.accent}45`;
   return(
     <div style={{background:t.bg,borderRadius:16,padding:"38px 30px",color:t.textColor,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.14)",border:`1px solid ${t.accent}30`}}>
       <div style={{textAlign:"center",marginBottom:26}}>
@@ -1533,15 +1930,37 @@ function InvitePreview({t,c,survey}){
         {dateStr&&<div style={{fontSize:13,color:t.accent,fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic"}}>{dateStr}</div>}
       </div>
       <div style={{textAlign:"center",fontSize:13,lineHeight:1.8,color:t.textColor,opacity:.85,marginBottom:24}}>{c.text}</div>
-      <div style={{borderTop:`1px solid ${t.accent}45`,borderBottom:`1px solid ${t.accent}45`,padding:"16px 0",marginBottom:22,textAlign:"center"}}>
+      {c.story&&(
+        <div style={{textAlign:"center",marginBottom:24,paddingTop:18,borderTop:sep}}>
+          <div style={{fontSize:10,letterSpacing:".12em",textTransform:"uppercase",color:t.accent,marginBottom:8}}>Наша история</div>
+          <div style={{fontSize:12.5,lineHeight:1.8,opacity:.85,fontStyle:"italic",fontFamily:"'Cormorant Garamond',serif"}}>{c.story}</div>
+        </div>
+      )}
+      <div style={{borderTop:sep,borderBottom:sep,padding:"16px 0",marginBottom:22,textAlign:"center"}}>
         <div style={{fontSize:10,letterSpacing:".12em",textTransform:"uppercase",color:t.accent,marginBottom:5}}>Место</div>
         <div style={{fontSize:15,fontWeight:600,fontFamily:"'Cormorant Garamond',serif"}}>{c.venue}</div>
         <div style={{fontSize:11.5,opacity:.7,marginTop:3}}>{c.address}</div>
+        {/* Карта */}
+        <div style={{height:96,borderRadius:10,marginTop:12,position:"relative",overflow:"hidden",background:`${t.accent}14`,border:`1px solid ${t.accent}30`}}>
+          <div style={{position:"absolute",inset:0,backgroundImage:`linear-gradient(${t.accent}22 1px,transparent 1px),linear-gradient(90deg,${t.accent}22 1px,transparent 1px)`,backgroundSize:"26px 26px"}}/>
+          <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-100%)",fontSize:22}}>📍</div>
+        </div>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:26}}>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:22}}>
         <div style={{textAlign:"center"}}><div style={{fontSize:9.5,letterSpacing:".1em",textTransform:"uppercase",color:t.accent,marginBottom:4}}>Дресс-код</div><div style={{fontSize:11.5,opacity:.8}}>{c.dresscode}</div></div>
-        <div style={{textAlign:"center"}}><div style={{fontSize:9.5,letterSpacing:".1em",textTransform:"uppercase",color:t.accent,marginBottom:4}}>Начало</div><div style={{fontSize:11.5,opacity:.8}}>17:00</div></div>
+        <div style={{textAlign:"center"}}><div style={{fontSize:9.5,letterSpacing:".1em",textTransform:"uppercase",color:t.accent,marginBottom:4}}>Начало</div><div style={{fontSize:11.5,opacity:.8}}>{startTime}</div></div>
       </div>
+      {dayTiming.length>0&&(
+        <div style={{marginBottom:24,paddingTop:18,borderTop:sep}}>
+          <div style={{fontSize:10,letterSpacing:".12em",textTransform:"uppercase",color:t.accent,marginBottom:12,textAlign:"center"}}>Программа дня</div>
+          {dayTiming.map(x=>(
+            <div key={x.id} style={{display:"flex",justifyContent:"center",gap:14,fontSize:12,padding:"5px 0"}}>
+              <span style={{fontWeight:700,minWidth:42,textAlign:"right",fontVariantNumeric:"tabular-nums"}}>{x.time||"—"}</span>
+              <span style={{opacity:.85,minWidth:120}}>{x.title}</span>
+            </div>
+          ))}
+        </div>
+      )}
       <div style={{textAlign:"center"}}>
         <span style={{display:"inline-block",padding:"11px 28px",borderRadius:999,background:t.accent,color:t.bg,fontSize:12,fontFamily:"'Cormorant Garamond',serif",letterSpacing:".04em",cursor:"pointer"}}>Подтвердить участие</span>
       </div>
@@ -1550,18 +1969,19 @@ function InvitePreview({t,c,survey}){
 }
 
 // ─── INVITE PAGE ──────────────────────────────────────────────────────────────
-function InvitePage({survey,user,inviteData,setInviteData}){
+function InvitePage({survey,user,inviteData,setInviteData,timing,embedded}){
   const[copied,setCopied]=useState(false);
   const{tmplId="classic",content={}}=inviteData||{};
-  const defaultContent={title:`Свадьба ${user?.name2||"Жениха"} & ${user?.name1||"Невесты"}`,venue:"Loft Riverside",address:"Москва, Овчинниковская наб., 20",text:"Мы рады пригласить вас разделить с нами этот особенный день!",dresscode:"Праздничный, оттенки пыльной розы",wishes:"",program:""};
+  const defaultContent={title:`Свадьба ${user?.name2||"Жениха"} & ${user?.name1||"Невесты"}`,venue:"Loft Riverside",address:"Москва, Овчинниковская наб., 20",text:"Мы рады пригласить вас разделить с нами этот особенный день!",story:"Мы познакомились случайно — и поняли, что это навсегда. Будем счастливы разделить с вами начало нашей семейной истории.",dresscode:"Праздничный, оттенки пыльной розы",wishes:"",program:""};
   const c={...defaultContent,...content};
   const t=INVITE_TEMPLATES.find(x=>x.id===tmplId)||INVITE_TEMPLATES[0];
   const slug=makeSlug(user);
   const setTmpl=(id)=>setInviteData(p=>({...(p||{}),tmplId:id}));
   const upd=k=>e=>setInviteData(p=>({...(p||{}),content:{...c,[k]:e.target.value}}));
   const finp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"};
+  const wrap=embedded?{display:"flex",flexDirection:"column",gap:20,fontFamily:fb}:{maxWidth:1160,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb};
   return(
-    <div style={{maxWidth:1160,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+    <div style={wrap}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
       <div>
         <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Сайт гостей</div>
@@ -1586,16 +2006,78 @@ function InvitePage({survey,user,inviteData,setInviteData}){
               <div key={k}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>{l}</div><input style={finp} value={c[k]} onChange={upd(k)}/></div>
             ))}
             <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Приветствие</div><textarea style={{...finp,minHeight:60,resize:"vertical",lineHeight:1.5}} value={c.text} onChange={upd("text")}/></div>
+            <div><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Наша история</div><textarea style={{...finp,minHeight:70,resize:"vertical",lineHeight:1.5}} value={c.story} onChange={upd("story")} placeholder="Как вы познакомились…"/></div>
+            <div style={{fontSize:11.5,color:"#948D83",lineHeight:1.5,background:"#FBF9F5",borderRadius:10,padding:"10px 12px",border:"1px solid #EBE4D8"}}>💡 Тайминг дня на сайте подтягивается из раздела «Тайминг», вишлист — из вкладки «Вишлист».</div>
           </div>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:14}}>
           <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:14,padding:"14px 18px",boxShadow:"0 1px 2px rgba(33,28,23,.03)",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <span style={{fontSize:13,color:"#5E8A7D",fontWeight:700}}>totday.app/{slug}</span>
-            <button onClick={()=>{navigator.clipboard.writeText(`totday.app/${slug}`).catch(()=>{});setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{padding:"7px 15px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:11.5,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>{copied?"✓ Скопировано":"Копировать"}</button>
+            <span style={{fontSize:13,color:"#5E8A7D",fontWeight:700}}>totday.ru/wedding/{slug}</span>
+            <button onClick={()=>{navigator.clipboard.writeText(`totday.ru/wedding/${slug}`).catch(()=>{});setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{padding:"7px 15px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:11.5,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>{copied?"✓ Скопировано":"Копировать"}</button>
           </div>
-          <InvitePreview t={t} c={c} survey={survey}/>
+          <InvitePreview t={t} c={c} survey={survey} timing={timing}/>
         </div>
       </section>
+    </div>
+  );
+}
+
+// ─── WISHLIST ─────────────────────────────────────────────────────────────────
+function WishlistPage({wishlist,setWishlist}){
+  const[form,setForm]=useState({title:"",price:"",link:""});
+  const add=()=>{if(!form.title)return;setWishlist(p=>[...p,{id:Date.now(),title:form.title,price:Number(form.price)||0,link:form.link,reserved:false}]);setForm({title:"",price:"",link:""});};
+  const del=(id)=>setWishlist(p=>p.filter(w=>w.id!==id));
+  const toggleRes=(id)=>setWishlist(p=>p.map(w=>w.id===id?{...w,reserved:!w.reserved}:w));
+  const inp={border:"1px solid #E2DACB",borderRadius:11,padding:"11px 14px",fontSize:13,fontFamily:fb,background:"#FBF9F5",width:"100%",outline:"none"};
+  const reservedCnt=wishlist.filter(w=>w.reserved).length;
+  return(
+    <div style={{display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div>
+        <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Вишлист подарков</div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>Список желаемого — гости видят его на свадебном сайте и бронируют подарок{wishlist.length>0?` · ${reservedCnt} из ${wishlist.length} забронировано`:""}</div>
+      </div>
+      <section style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:SHADOW}}>
+        <div style={{fontSize:14,fontWeight:600,marginBottom:14}}>Добавить подарок</div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
+          <div style={{flex:"2 1 200px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Что подарить</div><input style={inp} value={form.title} onChange={e=>setForm(p=>({...p,title:e.target.value}))} placeholder="Робот-пылесос, сертификат…" onKeyDown={e=>e.key==="Enter"&&add()}/></div>
+          <div style={{flex:"0 1 120px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Цена ₽</div><input type="number" style={inp} value={form.price} onChange={e=>setForm(p=>({...p,price:e.target.value}))} placeholder="0"/></div>
+          <div style={{flex:"2 1 180px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Ссылка (необязательно)</div><input style={inp} value={form.link} onChange={e=>setForm(p=>({...p,link:e.target.value}))} placeholder="https://…"/></div>
+          <button onClick={add} style={{padding:"11px 22px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>+ Добавить</button>
+        </div>
+      </section>
+      <section style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
+        {wishlist.map((w,i)=>(
+          <div key={w.id} style={{background:"#FFFFFF",border:`1px solid ${w.reserved?"#C8E0D8":"#EBE4D8"}`,borderRadius:18,padding:18,boxShadow:SHADOW,position:"relative",opacity:w.reserved?0.85:1}}>
+            <div style={{height:90,borderRadius:12,background:GALLERY_GRADS[i%GALLERY_GRADS.length],marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}}>🎁</div>
+            <div style={{fontSize:14.5,fontWeight:700,marginBottom:4}}>{w.title}</div>
+            {w.price>0&&<div style={{fontSize:13,fontWeight:600,color:"#5E8A7D",marginBottom:6}}>{fmt(w.price)} ₽</div>}
+            {w.link&&<a href={w.link} target="_blank" rel="noreferrer" style={{fontSize:12,color:"#A66B60",fontWeight:600,textDecoration:"underline",display:"inline-block",marginBottom:10}}>Открыть ссылку →</a>}
+            <div style={{display:"flex",gap:8,marginTop:8}}>
+              <button onClick={()=>toggleRes(w.id)} style={{flex:1,padding:"8px",borderRadius:999,fontSize:12,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb,background:w.reserved?"#EAF0EC":"#221D18",color:w.reserved?"#5E8A7D":"#FBF9F5"}}>{w.reserved?"✓ Забронирован":"Отметить занятым"}</button>
+              <button onClick={()=>del(w.id)} style={{padding:"8px 12px",borderRadius:999,background:"transparent",color:"#A66B60",fontSize:12,fontWeight:600,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}}>✕</button>
+            </div>
+          </div>
+        ))}
+        {wishlist.length===0&&<div style={{gridColumn:"1/-1",textAlign:"center",padding:50,color:"#948D83",fontSize:14}}>Список пуст — добавьте первый подарок выше</div>}
+      </section>
+    </div>
+  );
+}
+
+// ─── GUESTS HUB (Гости + Сайт + Вишлист) ──────────────────────────────────────
+function GuestsHub({slug,guests,setGuests,survey,user,inviteData,setInviteData,wishlist,setWishlist,timing}){
+  const[sub,setSub]=useState("list");
+  const SUBS=[{id:"list",label:"Список гостей"},{id:"site",label:"Свадебный сайт"},{id:"wishlist",label:"Вишлист"}];
+  return(
+    <div style={{maxWidth:1200,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div style={{display:"flex",gap:4,background:"#EFE9DE",borderRadius:12,padding:4,width:"fit-content"}}>
+        {SUBS.map(s=>(
+          <span key={s.id} onClick={()=>setSub(s.id)} style={{padding:"9px 20px",borderRadius:9,background:sub===s.id?"#FFFFFF":"transparent",fontSize:13,fontWeight:sub===s.id?600:500,color:sub===s.id?"#221D18":"#857E74",cursor:"pointer",boxShadow:sub===s.id?"0 1px 2px rgba(33,28,23,.05)":"none"}}>{s.label}</span>
+        ))}
+      </div>
+      {sub==="list"&&<GuestsPage slug={slug} guests={guests} setGuests={setGuests} embedded/>}
+      {sub==="site"&&<InvitePage survey={survey} user={user} inviteData={inviteData} setInviteData={setInviteData} timing={timing} embedded/>}
+      {sub==="wishlist"&&<WishlistPage wishlist={wishlist} setWishlist={setWishlist}/>}
     </div>
   );
 }
@@ -1657,14 +2139,13 @@ const SIDE_TABS=[
   {id:"dashboard",label:"Главная"},
   {id:"budget",   label:"Бюджет"},
   {id:"checklist",label:"Чек-лист"},
-  {id:"guests",   label:"Гости"},
+  {id:"guests",   label:"Гости и сайт"},
   {id:"vendors",  label:"Подрядчики"},
   {id:"venues",   label:"Площадки"},
   {id:"agencies", label:"Агентства"},
   {id:"favorites",label:"Избранное"},
   {id:"timing",   label:"Тайминг"},
   {id:"survey2",  label:"Концепция"},
-  {id:"invite",   label:"Сайт гостей"},
 ];
 
 function SideItem({id,label,active,setTab}){
@@ -1679,16 +2160,15 @@ function SideItem({id,label,active,setTab}){
 
 function Sidebar({tab,setTab,role,user,survey,openWedding,logout}){
   const agencyTabs=[
-    {id:"agency",   label:"Все свадьбы"},
-    {id:"vendors",  label:"База подрядчиков"},
-    {id:"agencies", label:"Агентства"},
+    {id:"agency",        label:"Все свадьбы"},
+    {id:"agencyCalendar",label:"Календарь"},
+    {id:"vendors",       label:"База подрядчиков"},
   ];
   const agencyWeddingTabs=[
     {id:"agency",   label:"← Все свадьбы"},
     {id:"budget",   label:"Бюджет"},
-    {id:"guests",   label:"Гости"},
+    {id:"guests",   label:"Гости и сайт"},
     {id:"timing",   label:"Тайминг"},
-    {id:"invite",   label:"Сайт гостей"},
   ];
   const vendorTabs=[
     {id:"vendorDashboard",label:"Мой кабинет"},
@@ -1696,21 +2176,21 @@ function Sidebar({tab,setTab,role,user,survey,openWedding,logout}){
   const tabs=role==="vendor"?vendorTabs:role==="agency"?(openWedding?agencyWeddingTabs:agencyTabs):SIDE_TABS;
   const dateStr=survey?.date?new Date(survey.date).toLocaleDateString("ru",{day:"numeric",month:"short",year:"numeric"}):"";
   return(
-    <aside style={{width:250,minHeight:"100vh",background:"#FBF9F5",borderRight:`1px solid ${C.line}`,display:"flex",flexDirection:"column",padding:"30px 18px 22px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0,zIndex:100}}>
-      <div style={{padding:"0 12px 30px"}}>
+    <aside className="td-aside" style={{width:250,minHeight:"100vh",background:"#FBF9F5",borderRight:`1px solid ${C.line}`,display:"flex",flexDirection:"column",padding:"30px 18px 22px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0,zIndex:100}}>
+      <div className="td-asidehead" style={{padding:"0 12px 30px"}}>
         <div style={{display:"flex",alignItems:"baseline",gap:1}}><span style={{fontSize:23,fontWeight:700,letterSpacing:"-.04em",color:C.dark,fontFamily:fb}}>totday</span><span style={{width:7,height:7,borderRadius:"50%",background:C.blushDark,display:"inline-block",marginLeft:2}}/></div>
         {role==="agency"&&<div style={{fontSize:10,fontFamily:fb,color:"#A66B60",fontWeight:700,letterSpacing:".16em",textTransform:"uppercase",marginTop:3}}>для агентств</div>}
       </div>
       <div style={{fontSize:10,letterSpacing:".18em",textTransform:"uppercase",color:"#B0A99E",fontWeight:600,padding:"0 14px 12px"}}>
         {role==="vendor"?"Подрядчик":role==="agency"&&!openWedding?"Агентство":role==="agency"&&openWedding?`${openWedding.couple}·`:"Планирование"}
       </div>
-      <nav style={{display:"flex",flexDirection:"column",gap:3}}>
+      <nav className="td-nav" style={{display:"flex",flexDirection:"column",gap:3}}>
         {tabs.map(t=>(
           <SideItem key={t.id} id={t.id} label={t.label} active={tab} setTab={setTab}/>
         ))}
       </nav>
       {user&&(
-        <div style={{marginTop:"auto",paddingTop:18,borderTop:`1px solid ${C.line}`}}>
+        <div className="td-userbox" style={{marginTop:"auto",paddingTop:18,borderTop:`1px solid ${C.line}`}}>
           <div style={{display:"flex",alignItems:"center",gap:11,padding:"0 6px 12px"}}>
             <div style={{width:38,height:38,borderRadius:"50%",background:"linear-gradient(140deg,#EBD9C8,#DFC6B8)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#6E5A4E",flexShrink:0}}>{user.name1?.[0]||"С"}</div>
             <div style={{overflow:"hidden"}}>
@@ -1732,13 +2212,16 @@ function Dashboard({user,survey,cats,guests,onNav}){
   const confirmedGuests=guests.filter(g=>g.rsvp==="Придёт").length;
   const waitingGuests=guests.filter(g=>g.rsvp==="Ожидает").length;
   const noGuests=guests.filter(g=>g.rsvp==="Не придёт").length;
+  const contacted=LS.get("td_contacted",[]);
+  const hasInvite=!!LS.get("td_invite",null);
+  const photoContacted=VENDORS.some(v=>v.cat==="photo"&&contacted.includes(v.id));
   const tasks=[
     {done:!!survey?.format,         text:"Пройти быстрый расчёт"},
     {done:!!survey?.concept,        text:"Заполнить концепцию"},
     {done:cats.some(c=>c.actual>0), text:"Добавить первый расход"},
     {done:guests.length>3,          text:"Внести список гостей"},
-    {done:false,                    text:"Выбрать фотографа"},
-    {done:false,                    text:"Создать сайт гостей"},
+    {done:photoContacted,           text:"Выбрать фотографа"},
+    {done:hasInvite,                text:"Создать сайт гостей"},
   ];
   const progress=Math.round(tasks.filter(t=>t.done).length/tasks.length*100);
   const daysUntil=survey?.date?Math.max(0,Math.floor((new Date(survey.date)-new Date())/86400000)):null;
@@ -1807,9 +2290,9 @@ function Dashboard({user,survey,cats,guests,onNav}){
         </div>
         <div style={{...CARD,cursor:"pointer"}} onClick={()=>onNav("vendors")}>
           <div style={{...LBL,marginBottom:12}}>Подрядчики</div>
-          <div style={{display:"flex",alignItems:"baseline",gap:6,marginBottom:6}}><span style={{fontSize:25,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums"}}>4</span><span style={{fontSize:15,color:"#A39C92",fontWeight:500}}>/ {VENDORS.length}</span></div>
-          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>подтверждено из доступных</div>
-          <div style={{display:"flex",gap:5}}>{Array.from({length:Math.min(VENDORS.length,13)}).map((_,i)=><span key={i} style={{flex:1,height:4,borderRadius:4,background:i<4?C.blushDark:"#EFE8DD"}}/>)}</div>
+          <div style={{display:"flex",alignItems:"baseline",gap:6,marginBottom:6}}><span style={{fontSize:25,fontWeight:700,letterSpacing:"-.02em",fontVariantNumeric:"tabular-nums"}}>{contacted.length}</span><span style={{fontSize:15,color:"#A39C92",fontWeight:500}}>/ {VENDORS.length}</span></div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>запросов отправлено</div>
+          <div style={{display:"flex",gap:5}}>{Array.from({length:Math.min(VENDORS.length,13)}).map((_,i)=><span key={i} style={{flex:1,height:4,borderRadius:4,background:i<contacted.length?C.blushDark:"#EFE8DD"}}/>)}</div>
         </div>
         <div style={CARD}>
           <div style={{...LBL,marginBottom:12}}>Готовность</div>
@@ -1827,8 +2310,8 @@ function Dashboard({user,survey,cats,guests,onNav}){
             <button style={{background:"none",border:"none",color:"#A66B60",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:fb}} onClick={()=>onNav("vendors")}>Смотреть все →</button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}}>
-            {[{label:"Площадки",cnt:VENDORS.filter(v=>v.cat==="venue").length,from:"150 000",sub:"варианта",pat:PAT[0]},{label:"Фотографы",cnt:VENDORS.filter(v=>v.cat==="photo").length,from:"60 000",sub:"автора",pat:PAT[1]},{label:"Декор",cnt:VENDORS.filter(v=>v.cat==="decor").length,from:"80 000",sub:"студии",pat:PAT[2]}].map(c=>(
-              <div key={c.label} onClick={()=>onNav("vendors")} style={{border:"1px solid #EEE7DB",borderRadius:16,overflow:"hidden",cursor:"pointer"}}>
+            {[{label:"Площадки",cnt:VENUES.length,from:"120 000",sub:"варианта",pat:PAT[0],nav:"venues"},{label:"Фотографы",cnt:VENDORS.filter(v=>v.cat==="photo").length,from:"55 000",sub:"автора",pat:PAT[1],nav:"vendors"},{label:"Декор и цветы",cnt:VENDORS.filter(v=>["decor","florist"].includes(v.cat)).length,from:"45 000",sub:"студии",pat:PAT[2],nav:"vendors"}].map(c=>(
+              <div key={c.label} onClick={()=>onNav(c.nav)} style={{border:"1px solid #EEE7DB",borderRadius:16,overflow:"hidden",cursor:"pointer"}}>
                 <div style={{height:112,background:c.pat,position:"relative",display:"flex",alignItems:"flex-end",padding:10}}>
                   <span style={{fontSize:10,letterSpacing:".16em",textTransform:"uppercase",color:C.dark,background:"rgba(251,249,245,.85)",padding:"4px 9px",borderRadius:999,fontWeight:600}}>{c.cnt} {c.sub}</span>
                 </div>
@@ -1871,10 +2354,10 @@ function Dashboard({user,survey,cats,guests,onNav}){
         <div style={CARD20}>
           <div style={{...LBL,marginBottom:5}}>Площадки</div>
           <div style={{fontSize:18,fontWeight:600,letterSpacing:"-.01em",marginBottom:16}}>Свободны на дату</div>
-          {VENDORS.filter(v=>v.cat==="venue").map((v,i)=>(
-            <div key={v.id} onClick={()=>onNav("vendors")} style={{display:"flex",gap:12,alignItems:"center",padding:"11px 0",borderBottom:i<2?"1px solid #F1EBE1":"none",cursor:"pointer"}}>
+          {VENUES.slice(0,3).map((v,i)=>(
+            <div key={v.id} onClick={()=>onNav("venues")} style={{display:"flex",gap:12,alignItems:"center",padding:"11px 0",borderBottom:i<2?"1px solid #F1EBE1":"none",cursor:"pointer"}}>
               <div style={{width:46,height:46,borderRadius:12,background:PAT[i]||PAT[0],flexShrink:0}}/>
-              <div style={{flex:1}}><div style={{fontSize:13.5,fontWeight:600}}>{v.name}</div><div style={{fontSize:11.5,color:"#A39C92"}}>от {fmt(v.priceFrom)} ₽ · ★ {v.rating}</div></div>
+              <div style={{flex:1}}><div style={{fontSize:13.5,fontWeight:600}}>{v.name}</div><div style={{fontSize:11.5,color:"#A39C92"}}>от {fmt(v.priceRent)} ₽ · ★ {v.rating}</div></div>
             </div>
           ))}
         </div>
@@ -1886,8 +2369,71 @@ function Dashboard({user,survey,cats,guests,onNav}){
           <div style={{fontSize:20,fontWeight:600,letterSpacing:"-.01em",marginBottom:6}}>Создайте сайт-приглашение для гостей</div>
           <div style={{fontSize:13.5,color:"#857E74"}}>Ваша история, программа дня и онлайн-подтверждение — на одной красивой странице.</div>
         </div>
-        <button style={{...S.btn,flexShrink:0,padding:"13px 28px",fontSize:13.5}} onClick={()=>onNav("invite")}>Создать сайт</button>
+        <button style={{...S.btn,flexShrink:0,padding:"13px 28px",fontSize:13.5}} onClick={()=>onNav("guests")}>Создать сайт</button>
       </section>
+    </div>
+  );
+}
+
+// ─── AGENCY CALENDAR ──────────────────────────────────────────────────────────
+function AgencyCalendar({weddings}){
+  const[selected,setSelected]=useState(null);
+  const marks=Object.fromEntries(weddings.filter(w=>w.date).map(w=>[w.date,"wedding"]));
+  const wOnDate=selected?weddings.filter(w=>w.date===selected):[];
+  const SS={"В работе":{bg:"#F6EFDE",col:"#B8902F"},"Подготовка":{bg:"#F1EBE1",col:"#857E74"},"Завершена":{bg:"#EAF0EC",col:"#5E8A7D"}};
+  const dFmt=d=>d?new Date(d+"T12:00").toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}):"";
+  return(
+    <div style={{maxWidth:1000,margin:"0 auto",padding:"30px 40px 60px",display:"flex",flexDirection:"column",gap:20,fontFamily:fb}}>
+      <div>
+        <div style={{fontSize:24,fontWeight:700,letterSpacing:"-.025em"}}>Календарь</div>
+        <div style={{fontSize:13.5,color:"#948D83",marginTop:4}}>{weddings.filter(w=>w.date).length} свадеб · нажмите на дату для деталей</div>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+          <MiniCalendar marks={marks} onToggle={d=>setSelected(prev=>prev===d?null:d)} legend={[["Свадьба","wedding"]]}/>
+        </div>
+        <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:24,boxShadow:SHADOW}}>
+          {selected?(
+            <>
+              <div style={{fontSize:15,fontWeight:600,marginBottom:3}}>{dFmt(selected)}</div>
+              <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>{wOnDate.length?`${wOnDate.length} свадеб`:"Нет свадеб"}</div>
+              {wOnDate.length===0
+                ?<div style={{color:"#948D83",fontSize:13}}>На эту дату ничего не запланировано</div>
+                :wOnDate.map(w=>{const ss=SS[w.status]||SS["Подготовка"];return(
+                  <div key={w.id} style={{padding:"14px 16px",borderRadius:12,background:"#FBF9F5",border:"1px solid #EBE4D8",marginBottom:8}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                      <div style={{fontSize:15,fontWeight:700}}>{w.couple}</div>
+                      <span style={{padding:"3px 10px",borderRadius:8,background:ss.bg,color:ss.col,fontSize:11,fontWeight:600}}>{w.status}</span>
+                    </div>
+                    <div style={{fontSize:12.5,color:"#857E74"}}>{w.city} · {w.guests} гостей · {fmt(w.budget)} ₽</div>
+                  </div>
+                );})}
+            </>
+          ):(
+            <>
+              <div style={{fontSize:14,fontWeight:600,marginBottom:16}}>Все свадьбы по датам</div>
+              {[...weddings].filter(w=>w.date).sort((a,b)=>a.date.localeCompare(b.date)).map((w,i,arr)=>{
+                const ss=SS[w.status]||SS["Подготовка"];
+                const dt=new Date(w.date+"T12:00");
+                return(
+                  <div key={w.id} style={{display:"flex",gap:12,alignItems:"center",padding:"11px 0",borderBottom:i<arr.length-1?"1px solid #F1EBE1":"none",cursor:"pointer"}} onClick={()=>setSelected(w.date)}>
+                    <div style={{width:42,textAlign:"center",flexShrink:0}}>
+                      <div style={{fontSize:10.5,color:"#A39C92",textTransform:"capitalize"}}>{dt.toLocaleDateString("ru",{month:"short"})}</div>
+                      <div style={{fontSize:22,fontWeight:700,lineHeight:1.1}}>{dt.getDate()}</div>
+                    </div>
+                    <div style={{flex:1}}>
+                      <div style={{fontSize:13.5,fontWeight:600}}>{w.couple}</div>
+                      <div style={{fontSize:12,color:"#857E74"}}>{w.city} · {w.guests} гостей</div>
+                    </div>
+                    <span style={{padding:"3px 10px",borderRadius:8,background:ss.bg,color:ss.col,fontSize:11,fontWeight:600}}>{w.status}</span>
+                  </div>
+                );
+              })}
+              {weddings.filter(w=>w.date).length===0&&<div style={{color:"#948D83",fontSize:13,textAlign:"center",padding:"30px 0"}}>Нет запланированных свадеб</div>}
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -1896,6 +2442,10 @@ function Dashboard({user,survey,cats,guests,onNav}){
 function AgencyDashboard({weddings,setWeddings,onOpen}){
   const[showAdd,setShowAdd]=useState(false);
   const[nw,setNw]=useState({couple:"",date:"",city:"Москва",guests:"",budget:""});
+  const[leads,setLeads]=useState(()=>LS.get("td_agency_leads",[]));
+  useEffect(()=>LS.set("td_agency_leads",leads),[leads]);
+  const dismissLead=(id)=>setLeads(p=>p.filter(l=>l.id!==id));
+  const acceptLead=(l)=>{setWeddings(p=>[...p,{id:Date.now(),couple:l.couple,date:l.date,city:l.city||"Москва",guests:Number(l.guests)||0,budget:Number(l.budget)||0,paid:0,status:"Подготовка"}]);dismissLead(l.id);};
   const statusColor={"В работе":"gold","Подготовка":"","Завершена":"g"};
   const totalBudget=weddings.reduce((s,w)=>s+(w.budget||0),0);
   const totalPaid=weddings.reduce((s,w)=>s+(w.paid||0),0);
@@ -1921,6 +2471,26 @@ function AgencyDashboard({weddings,setWeddings,onOpen}){
           </div>
         ))}
       </section>
+      {leads.length>0&&(
+        <section style={{background:"#FFFFFF",border:"1px solid #F0E3BC",borderRadius:20,padding:24,boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)"}}>
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+            <div style={{fontSize:14,fontWeight:600}}>Заявки от пар</div>
+            <span style={{minWidth:18,height:18,borderRadius:999,background:"#B8902F",color:"#FFF",fontSize:10.5,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",padding:"0 5px"}}>{leads.length}</span>
+          </div>
+          <div style={{fontSize:12,color:"#948D83",marginBottom:16}}>Новые лиды с TotDay — возьмите в работу одним кликом</div>
+          {leads.map((l,i)=>(
+            <div key={l.id} style={{display:"flex",alignItems:"center",gap:14,flexWrap:"wrap",padding:"14px 0",borderBottom:i<leads.length-1?"1px solid #F1EBE1":"none"}}>
+              <div style={{flex:"1 1 200px"}}>
+                <div style={{fontSize:14.5,fontWeight:700}}>{l.couple}</div>
+                <div style={{fontSize:12.5,color:"#857E74",marginTop:2}}>{l.date?new Date(l.date+"T12:00").toLocaleDateString("ru",{day:"numeric",month:"long",year:"numeric"}):"дата не указана"} · {l.city} · {l.guests||"—"} гостей{l.budget?` · бюджет ${fmt(l.budget)} ₽`:""}</div>
+                <div style={{fontSize:12,color:"#A66B60",marginTop:2}}>Запрос на агентство «{l.agency}»</div>
+              </div>
+              <button onClick={()=>acceptLead(l)} style={{padding:"9px 18px",borderRadius:999,background:"#221D18",color:"#FBF9F5",fontSize:12.5,fontWeight:600,border:"none",cursor:"pointer",fontFamily:fb}}>✓ В работу</button>
+              <button onClick={()=>dismissLead(l.id)} style={{padding:"9px 14px",borderRadius:999,background:"transparent",color:"#A66B60",fontSize:12.5,fontWeight:600,border:"1px solid #E2DACB",cursor:"pointer",fontFamily:fb}}>Отклонить</button>
+            </div>
+          ))}
+        </section>
+      )}
       {showAdd&&(
         <div style={{background:"#FFFFFF",border:"1px solid #EBE4D8",borderRadius:20,padding:"22px 24px",boxShadow:"0 1px 2px rgba(33,28,23,.03),0 14px 30px -20px rgba(33,28,23,.12)",display:"flex",flexWrap:"wrap",gap:12,alignItems:"flex-end"}}>
           <div style={{flex:"2 1 180px"}}><div style={{fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",color:"#A39C92",fontWeight:600,marginBottom:6}}>Пара</div><input style={{...ainp,width:"100%"}} value={nw.couple} onChange={e=>setNw(p=>({...p,couple:e.target.value}))} placeholder="Имя & Имя"/></div>
@@ -1999,6 +2569,7 @@ export default function App(){
     {id:3,name:"Елена Смирнова", side:"Невесты",rsvp:"Не придёт",diet:"Нет",kids:0,transfer:false,lodging:false,table:"",relation:"коллега",inviteName:"",seatName:"",hostNote:""},
   ]));
   const[inviteData,setInviteData]=useState(()=>LS.get("td_invite",null));
+  const[wishlist,  setWishlist]  =useState(()=>LS.get("td_wishlist",[]));
   const[timing,    setTiming]    =useState(()=>LS.get("td_timing",[
     {id:1,block:"before",time:"16:00",title:"Обзвон всех подрядчиков координатором"},
     {id:2,block:"before",time:"20:00",title:"Подготовить конверты для оплаты команды"},
@@ -2019,6 +2590,7 @@ export default function App(){
   useEffect(()=>{LS.set("td_cats",cats);},[cats]);
   useEffect(()=>{LS.set("td_guests",guests);},[guests]);
   useEffect(()=>{LS.set("td_invite",inviteData);},[inviteData]);
+  useEffect(()=>{LS.set("td_wishlist",wishlist);},[wishlist]);
   useEffect(()=>{LS.set("td_timing",timing);},[timing]);
   useEffect(()=>{LS.set("td_role",role);},[role]);
   useEffect(()=>{LS.set("td_agency_weddings",agencyWeddings);},[agencyWeddings]);
@@ -2032,7 +2604,11 @@ export default function App(){
     setTab("budget");
   },[survey]);
   const handleConcept=useCallback((d)=>{setConcept(d);setSurvey(prev=>prev?{...prev,concept:d}:null);setTab("budget");},[]);
-  const goVendors=useCallback((catId)=>{setVendorCat(catId);setTab("vendors");},[]);
+  const goVendors=useCallback((catId)=>{
+    if(catId==="venue"){setSelectedVenue(null);setTab("venues");return;}
+    const ok=VENDOR_CATS.some(c=>c.id===catId);
+    setVendorCat(ok?catId:"all");setSelectedVendor(null);setTab("vendors");
+  },[]);
   const handleSetTab=useCallback((newTab)=>{
     if(newTab==="agency"&&openWedding){
       setAgencyWeddings(prev=>prev.map(w=>w.id===openWedding.id?{...w,_cats:cats,_guests:guests,_timing:timing}:w));
@@ -2043,12 +2619,45 @@ export default function App(){
     setTab(newTab);
   },[openWedding,cats,guests,timing]);
   const logout=()=>{
-    ["td_user","td_survey","td_concept","td_cats","td_guests","td_invite","td_timing","td_txHistory","td_favs","td_contacted","td_role","td_agency_weddings","td_checklist","td_fav_venues","td_fav_agencies","td_vendor_profile"].forEach(k=>LS.del(k));
+    // Очищаем сессию пары. Marketplace-ключи (заявки подрядчику, лиды агентству,
+    // опубликованный профиль и данные кабинета подрядчика) сохраняем —
+    // они общие между ролями и нужны, чтобы связи работали после смены роли.
+    ["td_user","td_survey","td_concept","td_cats","td_guests","td_invite","td_timing","td_txHistory","td_favs","td_contacted","td_role","td_agency_weddings","td_checklist","td_fav_venues","td_fav_agencies","td_agency_sent","td_wishlist"].forEach(k=>LS.del(k));
     setUser(null);setRole("couple");setOpenWedding(null);setSelectedVendor(null);setSelectedVenue(null);setScreen("landing");
   };
   const fullSurvey=survey?{...survey,concept}:null;
 
-  const STYLES=`*{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}button{transition:all .2s}button:active{transform:scale(.97)}input:focus,select:focus,textarea:focus{border-color:${C.blushDark}!important;box-shadow:0 0 0 3px ${C.blushBg}}@keyframes tdfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.td-page>*{animation:tdfade .5s cubic-bezier(.2,.7,.2,1) both}.td-page>*:nth-child(2){animation-delay:.04s}.td-page>*:nth-child(3){animation-delay:.08s}.td-page>*:nth-child(4){animation-delay:.12s}`;
+  const STYLES=`*{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}button{transition:all .2s}button:active{transform:scale(.97)}input:focus,select:focus,textarea:focus{border-color:${C.blushDark}!important;box-shadow:0 0 0 3px ${C.blushBg}}@keyframes tdfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.td-page>*{animation:tdfade .5s cubic-bezier(.2,.7,.2,1) both}.td-page>*:nth-child(2){animation-delay:.04s}.td-page>*:nth-child(3){animation-delay:.08s}.td-page>*:nth-child(4){animation-delay:.12s}
+  @media(max-width:860px){
+    .td-shell{flex-direction:column!important}
+    .td-aside{width:100%!important;height:auto!important;min-height:0!important;position:sticky!important;top:0!important;flex-direction:column!important;padding:10px 12px!important;border-right:none!important;border-bottom:1px solid ${C.line}!important;z-index:300}
+    .td-asidehead{padding:0 6px 8px!important}
+    .td-aside>div:nth-child(2){display:none!important}
+    .td-nav{flex-direction:row!important;overflow-x:auto!important;gap:6px!important;padding-bottom:2px!important;-webkit-overflow-scrolling:touch}
+    .td-nav button{width:auto!important;white-space:nowrap!important;flex-shrink:0!important;padding:9px 14px!important}
+    .td-userbox{margin-top:8px!important;padding-top:10px!important;display:flex!important;align-items:center!important;gap:10px!important}
+    .td-userbox>div{padding:0!important;margin:0!important;flex:1!important}
+    .td-userbox>button{width:auto!important;padding:8px 16px!important;flex-shrink:0!important}
+    .td-main{min-height:0!important}
+    [style*="grid-template-columns:repeat(2,1fr)"],[style*="grid-template-columns:repeat(3,1fr)"],[style*="grid-template-columns:repeat(4,1fr)"],[style*="grid-template-columns:repeat(5,1fr)"],[style*="grid-template-columns:repeat(6,1fr)"],[style*="grid-template-columns:2fr 1fr"],[style*="grid-template-columns:1fr 1fr"],[style*="grid-template-columns:2fr 290px"],[style*="grid-template-columns:1fr 290px"]{grid-template-columns:1fr!important}
+    [style*="padding:30px 40px 60px"]{padding:18px 15px 44px!important}
+    [style*="padding:44px 36px"]{padding:22px 15px!important}
+    [style*="padding:48px 40px"]{padding:30px 18px!important}
+    [style*="padding:52px 40px"]{padding:34px 18px!important}
+    [style*="padding:72px 40px"]{padding:40px 18px!important}
+    [style*="padding:84px 40px"]{padding:44px 18px!important}
+    [style*="padding:0 40px"]{padding:0 18px!important}
+    .td-lnav{gap:12px!important}
+    .td-lnav>span:nth-child(-n+5){display:none!important}
+    [style*="1.4fr 1fr .8fr 1fr .6fr .8fr .8fr"]{grid-template-columns:1.6fr 1fr!important}
+    [style*="1.4fr 1fr .8fr 1fr .6fr .8fr .8fr"]>*:nth-child(2),[style*="1.4fr 1fr .8fr 1fr .6fr .8fr .8fr"]>*:nth-child(3),[style*="1.4fr 1fr .8fr 1fr .6fr .8fr .8fr"]>*:nth-child(n+5){display:none!important}
+    [style*="1.6fr 1fr 1fr 1fr 1fr 1fr"]{grid-template-columns:1.6fr 1fr!important}
+    [style*="1.6fr 1fr 1fr 1fr 1fr 1fr"]>*:nth-child(2),[style*="1.6fr 1fr 1fr 1fr 1fr 1fr"]>*:nth-child(3),[style*="1.6fr 1fr 1fr 1fr 1fr 1fr"]>*:nth-child(4),[style*="1.6fr 1fr 1fr 1fr 1fr 1fr"]>*:nth-child(5){display:none!important}
+    [style*="34px 1fr 120px 150px 110px 64px"]{grid-template-columns:30px 1fr 84px!important;gap:8px!important}
+    [style*="34px 1fr 120px 150px 110px 64px"]>*:nth-child(3),[style*="34px 1fr 120px 150px 110px 64px"]>*:nth-child(4),[style*="34px 1fr 120px 150px 110px 64px"]>*:nth-child(6){display:none!important}
+    [style*="font-size:92px"]{font-size:62px!important}
+    [style*="clamp(40px,5.5vw,66px)"]{font-size:38px!important}
+  }`;
 
   if(!user){
     if(screen==="landing")return<LandingPage onStart={()=>{setRole("couple");setScreen("minisurvey");}} onLogin={()=>{setRole("couple");setScreen("auth");}} onAgency={()=>{setRole("agency");setScreen("auth");}} onVendor={()=>{setRole("vendor");setScreen("auth");}}/>;
@@ -2060,13 +2669,14 @@ export default function App(){
   }
 
   return(
-    <div style={{...S.app,display:"flex",minHeight:"100vh"}}>
+    <div className="td-shell" style={{...S.app,display:"flex",minHeight:"100vh"}}>
       <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
       <style>{STYLES}</style>
       <Sidebar tab={tab} setTab={handleSetTab} role={role} user={user} survey={survey} openWedding={openWedding} logout={logout}/>
-      <main style={{flex:1,overflow:"auto",minHeight:"100vh",background:C.bg}}>
+      <main className="td-main" style={{flex:1,overflow:"auto",minHeight:"100vh",background:C.bg}}>
         {role==="vendor"&&tab==="vendorDashboard"&&<VendorCabinet user={user}/>}
         {role==="agency"&&tab==="agency"&&<AgencyDashboard weddings={agencyWeddings} setWeddings={setAgencyWeddings} onOpen={(w)=>{setOpenWedding(w);setCats(w._cats||makeCatsFromBudget(w.budget||1500000,{guests:w.guests,city:w.city,format:"restaurant"},"comfort"));setGuests(w._guests||[]);setTiming(w._timing||[]);setTab("budget");}}/>}
+        {role==="agency"&&tab==="agencyCalendar"&&<AgencyCalendar weddings={agencyWeddings}/>}
         {!(role==="vendor")&&!(role==="agency"&&tab==="agency")&&(<>
           {tab==="dashboard" &&<Dashboard user={user} survey={fullSurvey} cats={cats} guests={guests} onNav={setTab}/>}
           {tab==="survey1"   &&<Survey1Page onComplete={handleSurvey1Complete} initial={survey}/>}
@@ -2080,9 +2690,8 @@ export default function App(){
           {tab==="agencies"  &&<AgencyCatalog favoriteAgencies={favoriteAgencies} setFavoriteAgencies={setFavoriteAgencies}/>}
           {tab==="checklist" &&<ChecklistPage survey={fullSurvey} checklist={checklist} setChecklist={setChecklist}/>}
           {tab==="favorites" &&<FavoritesPage favoriteVenues={favoriteVenues} favoriteAgencies={favoriteAgencies} onNav={setTab} setFavoriteVenues={setFavoriteVenues} setFavoriteAgencies={setFavoriteAgencies}/>}
-          {tab==="guests"    &&<GuestsPage slug={makeSlug(user)} guests={guests} setGuests={setGuests}/>}
+          {tab==="guests"    &&<GuestsHub slug={makeSlug(user)} guests={guests} setGuests={setGuests} survey={fullSurvey} user={user} inviteData={inviteData} setInviteData={setInviteData} wishlist={wishlist} setWishlist={setWishlist} timing={timing}/>}
           {tab==="timing"    &&<TimingPage survey={fullSurvey} timing={timing} setTiming={setTiming}/>}
-          {tab==="invite"    &&<InvitePage survey={fullSurvey} user={user} inviteData={inviteData} setInviteData={setInviteData}/>}
         </>)}
       </main>
     </div>
